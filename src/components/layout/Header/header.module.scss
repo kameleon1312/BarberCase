@@ -1,0 +1,101 @@
+@use "../../../styles/tools/mixins" as m;
+@use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/radii" as r;
+@use "../../../styles/tokens/shadows" as s;
+@use "../../../styles/tokens/z" as z;
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: z.$header;
+  backdrop-filter: blur(16px);
+  background: rgba(7, 8, 11, 0.58);
+  border-bottom: 1px solid c.$line;
+}
+
+.inner {
+  @include m.container;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: c.$text;
+  min-width: 210px;
+}
+
+.mark {
+  width: 38px;
+  height: 38px;
+  border-radius: r.$md;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 204, 102, 0.35);
+  background: rgba(255, 204, 102, 0.10);
+  box-shadow: s.$soft;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.brandName {
+  font-weight: 750;
+}
+
+.brandTagline {
+  color: c.$muted;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.nav {
+  display: flex;
+  gap: 14px;
+
+  @media (max-width: 860px) {
+    display: none;
+  }
+}
+
+.link {
+  text-decoration: none;
+  color: c.$text-2;
+  padding: 8px 4px;
+  border-bottom: 1px solid transparent;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover {
+    color: c.$text;
+    border-bottom-color: rgba(255, 255, 255, 0.18);
+  }
+}
+
+.cta {
+  text-decoration: none;
+  color: c.$text;
+  border: 1px solid rgba(255, 204, 102, 0.35);
+  background: rgba(255, 204, 102, 0.10);
+  padding: 10px 14px;
+  border-radius: r.$pill;
+  box-shadow: s.$soft;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover {
+    border-color: rgba(255, 204, 102, 0.55);
+  }
+}

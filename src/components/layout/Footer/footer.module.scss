@@ -1,0 +1,44 @@
+@use "../../../styles/tools/mixins" as m;
+@use "../../../styles/tokens/colors" as c;
+
+.footer {
+  padding: 34px 0;
+  border-top: 1px solid c.$line;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.inner {
+  @include m.container;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+
+  @media (max-width: 720px) {
+    flex-direction: column;
+  }
+}
+
+.brandLine {
+  font-weight: 750;
+}
+
+.muted {
+  color: c.$muted;
+  margin-top: 6px;
+}
+
+.right {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.link {
+  text-decoration: none;
+  color: c.$text-2;
+
+  &:hover {
+    color: c.$text;
+  }
+}

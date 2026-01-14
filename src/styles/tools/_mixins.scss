@@ -1,0 +1,29 @@
+@use "../tokens/colors" as c;
+@use "../tokens/radii" as r;
+
+@mixin container {
+  width: min(1120px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+@mixin card {
+  background: linear-gradient(180deg, rgba(255,255,255,0.075), rgba(255,255,255,0.045));
+  border: 1px solid c.$line;
+  border-radius: r.$lg;
+  backdrop-filter: blur(14px);
+}
+
+@mixin focusRing {
+  &:focus-visible {
+    outline: 2px solid rgba(255, 204, 102, 0.9); // focus ring
+    outline-offset: 3px;
+  }
+}
+
+@mixin reduceMotion {
+  @media (prefers-reduced-motion: reduce) {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}

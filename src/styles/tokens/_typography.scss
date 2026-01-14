@@ -1,0 +1,13 @@
+$font-sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Arial, sans-serif;
+$font-display: ui-serif, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+
+$fs-0: clamp(0.92rem, 0.86rem + 0.2vw, 1rem);
+$fs-1: clamp(1.05rem, 0.98rem + 0.32vw, 1.2rem);
+$fs-2: clamp(1.3rem, 1.12rem + 0.8vw, 1.85rem);
+$fs-3: clamp(2.0rem, 1.4rem + 2.2vw, 3.1rem);
+$fs-4: clamp(2.7rem, 1.7rem + 3.8vw, 4.6rem);
+
+$lh-tight: 1.06;
+$lh: 1.45;
+$ls-tight: -0.02em;
+$ls-wide: 0.08em;

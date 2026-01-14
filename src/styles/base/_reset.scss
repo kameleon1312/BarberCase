@@ -1,0 +1,15 @@
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: geometricPrecision;
+}
+
+img { max-width: 100%; display: block; }
+button, input { font: inherit; }
+a { color: inherit; }

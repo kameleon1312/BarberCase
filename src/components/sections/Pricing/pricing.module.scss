@@ -1,0 +1,93 @@
+@use "../../../styles/tools/mixins" as m;
+@use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/typography" as t;
+@use "../../../styles/tokens/radii" as r;
+@use "../../../styles/tokens/shadows" as s;
+
+.section {
+  padding: clamp(56px, 7vw, 92px) 0;
+}
+
+.inner { @include m.container; }
+
+.header {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.title {
+  margin: 0;
+  font-family: t.$font-display;
+  font-size: t.$fs-3;
+  letter-spacing: t.$ls-tight;
+}
+
+.subtitle {
+  margin: 0;
+  color: c.$text-2;
+  max-width: 70ch;
+}
+
+.table {
+  @include m.card;
+  box-shadow: s.$soft;
+  padding: 10px;
+  border-radius: r.$xl;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px;
+  border-radius: r.$lg;
+  border: 1px solid transparent;
+  transition: background 180ms ease, border-color 180ms ease;
+  @include m.reduceMotion;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.035);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
+
+  @media (max-width: 520px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.featured {
+  border-color: rgba(255, 204, 102, 0.22);
+  background: rgba(255, 204, 102, 0.06);
+}
+
+.left {
+  display: grid;
+  gap: 6px;
+}
+
+.name {
+  font-weight: 700;
+}
+
+.note {
+  color: c.$muted;
+  font-weight: 500;
+}
+
+.time {
+  color: c.$muted;
+  font-size: 0.92rem;
+}
+
+.price {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.hint {
+  color: c.$muted;
+  margin-top: 10px;
+  font-size: 0.92rem;
+}
