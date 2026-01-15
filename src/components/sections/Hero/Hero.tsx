@@ -1,4 +1,5 @@
 import styles from "./hero.module.scss";
+import fryzjer from "../../../assets/images/fryzjer.jpg";
 
 export function Hero() {
   return (
@@ -44,6 +45,7 @@ export function Hero() {
 
         <div className={styles.visual} aria-hidden="true">
           <div className={styles.showcase}>
+            <img src={fryzjer} alt="" className={styles.image} />
             <div className={styles.frame} />
             <div className={styles.tag}>SIGNATURE LOOK</div>
             <div className={styles.sweep} />
