@@ -11,6 +11,17 @@
   backdrop-filter: blur(16px);
   background: rgba(7, 8, 11, 0.58);
   border-bottom: 1px solid c.$line;
+  overflow: visible;
+
+  transition: background 220ms ease, backdrop-filter 220ms ease, border-color 220ms ease;
+  @include m.reduceMotion;
+}
+
+/* kompakt po scrollu */
+.header[data-compact="true"] {
+  backdrop-filter: blur(22px);
+  background: rgba(7, 8, 11, 0.76);
+  border-bottom-color: rgba(255, 255, 255, 0.16);
 }
 
 .inner {
@@ -19,29 +30,85 @@
   align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding: 12px 0;
+
+  height: 110px; /* wysokość paska w stanie “hero” */
+  padding: 0;
+
+  transition: height 220ms ease;
+  @include m.reduceMotion;
+}
+
+.header[data-compact="true"] .inner {
+  height: 90px; /* wysokość paska w stanie “compact” */
 }
 
 .brand {
+  position: relative; /* anchor dla absolutnego logo */
   display: inline-flex;
   align-items: center;
   gap: 10px;
   text-decoration: none;
   color: c.$text;
-  min-width: 210px;
+
+  min-height: 64px;
+  padding-left: 220px; /* miejsce na duże logo (200px + margines) */
+
+  @media (max-width: 720px) {
+    padding-left: 160px;
+  }
+
+  @media (max-width: 520px) {
+    padding-left: 120px;
+  }
 }
 
-.mark {
-  width: 38px;
-  height: 38px;
-  border-radius: r.$md;
+/* Wrapper jest absolutny -> logo nie wpływa na wysokość headera */
+.logoWrap {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 190px;
+  height: 190px;
+
+  pointer-events: none; /* klik działa na cały .brand */
   display: grid;
   place-items: center;
-  border: 1px solid rgba(255, 204, 102, 0.35);
-  background: rgba(255, 204, 102, 0.10);
-  box-shadow: s.$soft;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+
+  @media (max-width: 720px) {
+    width: 150px;
+    height: 150px;
+  }
+
+  @media (max-width: 520px) {
+    width: 110px;
+    height: 110px;
+  }
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+
+  transform-origin: left center;
+  transform: scale(1);
+
+  filter:
+    drop-shadow(0 16px 40px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 18px rgba(255, 204, 102, 0.08));
+
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1), filter 260ms ease;
+  @include m.reduceMotion;
+}
+
+/* Płynne skalowanie logo przy scrollu */
+.header[data-compact="true"] .logo {
+  transform: scale(0.72);
+  filter:
+    drop-shadow(0 10px 26px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 14px rgba(255, 204, 102, 0.06));
 }
 
 .brandText {
@@ -51,7 +118,7 @@
 }
 
 .brandName {
-  font-weight: 750;
+  font-weight: 800;
 }
 
 .brandTagline {
@@ -59,6 +126,10 @@
   font-size: 0.78rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+
+  @media (max-width: 520px) {
+    display: none;
+  }
 }
 
 .nav {
