@@ -1,0 +1,247 @@
+@use "../../../styles/tools/mixins" as m;
+@use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/radii" as r;
+@use "../../../styles/tokens/shadows" as s;
+@use "../../../styles/tokens/z" as z;
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.58);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
+  z-index: (z.$header + 20);
+  @include m.reduceMotion;
+}
+
+.backdropOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: min(420px, 92vw);
+
+  background: rgba(8, 9, 12, 0.88);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+
+  transform: translateX(102%);
+  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
+  z-index: (z.$header + 25);
+
+  padding: 14px;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+
+  @include m.reduceMotion;
+}
+
+.drawerOpen {
+  transform: translateX(0);
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 2px 10px;
+}
+
+.topText {
+  display: grid;
+  gap: 4px;
+}
+
+.title {
+  font-weight: 900;
+  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+  color: c.$text;
+}
+
+.sub {
+  color: c.$muted;
+  font-size: 0.92rem;
+}
+
+.close {
+  width: 44px;
+  height: 44px;
+  border-radius: r.$md;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  color: c.$text;
+  cursor: pointer;
+  box-shadow: s.$inner;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 204, 102, 0.22);
+  }
+}
+
+.summary {
+  @include m.card;
+  padding: 12px;
+  border-radius: r.$lg;
+  box-shadow: s.$soft;
+  display: grid;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.summaryMain {
+  display: grid;
+  gap: 4px;
+}
+
+.summaryName {
+  font-weight: 850;
+  letter-spacing: -0.01em;
+}
+
+.summaryDesc {
+  color: c.$muted;
+  font-size: 0.92rem;
+}
+
+.summaryMeta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.pill {
+  border-radius: r.$md;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px;
+}
+
+.pillTop {
+  display: block;
+  color: c.$muted;
+  font-size: 0.82rem;
+  margin-bottom: 4px;
+}
+
+.pillVal {
+  display: block;
+  font-weight: 750;
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+
+  @media (max-width: 380px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.label {
+  color: c.$muted;
+  font-size: 0.86rem;
+}
+
+.control,
+.controlArea {
+  width: 100%;
+  border-radius: r.$md;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.03);
+  color: c.$text;
+  padding: 12px 12px;
+
+  outline: none;
+  @include m.reduceMotion;
+
+  &:focus {
+    border-color: rgba(255, 204, 102, 0.35);
+    box-shadow: 0 0 0 3px rgba(255, 204, 102, 0.12);
+  }
+}
+
+.controlArea {
+  resize: vertical;
+  min-height: 96px;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.primary,
+.secondary {
+  border-radius: r.$pill;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  cursor: pointer;
+  @include m.focusRing;
+  @include m.reduceMotion;
+}
+
+.secondary {
+  background: rgba(255, 255, 255, 0.04);
+  color: c.$text;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+  }
+}
+
+.primary {
+  border-color: rgba(255, 204, 102, 0.35);
+  background: linear-gradient(180deg, rgba(255, 204, 102, 0.18), rgba(255, 204, 102, 0.08));
+  color: c.$text;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &:hover {
+    border-color: rgba(255, 204, 102, 0.55);
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+}
+
+.arrow {
+  opacity: 0.9;
+}
+
+.hint {
+  color: c.$muted;
+  font-size: 0.86rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+  padding-top: 10px;
+}

@@ -1,7 +1,11 @@
 import styles from "./hero.module.scss";
 import fryzjer from "../../../assets/images/fryzjer.jpg";
 
-export function Hero() {
+type HeroProps = {
+  onBook?: () => void;
+};
+
+export function Hero({ onBook }: HeroProps) {
   return (
     <section className={styles.hero} id="top" aria-label="Sekcja główna">
       <div className={styles.inner}>
@@ -14,14 +18,20 @@ export function Hero() {
           </h1>
 
           <p className={styles.lead}>
-            Premium strzyżenia i broda w klimacie “night studio”. Szybka rezerwacja,
-            perfekcyjny detal, zero chaosu.
+            Premium strzyżenia i broda w klimacie “night studio”. Szybka rezerwacja, perfekcyjny detal, zero chaosu.
           </p>
 
           <div className={styles.actions}>
-            <a className={styles.primary} href="#rezerwacja">
-              Umów wizytę
-            </a>
+            {onBook ? (
+              <button type="button" className={styles.primaryBtn} onClick={onBook}>
+                Umów wizytę
+              </button>
+            ) : (
+              <a className={styles.primary} href="#rezerwacja">
+                Umów wizytę
+              </a>
+            )}
+
             <a className={styles.secondary} href="#cennik">
               Zobacz cennik
             </a>

@@ -150,3 +150,47 @@
   0%, 100% { transform: translateX(-38%) rotate(8deg); opacity: 0.55; }
   50% { transform: translateX(18%) rotate(8deg); opacity: 0.9; }
 }
+
+/* shared button/link look */
+.primary,
+.secondary,
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: r.$pill;
+  text-decoration: none;
+  border: 1px solid c.$line;
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover { transform: translateY(-1px); }
+}
+
+/* IMPORTANT: reset button defaults */
+.primaryBtn {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* gold primary */
+.primary,
+.primaryBtn {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 204, 102, 0.24),
+    rgba(255, 204, 102, 0.10)
+  );
+  border-color: rgba(255, 204, 102, 0.35);
+}
+
+/* secondary */
+.secondary {
+  background: rgba(255, 255, 255, 0.045);
+}

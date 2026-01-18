@@ -3,7 +3,11 @@ import styles from "./header.module.scss";
 import { brand, nav } from "../../../data/content";
 import logos from "../../../assets/images/logos.png";
 
-export function Header() {
+type HeaderProps = {
+  onBook?: () => void;
+};
+
+export function Header({ onBook }: HeaderProps) {
   const [compact, setCompact] = useState(false);
 
   useEffect(() => {
@@ -19,6 +23,7 @@ export function Header() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
+
     return () => {
       window.removeEventListener("scroll", onScroll);
       if (raf) window.cancelAnimationFrame(raf);
@@ -47,9 +52,15 @@ export function Header() {
           ))}
         </nav>
 
-        <a className={styles.cta} href="#rezerwacja">
-          Umów wizytę
-        </a>
+        {onBook ? (
+          <button type="button" className={styles.ctaBtn} onClick={onBook}>
+            Umów wizytę
+          </button>
+        ) : (
+          <a className={styles.cta} href="#rezerwacja">
+            Umów wizytę
+          </a>
+        )}
       </div>
     </header>
   );

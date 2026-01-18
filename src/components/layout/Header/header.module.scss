@@ -179,3 +179,28 @@
     transform: translateY(-1px);
   }
 }
+
+.ctaBtn {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  /* identyczny wygląd jak .cta */
+  color: c.$text;
+  border: 1px solid rgba(255, 204, 102, 0.35);
+  background: linear-gradient(180deg, rgba(255, 204, 102, 0.14), rgba(255, 204, 102, 0.08));
+  padding: 10px 14px;
+  border-radius: r.$pill;
+  box-shadow: s.$soft;
+
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover {
+    border-color: rgba(255, 204, 102, 0.55);
+    transform: translateY(-1px);
+  }
+}

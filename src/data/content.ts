@@ -41,3 +41,41 @@ export const pricing: PriceItem[] = [
   },
   { name: "Fade / Skin", time: "45 min", price: "110 zł", note: "Dokładne cieniowanie" },
 ];
+
+export const bookingServices = [
+  {
+    id: "hair",
+    name: "Strzyżenie",
+    durationMin: 45,
+    priceFrom: 90,
+    priceTo: 130,
+    desc: "Konsultacja + cięcie + stylizacja.",
+  },
+  {
+    id: "beard",
+    name: "Broda",
+    durationMin: 35,
+    priceFrom: 70,
+    priceTo: 110,
+    desc: "Trym + kontur + pielęgnacja.",
+  },
+  {
+    id: "combo",
+    name: "Strzyżenie + Broda",
+    durationMin: 75,
+    priceFrom: 150,
+    priceTo: 210,
+    desc: "Komplet w stylu night studio.",
+  },
+  {
+    id: "fade",
+    name: "Skin Fade (premium)",
+    durationMin: 55,
+    priceFrom: 110,
+    priceTo: 160,
+    desc: "Precyzyjny fade + wykończenie.",
+  },
+] as const;
+
+export type BookingService = (typeof bookingServices)[number];
+export type BookingServiceId = BookingService["id"];
