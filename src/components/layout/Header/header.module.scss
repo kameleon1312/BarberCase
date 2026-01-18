@@ -8,20 +8,19 @@
   position: sticky;
   top: 0;
   z-index: z.$header;
-  backdrop-filter: blur(16px);
-  background: rgba(7, 8, 11, 0.58);
-  border-bottom: 1px solid c.$line;
-  overflow: visible;
 
-  transition: background 220ms ease, backdrop-filter 220ms ease, border-color 220ms ease;
+  background: rgba(7, 8, 11, 0.55);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  backdrop-filter: blur(16px);
+
+  transition: background 220ms ease, border-color 220ms ease, backdrop-filter 220ms ease;
   @include m.reduceMotion;
 }
 
-/* kompakt po scrollu */
 .header[data-compact="true"] {
+  background: rgba(7, 8, 11, 0.74);
+  border-bottom-color: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(22px);
-  background: rgba(7, 8, 11, 0.76);
-  border-bottom-color: rgba(255, 255, 255, 0.16);
 }
 
 .inner {
@@ -29,9 +28,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 18px;
 
-  height: 110px; /* wysokość paska w stanie “hero” */
+  height: 126px; /* desktop baseline */
   padding: 0;
 
   transition: height 220ms ease;
@@ -39,76 +38,57 @@
 }
 
 .header[data-compact="true"] .inner {
-  height: 90px; /* wysokość paska w stanie “compact” */
+  height: 64px;
 }
 
+/* BRAND: normal flow (bez absolute i bez padding-left) */
 .brand {
-  position: relative; /* anchor dla absolutnego logo */
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   text-decoration: none;
   color: c.$text;
-
-  min-height: 64px;
-  padding-left: 220px; /* miejsce na duże logo (200px + margines) */
-
-  @media (max-width: 720px) {
-    padding-left: 160px;
-  }
+  min-width: 260px;
 
   @media (max-width: 520px) {
-    padding-left: 120px;
+    min-width: auto;
   }
 }
 
-/* Wrapper jest absolutny -> logo nie wpływa na wysokość headera */
+/* LOGO: “badge” w flow, kontrolowany rozmiarem wrappera */
 .logoWrap {
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-
-  width: 190px;
-  height: 190px;
-
-  pointer-events: none; /* klik działa na cały .brand */
+  width: 200px;
+  height: 200px;
   display: grid;
   place-items: center;
 
-  @media (max-width: 720px) {
-    width: 150px;
-    height: 150px;
-  }
-
-  @media (max-width: 520px) {
-    width: 110px;
-    height: 110px;
-  }
-}
-
-.logo {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-
-  transform-origin: left center;
-  transform: scale(1);
-
-  filter:
-    drop-shadow(0 16px 40px rgba(0, 0, 0, 0.55))
-    drop-shadow(0 0 18px rgba(255, 204, 102, 0.08));
-
-  transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1), filter 260ms ease;
+  transition: width 220ms ease, height 220ms ease, transform 220ms ease;
   @include m.reduceMotion;
 }
 
-/* Płynne skalowanie logo przy scrollu */
-.header[data-compact="true"] .logo {
-  transform: scale(0.72);
+.header[data-compact="true"] .logoWrap {
+  width: 152px;
+  height: 152px;
+}
+
+.logo {
+  width: 76%;
+  height: 76%;
+  object-fit: contain;
+
   filter:
-    drop-shadow(0 10px 26px rgba(0, 0, 0, 0.55))
-    drop-shadow(0 0 14px rgba(255, 204, 102, 0.06));
+    drop-shadow(0 10px 22px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 10px rgba(255, 204, 102, 0.08));
+
+  transition: transform 220ms ease, filter 220ms ease;
+  @include m.reduceMotion;
+}
+
+.header[data-compact="true"] .logo {
+  transform: scale(0.95);
+  filter:
+    drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55))
+    drop-shadow(0 0 8px rgba(255, 204, 102, 0.06));
 }
 
 .brandText {
@@ -118,7 +98,8 @@
 }
 
 .brandName {
-  font-weight: 800;
+  font-weight: 850;
+  letter-spacing: -0.01em;
 }
 
 .brandTagline {
@@ -132,9 +113,11 @@
   }
 }
 
+/* NAV */
 .nav {
   display: flex;
-  gap: 14px;
+  align-items: center;
+  gap: 18px;
 
   @media (max-width: 860px) {
     display: none;
@@ -142,31 +125,57 @@
 }
 
 .link {
+  position: relative;
   text-decoration: none;
-  color: c.$text-2;
-  padding: 8px 4px;
-  border-bottom: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.78);
+  padding: 10px 6px;
+  border-radius: 10px;
+
+  transition: color 180ms ease, background 180ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
     color: c.$text;
-    border-bottom-color: rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  /* micro-underline premium */
+  &::after {
+    content: "";
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 4px;
+    height: 1px;
+    background: rgba(255, 204, 102, 0.0);
+    transition: background 180ms ease, transform 180ms ease;
+    transform: scaleX(0.6);
+    transform-origin: center;
+  }
+
+  &:hover::after {
+    background: rgba(255, 204, 102, 0.35);
+    transform: scaleX(1);
   }
 }
 
+/* CTA */
 .cta {
   text-decoration: none;
   color: c.$text;
   border: 1px solid rgba(255, 204, 102, 0.35);
-  background: rgba(255, 204, 102, 0.10);
+  background: linear-gradient(180deg, rgba(255, 204, 102, 0.14), rgba(255, 204, 102, 0.08));
   padding: 10px 14px;
   border-radius: r.$pill;
   box-shadow: s.$soft;
+
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
     border-color: rgba(255, 204, 102, 0.55);
+    transform: translateY(-1px);
   }
 }

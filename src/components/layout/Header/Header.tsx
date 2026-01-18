@@ -12,13 +12,13 @@ export function Header() {
     const onScroll = () => {
       if (raf) return;
       raf = window.requestAnimationFrame(() => {
-        setCompact((window.scrollY || 0) > 18); // próg zmniejszania
+        setCompact((window.scrollY || 0) > 18);
         raf = 0;
       });
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll(); // init
+    onScroll();
     return () => {
       window.removeEventListener("scroll", onScroll);
       if (raf) window.cancelAnimationFrame(raf);
@@ -26,11 +26,7 @@ export function Header() {
   }, []);
 
   return (
-    <header
-      className={styles.header}
-      aria-label="Górna nawigacja"
-      data-compact={compact ? "true" : "false"}
-    >
+    <header className={styles.header} aria-label="Górna nawigacja" data-compact={compact ? "true" : "false"}>
       <div className={styles.inner}>
         <a className={styles.brand} href="#top" aria-label={brand.name}>
           <span className={styles.logoWrap} aria-hidden="true">
