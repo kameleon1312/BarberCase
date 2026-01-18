@@ -1,73 +1,105 @@
-# React + TypeScript + Vite
+<!-- ========================================================= -->
+<!--  BarberCase — Premium Barber Landing Experience           -->
+<!--  Motion. Atmosphere. Conversion.                          -->
+<!-- ========================================================= -->
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
 
-Currently, two official plugins are available:
+<img src="https://raw.githubusercontent.com/kameleon1312/assets/main/readme/header-grid-animated.gif" width="100%" height="140" alt="header visual" style="border-radius:10px;opacity:0.95;" />
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+<h1 style="margin-top:-28px;font-size:42px;font-weight:700;">
+✂️ BarberCase
+</h1>
 
-## React Compiler
+<p style="max-width:640px;">
+Production-ready landing page for a modern barber studio.<br/>
+Built as a portfolio-grade case study focused on UI precision, motion logic and premium feel.
+</p>
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+<a href="https://barber-case-world.vercel.app" target="_blank">
+  <img src="https://img.shields.io/badge/LIVE%20DEMO-Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" />
+</a>
 
-## Expanding the ESLint configuration
+</div>
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🧠 Concept
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**BarberCase** is a fictional premium barber brand used as a *real-world quality* portfolio project.  
+The goal was to design and implement a landing page that feels:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- editorial  
+- atmospheric  
+- intentional  
+- motion-driven  
+- production-ready  
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+It’s not just a layout — it’s a **brand experience**.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Every section is built component-by-component with focus on:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- rhythm  
+- spacing  
+- contrast  
+- interaction  
+- perceived quality  
+
+Built in **TypeScript** to ensure predictable UI behavior, scalable architecture and production-grade safety.
+
+---
+
+## ⚙️ Tech Stack
+
+- **React + Vite (TypeScript)**
+- **SCSS (modular architecture)**
+- **Mobile-first layout**
+- **Semantic HTML**
+- **Typed UI data models**
+- **Motion logic via CSS / TS**
+- **Vercel deployment**
+
+No heavy animation libraries — motion is **designed**, not “installed”.
+
+---
+
+## ✨ Key Features
+
+- Hero section with editorial rhythm  
+- Modular section system (easy to extend)  
+- Smooth micro-interactions  
+- Premium dark UI with gold accents  
+- Fully responsive (mobile-first)  
+- Clean component architecture  
+- Production-ready structure  
+
+---
+
+## 🎯 What This Project Shows
+
+This project demonstrates my approach to:
+
+- building **real product-like interfaces**
+- designing **motion as UX language**
+- structuring **scalable UI architecture**
+- thinking in **brand & experience**, not just layout
+- writing **clean, intentional, typed frontend code**
+
+It’s a blueprint for how I approach commercial projects.
+
+---
+
+## 🌍 Live
+
+👉 **https://barber-case-world.vercel.app**
+
+---
+
+<div align="center">
+
+<p style="opacity:0.7;font-size:13px;">
+Designed & built by Szymon Pochopień  
+Creative Frontend Engineer
+</p>
+
+</div>
