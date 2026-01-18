@@ -8,36 +8,37 @@ import { Pricing } from "../components/sections/Pricing/Pricing";
 import { CTA } from "../components/sections/CTA/CTA";
 
 import { QuickBookingDrawer } from "../components/sections/Booking/QuickBookingDrawer";
+import type { BookingServiceId } from "../data/content";
 
 export default function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [prefillServiceId, setPrefillServiceId] = useState<BookingServiceId | null>(null);
 
-  const openBooking = () => setBookingOpen(true);
+  const openBooking = (serviceId?: BookingServiceId) => {
+    if (serviceId) setPrefillServiceId(serviceId);
+    setBookingOpen(true);
+  };
+
   const closeBooking = () => setBookingOpen(false);
 
   return (
     <>
-      {/* A11y: szybkie przejście do treści */}
-      <a href="#main" style={{ position: "absolute", left: -9999, top: 0 }}>
-        Przejdź do treści
-      </a>
+      <Header onBook={() => openBooking()} />
 
-      {/* Header */}
-      <Header onBook={openBooking} />
-
-      {/* Main */}
       <main id="main">
-        {/* Hero też otwiera Quick Booking */}
-       <Hero onBook={openBooking} />
+        <Hero onBook={() => openBooking()} />
         <Services />
-        <Pricing />
+        <Pricing onPick={(id) => openBooking(id)} />
         <CTA />
       </main>
 
       <Footer />
 
-      {/* Global Drawer */}
-      <QuickBookingDrawer open={bookingOpen} onClose={closeBooking} />
+      <QuickBookingDrawer
+        open={bookingOpen}
+        onClose={closeBooking}
+        preselectServiceId={prefillServiceId ?? undefined}
+      />
     </>
   );
 }

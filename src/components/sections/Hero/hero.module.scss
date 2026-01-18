@@ -116,7 +116,7 @@
   position: absolute;
   inset: 16px;
   border-radius: calc(r.$xl - 12px);
-  border: 1px dashed rgba(255, 255, 255, 0.18); // placeholder pod foto/video
+  border: 1px dashed rgba(255, 255, 255, 0.18); /* subtle inner frame */
 }
 
 .tag {
@@ -151,7 +151,7 @@
   50% { transform: translateX(18%) rotate(8deg); opacity: 0.9; }
 }
 
-/* shared button/link look */
+/* Reused button styles for hero buttons */
 .primary,
 .secondary,
 .primaryBtn {
@@ -169,7 +169,7 @@
   &:hover { transform: translateY(-1px); }
 }
 
-/* IMPORTANT: reset button defaults */
+/* reset button styles */
 .primaryBtn {
   appearance: none;
   -webkit-appearance: none;
@@ -179,7 +179,7 @@
   cursor: pointer;
 }
 
-/* gold primary */
+/* primary */
 .primary,
 .primaryBtn {
   background: linear-gradient(

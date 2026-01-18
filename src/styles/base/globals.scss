@@ -1,20 +1,20 @@
 @use "../tokens/colors" as c;
 @use "../tokens/typography" as t;
 
-/* System */
+/* Dark mode */
 :root { color-scheme: dark; }
 
-/* Smooth scroll + offset pod sticky header */
+
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 84px; // wysokość Twojego headera
+  scroll-padding-top: 84px;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
 
-/* Podstawy */
+/* Globalne style body */
 body {
   font-family: t.$font-sans;
   font-size: t.$fs-0;
@@ -23,7 +23,7 @@ body {
   background: c.$bg;
 }
 
-/* Główna powłoka strony */
+
 .bg-shell {
   min-height: 100%;
   position: relative;
@@ -35,7 +35,7 @@ body {
     linear-gradient(180deg, c.$bg, c.$bg-2 55%, c.$bg);
 }
 
-/* Grain — premium “print” vibe */
+
 .bg-shell::before {
   content: "";
   position: absolute;
@@ -48,7 +48,7 @@ body {
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
 }
 
-/* A11y: skip link */
+
 .skip-link {
   position: absolute;
   left: -999px;
@@ -64,12 +64,12 @@ body {
   }
 }
 
-/* Optional: delikatny “snap” przy ręcznym scrollu */
+/* Scroll snapping */
 html {
   scroll-snap-type: y proximity;
 }
 
 section {
   scroll-snap-align: start;
-  scroll-margin-top: 84px; // zabezpieczenie pod sticky header
+  scroll-margin-top: 84px; /* Height of fixed header */
 }

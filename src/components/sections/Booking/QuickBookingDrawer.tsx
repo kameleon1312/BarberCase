@@ -6,6 +6,7 @@ import type { BookingServiceId } from "../../../data/content";
 type Props = {
   open: boolean;
   onClose: () => void;
+  preselectServiceId?: BookingServiceId;
 };
 
 type FormState = {
@@ -45,7 +46,7 @@ function useLockBodyScroll(locked: boolean) {
 
 function useFocusTrap(
   active: boolean,
-  containerRef: React.RefObject<HTMLElement>,
+  containerRef: React.RefObject<HTMLElement | null>,
   onEscape: () => void
 ) {
   useEffect(() => {
@@ -61,7 +62,7 @@ function useFocusTrap(
         )
       ).filter((x) => !x.hasAttribute("disabled") && !x.getAttribute("aria-hidden"));
 
-    // focus 1 element
+    // Focus first element
     focusables()[0]?.focus();
 
     const onKeyDown = (e: KeyboardEvent) => {
@@ -97,12 +98,13 @@ function useFocusTrap(
   }, [active, containerRef, onEscape]);
 }
 
-export function QuickBookingDrawer({ open, onClose }: Props) {
+export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props) {
   useLockBodyScroll(open);
 
-  // ✅ RefObject<HTMLElement> zamiast HTMLDivElement|null
-  const panelRef = useRef<HTMLElement | null>(null);
-  useFocusTrap(open, panelRef as React.RefObject<HTMLElement>, onClose);
+  const panelRef = useRef<HTMLElement>(null);
+  useFocusTrap(open, panelRef, onClose);
+
+  const serviceSelectRef = useRef<HTMLSelectElement | null>(null);
 
   const today = useMemo(() => {
     const d = new Date();
@@ -120,8 +122,18 @@ export function QuickBookingDrawer({ open, onClose }: Props) {
     note: "",
   }));
 
-  // ✅ bez setState w effect (usuwa lint error)
-  // zamiast tego: min na input date i stałe today
+ 
+  useEffect(() => {
+    if (!open) return;
+    if (!preselectServiceId) return;
+
+ 
+    requestAnimationFrame(() => {
+      setForm((p) => (p.serviceId === preselectServiceId ? p : { ...p, serviceId: preselectServiceId }));
+      serviceSelectRef.current?.focus();
+      serviceSelectRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    });
+  }, [open, preselectServiceId]);
 
   const service = useMemo(
     () => bookingServices.find((s) => s.id === form.serviceId) ?? bookingServices[0],
@@ -163,10 +175,8 @@ export function QuickBookingDrawer({ open, onClose }: Props) {
       .filter(Boolean)
       .join("\n");
 
-    const mail = "barberspace@example.com"; // <- podmień na swój
-    const url = `mailto:${encodeURIComponent(mail)}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
+    const mail = "barberspace@example.com"; 
+    const url = `mailto:${encodeURIComponent(mail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     window.location.href = url;
     onClose();
@@ -192,12 +202,7 @@ export function QuickBookingDrawer({ open, onClose }: Props) {
             <div className={styles.sub}>Wybierz usługę i termin — bez chaosu.</div>
           </div>
 
-          <button
-            type="button"
-            className={styles.close}
-            onClick={onClose}
-            aria-label="Zamknij"
-          >
+          <button type="button" className={styles.close} onClick={onClose} aria-label="Zamknij">
             ✕
           </button>
         </div>
@@ -224,6 +229,7 @@ export function QuickBookingDrawer({ open, onClose }: Props) {
           <label className={styles.field}>
             <span className={styles.label}>Usługa</span>
             <select
+              ref={serviceSelectRef}
               className={styles.control}
               value={form.serviceId}
               onChange={(e) =>

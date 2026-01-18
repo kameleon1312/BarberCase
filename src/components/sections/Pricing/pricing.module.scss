@@ -8,11 +8,13 @@
   padding: clamp(56px, 7vw, 92px) 0;
 }
 
-.inner { @include m.container; }
+.inner {
+  @include m.container;
+}
 
 .header {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 18px;
 }
 
@@ -29,65 +31,152 @@
   max-width: 70ch;
 }
 
-.table {
-  @include m.card;
-  box-shadow: s.$soft;
-  padding: 10px;
-  border-radius: r.$xl;
+.carouselWrap {
+  position: relative;
+  margin-top: 18px;
 }
 
-.row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 14px 14px;
-  border-radius: r.$lg;
-  border: 1px solid transparent;
-  transition: background 180ms ease, border-color 180ms ease;
+.carousel {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(260px, 1fr);
+  gap: 14px;
+
+  overflow-x: auto;
+  padding: 6px 4px 14px;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 12px;
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    border: 3px solid transparent;
+    background-clip: padding-box;
+  }
+}
+
+.card {
+  scroll-snap-align: start;
+  text-align: left;
+
+  border-radius: r.$xl;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(900px 420px at 18% 0%, rgba(255, 204, 102, 0.10), transparent 58%),
+    rgba(255, 255, 255, 0.03);
+
+  box-shadow: s.$soft;
+  padding: 16px;
+
+  display: grid;
+  gap: 10px;
+
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  font: inherit;
+  color: c.$text;
+
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.035);
-    border-color: rgba(255, 255, 255, 0.12);
-  }
-
-  @media (max-width: 520px) {
-    flex-direction: column;
-    align-items: flex-start;
+    transform: translateY(-2px);
+    border-color: rgba(255, 204, 102, 0.22);
+    background:
+      radial-gradient(900px 420px at 18% 0%, rgba(255, 204, 102, 0.14), transparent 58%),
+      rgba(255, 255, 255, 0.04);
   }
 }
 
 .featured {
-  border-color: rgba(255, 204, 102, 0.22);
-  background: rgba(255, 204, 102, 0.06);
+  border-color: rgba(255, 204, 102, 0.35);
+  background:
+    radial-gradient(900px 420px at 18% 0%, rgba(255, 204, 102, 0.18), transparent 58%),
+    rgba(255, 255, 255, 0.03);
 }
 
-.left {
-  display: grid;
-  gap: 6px;
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .name {
-  font-weight: 700;
+  font-weight: 850;
+  letter-spacing: -0.01em;
 }
 
 .note {
   color: c.$muted;
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 0.9em;
 }
 
-.time {
+.badge {
+  padding: 7px 10px;
+  border-radius: r.$pill;
+  border: 1px solid rgba(255, 204, 102, 0.35);
+  background: rgba(0, 0, 0, 0.35);
+  font-size: 0.74rem;
+  letter-spacing: t.$ls-wide;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   color: c.$muted;
   font-size: 0.92rem;
 }
 
+.dot {
+  opacity: 0.6;
+}
+
+.metaHint {
+  opacity: 0.9;
+}
+
 .price {
-  font-weight: 800;
-  letter-spacing: -0.01em;
+  font-family: t.$font-display;
+  font-size: 1.55rem;
+  letter-spacing: -0.02em;
+  color: c.$text;
+}
+
+.fadeL,
+.fadeR {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 42px;
+  pointer-events: none;
+}
+
+.fadeL {
+  left: 0;
+  background: linear-gradient(90deg, rgba(7, 8, 11, 1), transparent);
+}
+
+.fadeR {
+  right: 0;
+  background: linear-gradient(270deg, rgba(7, 8, 11, 1), transparent);
 }
 
 .hint {
+  margin-top: 14px;
   color: c.$muted;
-  margin-top: 10px;
   font-size: 0.92rem;
 }

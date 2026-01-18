@@ -30,7 +30,7 @@
   justify-content: space-between;
   gap: 18px;
 
-  height: 126px; /* desktop baseline */
+  height: 126px;
   padding: 0;
 
   transition: height 220ms ease;
@@ -40,8 +40,7 @@
 .header[data-compact="true"] .inner {
   height: 64px;
 }
-
-/* BRAND: normal flow (bez absolute i bez padding-left) */
+/* BRAND */
 .brand {
   display: inline-flex;
   align-items: center;
@@ -55,7 +54,7 @@
   }
 }
 
-/* LOGO: “badge” w flow, kontrolowany rozmiarem wrappera */
+/* LOGO */
 .logoWrap {
   width: 200px;
   height: 200px;
@@ -140,7 +139,7 @@
     background: rgba(255, 255, 255, 0.04);
   }
 
-  /* micro-underline premium */
+  /* underline effect */
   &::after {
     content: "";
     position: absolute;
@@ -187,7 +186,7 @@
   align-items: center;
   justify-content: center;
 
-  /* identyczny wygląd jak .cta */
+ /* inherit styles from .cta */
   color: c.$text;
   border: 1px solid rgba(255, 204, 102, 0.35);
   background: linear-gradient(180deg, rgba(255, 204, 102, 0.14), rgba(255, 204, 102, 0.08));
