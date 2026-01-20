@@ -1,4 +1,5 @@
 import styles from "./cta.module.scss";
+import logo from "../../../assets/images/logo.jpg";
 
 export function CTA() {
   return (
@@ -38,6 +39,7 @@ export function CTA() {
           <div className={styles.right} aria-hidden="true">
             <div className={styles.mapMock}>
               <div className={styles.mapFrame} />
+              <img src={logo} alt="" className={styles.images} />
               <div className={styles.pin}>📍</div>
             </div>
           </div>

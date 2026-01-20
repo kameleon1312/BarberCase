@@ -321,7 +321,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
           </div>
 
           <div className={styles.hint}>
-            ESC zamyka • Kliknij tło, aby wrócić • Na start wysyłamy mail — później podepniesz API.
+            Po wysłaniu rezerwacji skontaktujemy się z Tobą, aby potwierdzić termin.
           </div>
         </form>
       </aside>

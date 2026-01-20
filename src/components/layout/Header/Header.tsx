@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./header.module.scss";
 import { brand, nav } from "../../../data/content";
 import logos from "../../../assets/images/logos.png";
@@ -9,6 +9,8 @@ type HeaderProps = {
 
 export function Header({ onBook }: HeaderProps) {
   const [compact, setCompact] = useState(false);
+  const [open, setOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let raf = 0;
@@ -30,9 +32,70 @@ export function Header({ onBook }: HeaderProps) {
     };
   }, []);
 
+  // lock body scroll when menu open
+  useEffect(() => {
+    if (!open) return;
+
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  // close on ESC + basic focus management
+  useEffect(() => {
+    if (!open) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    // focus first focusable in drawer
+    const t = window.setTimeout(() => {
+      const el = drawerRef.current?.querySelector<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      el?.focus();
+    }, 0);
+
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+      window.clearTimeout(t);
+    };
+  }, [open]);
+
+  const Cta = onBook ? (
+    <button
+      type="button"
+      className={styles.cta}
+      onClick={onBook}
+      aria-label="Umów wizytę — szybka rezerwacja"
+    >
+      <span className={styles.ctaLabelShort}>Wizyta</span>
+      <span className={styles.ctaLabelFull}>Umów wizytę</span>
+    </button>
+  ) : (
+    <a className={styles.cta} href="#rezerwacja" aria-label="Umów wizytę">
+      <span className={styles.ctaLabelShort}>Wizyta</span>
+      <span className={styles.ctaLabelFull}>Umów wizytę</span>
+    </a>
+  );
+
+  const onNavClick = () => setOpen(false);
+
   return (
-    <header className={styles.header} aria-label="Górna nawigacja" data-compact={compact ? "true" : "false"}>
+    <header
+      className={styles.header}
+      aria-label="Górna nawigacja"
+      data-compact={compact ? "true" : "false"}
+      data-menu-open={open ? "true" : "false"}
+    >
       <div className={styles.inner}>
+        {/* BRAND */}
         <a className={styles.brand} href="#top" aria-label={brand.name}>
           <span className={styles.logoWrap} aria-hidden="true">
             <img src={logos} alt="" className={styles.logo} />
@@ -44,6 +107,7 @@ export function Header({ onBook }: HeaderProps) {
           </span>
         </a>
 
+        {/* DESKTOP NAV */}
         <nav className={styles.nav} aria-label="Nawigacja">
           {nav.map((item) => (
             <a key={item.href} className={styles.link} href={item.href}>
@@ -52,16 +116,68 @@ export function Header({ onBook }: HeaderProps) {
           ))}
         </nav>
 
-        {onBook ? (
-          <button type="button" className={styles.ctaBtn} onClick={onBook}>
-            Umów wizytę
-          </button>
-        ) : (
-          <a className={styles.cta} href="#rezerwacja">
-            Umów wizytę
-          </a>
-        )}
+        {/* CTA */}
+        <div className={styles.ctaWrap}>{Cta}</div>
+
+        {/* MOBILE HAMBURGER */}
+        <button
+          type="button"
+          className={styles.burger}
+          aria-label={open ? "Zamknij menu" : "Otwórz menu"}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          onClick={() => setOpen((v) => !v)}
+        >
+          <span className={styles.burgerIcon} aria-hidden="true" />
+        </button>
       </div>
+
+      {/* MOBILE DRAWER */}
+      <div
+        className={styles.overlay}
+        data-open={open ? "true" : "false"}
+        onClick={() => setOpen(false)}
+        aria-hidden={!open}
+      />
+
+      <aside
+        id="mobile-menu"
+        className={styles.drawer}
+        data-open={open ? "true" : "false"}
+        aria-hidden={!open}
+        ref={drawerRef}
+      >
+        <div className={styles.drawerTop}>
+          <div className={styles.drawerBrand}>
+            <span className={styles.drawerTitle}>{brand.name}</span>
+            <span className={styles.drawerSub}>{brand.tagline}</span>
+          </div>
+
+          <button
+            type="button"
+            className={styles.drawerClose}
+            onClick={() => setOpen(false)}
+            aria-label="Zamknij menu"
+          >
+            ✕
+          </button>
+        </div>
+
+        <nav className={styles.drawerNav} aria-label="Nawigacja mobilna">
+          {nav.map((item) => (
+            <a
+              key={item.href}
+              className={styles.drawerLink}
+              href={item.href}
+              onClick={onNavClick}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className={styles.drawerCta}>{Cta}</div>
+      </aside>
     </header>
   );
 }

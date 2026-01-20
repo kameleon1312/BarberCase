@@ -6,6 +6,7 @@
 
 .section {
   padding: clamp(56px, 7vw, 92px) 0;
+  position: relative;
 }
 
 .inner {
@@ -29,6 +30,7 @@
   margin: 0;
   color: c.$text-2;
   max-width: 70ch;
+  line-height: 1.55;
 }
 
 .carouselWrap {
@@ -36,41 +38,64 @@
   margin-top: 18px;
 }
 
-.carousel {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(260px, 1fr);
+
+.viewport {
+  position: relative;
+  overflow: hidden;
+  border-radius: r.$xl;
+}
+
+
+.track {
+  display: flex;
+  align-items: stretch;
   gap: 14px;
 
-  overflow-x: auto;
-  padding: 6px 4px 14px;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 12px;
-  -webkit-overflow-scrolling: touch;
+  padding: 10px 6px 16px;
+  width: max-content;
 
-  scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+  
+  --marquee-duration: 34s;
+  animation: pricing-marquee var(--marquee-duration) linear infinite;
+  will-change: transform;
 
-  &::-webkit-scrollbar {
-    height: 10px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.14);
-    border-radius: 999px;
-    border: 3px solid transparent;
-    background-clip: padding-box;
+  
+  &:focus-within {
+    animation-play-state: paused;
   }
 }
 
+
+.paused {
+  animation-play-state: paused;
+}
+
+
+@keyframes pricing-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+
 .card {
+  flex: 0 0 auto;
+  width: clamp(260px, 74vw, 340px);
   scroll-snap-align: start;
+
   text-align: left;
+  position: relative;
+  isolation: isolate;
 
   border-radius: r.$xl;
   border: 1px solid rgba(255, 255, 255, 0.12);
+
   background:
-    radial-gradient(900px 420px at 18% 0%, rgba(255, 204, 102, 0.10), transparent 58%),
-    rgba(255, 255, 255, 0.03);
+    radial-gradient(1100px 520px at 18% 0%, rgba(255, 204, 102, 0.10), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
 
   box-shadow: s.$soft;
   padding: 16px;
@@ -84,24 +109,50 @@
   font: inherit;
   color: c.$text;
 
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    background 200ms ease,
+    box-shadow 200ms ease;
+
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 204, 102, 0.22);
+    border-color: rgba(255, 204, 102, 0.24);
     background:
-      radial-gradient(900px 420px at 18% 0%, rgba(255, 204, 102, 0.14), transparent 58%),
-      rgba(255, 255, 255, 0.04);
+      radial-gradient(1100px 520px at 18% 0%, rgba(255, 204, 102, 0.16), transparent 58%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
   }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:focus-visible {
+    border-color: rgba(255, 204, 102, 0.38);
+    box-shadow: 0 0 0 4px rgba(255, 204, 102, 0.18), s.$soft;
+  }
+}
+
+.cardGlow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background: radial-gradient(420px 220px at 18% 10%, rgba(255, 204, 102, 0.18), transparent 60%);
+  opacity: 0.55;
 }
 
 .featured {
   border-color: rgba(255, 204, 102, 0.35);
-  background:
-    radial-gradient(900px 420px at 18% 0%, rgba(255, 204, 102, 0.18), transparent 58%),
-    rgba(255, 255, 255, 0.03);
+
+  .cardGlow {
+    opacity: 0.9;
+    background: radial-gradient(520px 260px at 18% 10%, rgba(255, 204, 102, 0.24), transparent 62%);
+  }
 }
 
 .cardTop {
@@ -111,15 +162,11 @@
   gap: 10px;
 }
 
-.name {
-  font-weight: 850;
-  letter-spacing: -0.01em;
-}
-
-.note {
-  color: c.$muted;
-  font-weight: 600;
-  font-size: 0.9em;
+.kicker {
+  font-size: 0.78rem;
+  letter-spacing: t.$ls-wide;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.66);
 }
 
 .badge {
@@ -131,6 +178,31 @@
   letter-spacing: t.$ls-wide;
   text-transform: uppercase;
   white-space: nowrap;
+  line-height: 1;
+}
+
+.nameRow {
+  display: grid;
+  gap: 6px;
+}
+
+.name {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  font-size: 1.05rem;
+}
+
+.note {
+  color: c.$muted;
+  font-weight: 650;
+  font-size: 0.92rem;
+}
+
+.desc {
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.45;
+  font-size: 0.95rem;
 }
 
 .meta {
@@ -139,44 +211,168 @@
   gap: 8px;
   color: c.$muted;
   font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+.time {
+  font-weight: 750;
+  color: rgba(255, 255, 255, 0.72);
 }
 
 .dot {
-  opacity: 0.6;
+  opacity: 0.55;
 }
 
 .metaHint {
-  opacity: 0.9;
+  opacity: 0.92;
+}
+
+.features {
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.feature {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 8px;
+  align-items: start;
+  color: rgba(255, 255, 255, 0.76);
+  line-height: 1.35;
+  font-size: 0.93rem;
+}
+
+.check {
+  width: 18px;
+  height: 18px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 204, 102, 0.28);
+  background: rgba(255, 204, 102, 0.10);
+  color: rgba(255, 204, 102, 0.95);
+  font-size: 0.8rem;
+  margin-top: 1px;
+}
+
+.cardBottom {
+  margin-top: 6px;
+  display: grid;
+  gap: 10px;
+}
+
+.priceWrap {
+  display: grid;
+  gap: 6px;
 }
 
 .price {
   font-family: t.$font-display;
-  font-size: 1.55rem;
+  font-size: 1.7rem;
   letter-spacing: -0.02em;
   color: c.$text;
 }
+
+.small {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.86rem;
+  line-height: 1.35;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  border-radius: r.$pill;
+  border: 1px solid rgba(255, 204, 102, 0.22);
+  background: rgba(255, 204, 102, 0.08);
+  padding: 10px 12px;
+
+  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.ctaText {
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.ctaArrow {
+  opacity: 0.9;
+  transform: translateX(0);
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.card:hover .cta {
+  border-color: rgba(255, 204, 102, 0.32);
+  background: rgba(255, 204, 102, 0.12);
+}
+
+.card:hover .ctaArrow {
+  transform: translateX(3px);
+  opacity: 1;
+}
+
 
 .fadeL,
 .fadeR {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 42px;
+  width: 52px;
   pointer-events: none;
+  z-index: 2;
 }
 
 .fadeL {
   left: 0;
-  background: linear-gradient(90deg, rgba(7, 8, 11, 1), transparent);
+  background: linear-gradient(90deg, rgba(7, 8, 11, 1), rgba(7, 8, 11, 0.55), transparent);
 }
 
 .fadeR {
   right: 0;
-  background: linear-gradient(270deg, rgba(7, 8, 11, 1), transparent);
+  background: linear-gradient(270deg, rgba(7, 8, 11, 1), rgba(7, 8, 11, 0.55), transparent);
 }
 
 .hint {
   margin-top: 14px;
   color: c.$muted;
   font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+
+@media (min-width: 900px) {
+  .track {
+    gap: 16px;
+    padding: 12px 6px 16px;
+    --marquee-duration: 38s; 
+  }
+
+  .card {
+    width: 340px;
+    padding: 18px;
+  }
+
+  .price {
+    font-size: 1.85rem;
+  }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .track {
+    animation: none;
+    transform: none;
+  }
+
+  .card,
+  .cta,
+  .ctaArrow {
+    transition: none;
+  }
 }

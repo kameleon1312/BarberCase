@@ -5,11 +5,13 @@
 @use "../../../styles/tokens/z" as z;
 
 .header {
+  height: 150px;
+  width: 100%;
   position: sticky;
   top: 0;
   z-index: z.$header;
 
-  background: rgba(7, 8, 11, 0.55);
+  background: rgba(7, 8, 11, 0.52);
   border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(16px);
 
@@ -18,61 +20,107 @@
 }
 
 .header[data-compact="true"] {
-  background: rgba(7, 8, 11, 0.74);
+  background: rgba(7, 8, 11, 0.78);
   border-bottom-color: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(22px);
 }
 
+
 .inner {
   @include m.container;
-  display: flex;
+
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    "brand burger"
+    "cta   cta";
+  gap: 10px 12px;
+
+  padding: 14px 0 16px;
   align-items: center;
-  justify-content: space-between;
-  gap: 18px;
 
-  height: 126px;
-  padding: 0;
-
-  transition: height 220ms ease;
+  transition: padding 220ms ease;
   @include m.reduceMotion;
 }
 
 .header[data-compact="true"] .inner {
-  height: 64px;
+  padding: 10px 0 12px;
 }
-/* BRAND */
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-  color: c.$text;
-  min-width: 260px;
 
-  @media (max-width: 520px) {
-    min-width: auto;
+@media (min-width: 860px) {
+  .inner {
+    grid-template-columns: auto 1fr auto;
+    grid-template-areas: "brand nav cta";
+    gap: 0 18px;
+    padding: 14px 0;
+  }
+
+  .header[data-compact="true"] .inner {
+    padding: 10px 0;
   }
 }
 
-/* LOGO */
+/* =========================
+   BRAND
+   ========================= */
+.brand {
+  grid-area: brand;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  color: c.$text;
+  text-decoration: none;
+
+  min-width: 0;
+}
+
 .logoWrap {
-  width: 200px;
-  height: 200px;
+  flex: 0 0 auto;
+
+  width: 84px;
+  height: 84px;
+
   display: grid;
   place-items: center;
+
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  transform: translateY(-10px) scale(1.6);
 
   transition: width 220ms ease, height 220ms ease, transform 220ms ease;
   @include m.reduceMotion;
 }
 
+@media (min-width: 520px) {
+  .logoWrap {
+    width: 86px;
+    height: 56px;
+  }
+}
+
+@media (min-width: 860px) {
+  .logoWrap {
+    width: 110px;
+    height: 64px;
+  }
+}
+
 .header[data-compact="true"] .logoWrap {
-  width: 152px;
-  height: 152px;
+  width: 76px;
+  height: 54px;
+
+  @media (max-width: 859px) {
+    width: 70px;
+    height: 50px;
+  }
 }
 
 .logo {
-  width: 76%;
-  height: 76%;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
 
   filter:
@@ -84,73 +132,89 @@
 }
 
 .header[data-compact="true"] .logo {
-  transform: scale(0.95);
+  transform: translateZ(0) scale(0.98);
   filter:
     drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55))
     drop-shadow(0 0 8px rgba(255, 204, 102, 0.06));
 }
 
 .brandText {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   line-height: 1.05;
+  
 }
 
 .brandName {
-  font-weight: 850;
-  letter-spacing: -0.01em;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  font-size: 1.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-top: 30px;
+  margin-left: 10px;
 }
 
+
 .brandTagline {
+  margin-top: 4px;
   color: c.$muted;
   font-size: 0.78rem;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.10em;
   text-transform: uppercase;
+  opacity: 0.9;
 
   @media (max-width: 520px) {
     display: none;
   }
 }
 
-/* NAV */
+/* =========================
+   NAVIGATION
+   ========================= */
 .nav {
-  display: flex;
+  grid-area: nav;
+  display: none;
   align-items: center;
+  justify-content: center;
   gap: 18px;
 
-  @media (max-width: 860px) {
-    display: none;
+  @media (min-width: 860px) {
+    display: flex;
   }
 }
 
 .link {
   position: relative;
+  color: rgba(255, 255, 255, 0.80);
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.78);
-  padding: 10px 6px;
-  border-radius: 10px;
 
-  transition: color 180ms ease, background 180ms ease;
+  padding: 10px 10px;
+  border-radius: 12px;
+
+  transition: color 180ms ease, background 180ms ease, transform 180ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
     color: c.$text;
-    background: rgba(255, 255, 255, 0.04);
+    background: rgba(255, 255, 255, 0.045);
+    transform: translateY(-1px);
   }
 
-  /* underline effect */
   &::after {
     content: "";
     position: absolute;
-    left: 8px;
-    right: 8px;
-    bottom: 4px;
+    left: 10px;
+    right: 10px;
+    bottom: 6px;
     height: 1px;
-    background: rgba(255, 204, 102, 0.0);
-    transition: background 180ms ease, transform 180ms ease;
-    transform: scaleX(0.6);
+    background: rgba(255, 204, 102, 0);
+    transform: scaleX(0.7);
     transform-origin: center;
+    transition: background 180ms ease, transform 180ms ease;
   }
 
   &:hover::after {
@@ -159,47 +223,289 @@
   }
 }
 
-/* CTA */
+/* =========================
+   CTA
+   ========================= */
+.ctaWrap {
+  grid-area: cta;
+  display: flex;
+  justify-content: space-around;
+
+  @media (min-width: 860px) {
+    justify-content: flex-end;
+  }
+}
+
 .cta {
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  cursor: pointer;
   text-decoration: none;
+
   color: c.$text;
-  border: 1px solid rgba(255, 204, 102, 0.35);
-  background: linear-gradient(180deg, rgba(255, 204, 102, 0.14), rgba(255, 204, 102, 0.08));
-  padding: 10px 14px;
+  font-weight: 750;
+  letter-spacing: 0.01em;
+
+  padding: 11px 14px;
   border-radius: r.$pill;
+
+  border: 1px solid rgba(255, 204, 102, 0.35);
+  background: linear-gradient(180deg, rgba(255, 204, 102, 0.16), rgba(255, 204, 102, 0.08));
   box-shadow: s.$soft;
 
-  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
-    border-color: rgba(255, 204, 102, 0.55);
+    border-color: rgba(255, 204, 102, 0.58);
     transform: translateY(-1px);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.99);
   }
 }
 
-.ctaBtn {
-  all: unset;
-  cursor: pointer;
+
+.ctaLabelFull { display: none; }
+.ctaLabelShort { display: inline; }
+
+@media (min-width: 520px) {
+  .ctaLabelFull { display: inline; }
+  .ctaLabelShort { display: none; }
+}
+
+/* =========================
+   BURGER MENU (mobile)
+   ========================= */
+.burger {
+  grid-area: burger;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
- /* inherit styles from .cta */
-  color: c.$text;
-  border: 1px solid rgba(255, 204, 102, 0.35);
-  background: linear-gradient(180deg, rgba(255, 204, 102, 0.14), rgba(255, 204, 102, 0.08));
-  padding: 10px 14px;
-  border-radius: r.$pill;
-  box-shadow: s.$soft;
+  width: 44px;
+  height: 44px;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
 
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
-    border-color: rgba(255, 204, 102, 0.55);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.16);
     transform: translateY(-1px);
   }
+
+  @media (min-width: 860px) {
+    display: none;
+  }
+}
+
+
+.burgerIcon {
+  width: 18px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.86);
+  border-radius: 99px;
+  position: relative;
+  transition: transform 180ms ease, background 180ms ease;
+  @include m.reduceMotion;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 18px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.86);
+    border-radius: 99px;
+    transition: transform 180ms ease, top 180ms ease, opacity 180ms ease;
+    @include m.reduceMotion;
+  }
+
+  &::before { top: -6px; }
+  &::after { top: 6px; }
+}
+
+.header[data-menu-open="true"] .burgerIcon {
+  background: rgba(255, 255, 255, 0);
+
+  &::before {
+    top: 0;
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    top: 0;
+    transform: rotate(-45deg);
+  }
+}
+
+/* =========================
+   MOBILE DRAWER
+   ========================= */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: calc(z.$header + 1);
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 200ms ease;
+  @include m.reduceMotion;
+}
+
+.overlay[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100dvh;
+  width: min(92vw, 420px);
+
+  z-index: calc(z.$header + 2);
+
+  background: rgba(10, 11, 14, 0.92);
+  border-left: 1px solid rgba(255, 255, 255, 0.10);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.60);
+  backdrop-filter: blur(18px);
+
+  transform: translateX(110%);
+  transition: transform 240ms ease;
+  @include m.reduceMotion;
+
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.drawer[data-open="true"] {
+  transform: translateX(0);
+}
+
+@media (min-width: 860px) {
+  .overlay,
+  .drawer {
+    display: none;
+  }
+}
+
+.drawerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  padding: 8px 4px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+.drawerBrand {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.drawerTitle {
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawerSub {
+  margin-top: 3px;
+  color: rgba(255, 255, 255, 0.60);
+  font-size: 0.78rem;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.drawerClose {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.88);
+
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
+  }
+}
+
+.drawerNav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 14px 4px 10px;
+}
+
+.drawerLink {
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.86);
+  font-weight: 700;
+
+  padding: 12px 12px;
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.12);
+    transform: translateY(-1px);
+  }
+}
+
+.drawerCta {
+  margin-top: auto;
+  padding: 12px 4px 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+
+  display: flex;
 }
