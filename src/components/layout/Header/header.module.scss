@@ -4,14 +4,20 @@
 @use "../../../styles/tokens/shadows" as s;
 @use "../../../styles/tokens/z" as z;
 
+/* =========================
+   HEADER
+   ========================= */
+
 .header {
-  height: 150px;
-  width: 100%;
   position: sticky;
   top: 0;
   z-index: z.$header;
+  width: 100%;
 
-  background: rgba(7, 8, 11, 0.52);
+ 
+  min-height: 72px;
+
+  background: rgba(7, 8, 11, 0.60);
   border-bottom: 1px solid rgba(255, 255, 255, 0.10);
   backdrop-filter: blur(16px);
 
@@ -20,7 +26,7 @@
 }
 
 .header[data-compact="true"] {
-  background: rgba(7, 8, 11, 0.78);
+  background: rgba(7, 8, 11, 0.84);
   border-bottom-color: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(22px);
 }
@@ -31,21 +37,20 @@
 
   display: grid;
   grid-template-columns: 1fr auto;
-  grid-template-areas:
-    "brand burger"
-    "cta   cta";
-  gap: 10px 12px;
-
-  padding: 14px 0 16px;
+  grid-template-areas: "brand burger";
   align-items: center;
+
+  gap: 12px;
+  padding: calc(10px + env(safe-area-inset-top)) 0 10px;
 
   transition: padding 220ms ease;
   @include m.reduceMotion;
 }
 
 .header[data-compact="true"] .inner {
-  padding: 10px 0 12px;
+  padding: calc(8px + env(safe-area-inset-top)) 0 8px;
 }
+
 
 @media (min-width: 860px) {
   .inner {
@@ -67,19 +72,26 @@
   grid-area: brand;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+
+  gap: 12px;
+  min-width: 0;
 
   color: c.$text;
   text-decoration: none;
 
-  min-width: 0;
+ 
+  padding: 6px 0;
+
+  @include m.focusRing;
 }
+
 
 .logoWrap {
   flex: 0 0 auto;
 
-  width: 84px;
-  height: 84px;
+ 
+  height: 48px;
+  width: 48px;
 
   display: grid;
   place-items: center;
@@ -88,33 +100,32 @@
   border: 0;
   border-radius: 0;
   box-shadow: none;
-  transform: translateY(-10px) scale(1.6);
 
-  transition: width 220ms ease, height 220ms ease, transform 220ms ease;
+  transition: width 220ms ease, height 220ms ease;
   @include m.reduceMotion;
 }
 
 @media (min-width: 520px) {
   .logoWrap {
-    width: 86px;
-    height: 56px;
+    height: 52px;
+    width: 52px;
   }
 }
 
 @media (min-width: 860px) {
   .logoWrap {
-    width: 110px;
-    height: 64px;
+    height: 60px;
+    width: 60px;
   }
 }
 
 .header[data-compact="true"] .logoWrap {
-  width: 76px;
-  height: 54px;
+  height: 144px;
+  width: 144px;
 
-  @media (max-width: 859px) {
-    width: 70px;
-    height: 50px;
+  @media (min-width: 860px) {
+    height: 52px;
+    width: 52px;
   }
 }
 
@@ -127,52 +138,57 @@
     drop-shadow(0 10px 22px rgba(0, 0, 0, 0.55))
     drop-shadow(0 0 10px rgba(255, 204, 102, 0.08));
 
-  transition: transform 220ms ease, filter 220ms ease;
+  transition: filter 220ms ease;
   @include m.reduceMotion;
 }
 
 .header[data-compact="true"] .logo {
-  transform: translateZ(0) scale(0.98);
   filter:
     drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55))
     drop-shadow(0 0 8px rgba(255, 204, 102, 0.06));
 }
 
+
 .brandText {
   min-width: 0;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   line-height: 1.05;
-  
 }
 
 .brandName {
-  font-weight: 900;
+  margin: 0;
+  font-weight: 950;
   letter-spacing: -0.02em;
-  font-size: 1.8rem;
+
+
+  font-size: clamp(1.08rem, 4.5vw, 1.35rem);
+
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 30px;
-  margin-left: 10px;
 }
-
 
 .brandTagline {
   margin-top: 4px;
   color: c.$muted;
-  font-size: 0.78rem;
+  font-size: 0.74rem;
   letter-spacing: 0.10em;
   text-transform: uppercase;
   opacity: 0.9;
 
-  @media (max-width: 520px) {
-    display: none;
-  }
+
+  display: none;
 }
 
+@media (min-width: 720px) {
+  .brandTagline {
+    display: block;
+  }
+}
 /* =========================
-   NAVIGATION
+   NAV
    ========================= */
 .nav {
   grid-area: nav;
@@ -188,7 +204,7 @@
 
 .link {
   position: relative;
-  color: rgba(255, 255, 255, 0.80);
+  color: rgba(255, 255, 255, 0.82);
   text-decoration: none;
 
   padding: 10px 10px;
@@ -228,11 +244,13 @@
    ========================= */
 .ctaWrap {
   grid-area: cta;
-  display: flex;
-  justify-content: space-around;
+  display: none; 
+  justify-content: flex-end;
+}
 
-  @media (min-width: 860px) {
-    justify-content: flex-end;
+@media (min-width: 860px) {
+  .ctaWrap {
+    display: flex;
   }
 }
 
@@ -249,10 +267,11 @@
   text-decoration: none;
 
   color: c.$text;
-  font-weight: 750;
+  font-weight: 800;
   letter-spacing: 0.01em;
 
-  padding: 11px 14px;
+  min-height: 44px;
+  padding: 11px 16px;
   border-radius: r.$pill;
 
   border: 1px solid rgba(255, 204, 102, 0.35);
@@ -264,7 +283,7 @@
   @include m.reduceMotion;
 
   &:hover {
-    border-color: rgba(255, 204, 102, 0.58);
+    border-color: rgba(255, 204, 102, 0.60);
     transform: translateY(-1px);
     box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
   }
@@ -275,17 +294,11 @@
 }
 
 
-.ctaLabelFull { display: none; }
-.ctaLabelShort { display: inline; }
+.ctaLabelFull { display: inline; }
+.ctaLabelShort { display: none; }
 
-@media (min-width: 520px) {
-  .ctaLabelFull { display: inline; }
-  .ctaLabelShort { display: none; }
-}
 
-/* =========================
-   BURGER MENU (mobile)
-   ========================= */
+
 .burger {
   grid-area: burger;
   display: inline-flex;
@@ -316,13 +329,13 @@
   }
 }
 
-
 .burgerIcon {
   width: 18px;
   height: 2px;
   background: rgba(255, 255, 255, 0.86);
   border-radius: 99px;
   position: relative;
+
   transition: transform 180ms ease, background 180ms ease;
   @include m.reduceMotion;
 
@@ -335,6 +348,7 @@
     height: 2px;
     background: rgba(255, 255, 255, 0.86);
     border-radius: 99px;
+
     transition: transform 180ms ease, top 180ms ease, opacity 180ms ease;
     @include m.reduceMotion;
   }
@@ -358,7 +372,7 @@
 }
 
 /* =========================
-   MOBILE DRAWER
+   DRAWER (mobile nav)
    ========================= */
 .overlay {
   position: fixed;
@@ -506,6 +520,26 @@
   margin-top: auto;
   padding: 12px 4px 6px;
   border-top: 1px solid rgba(255, 255, 255, 0.10);
-
   display: flex;
+  justify-content: flex-start;
+}
+
+/* =========================
+   REDUCED MOTION
+   ========================= */
+@media (prefers-reduced-motion: reduce) {
+  .header,
+  .inner,
+  .logoWrap,
+  .logo,
+  .link,
+  .cta,
+  .burger,
+  .burgerIcon,
+  .overlay,
+  .drawer,
+  .drawerLink,
+  .drawerClose {
+    transition: none;
+  }
 }
