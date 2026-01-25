@@ -6,13 +6,16 @@
 
 .section {
   padding: clamp(56px, 7vw, 92px) 0;
+  position: relative;
 }
 
-.inner { @include m.container; }
+.inner {
+  @include m.container;
+}
 
 .header {
   display: grid;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 18px;
 }
 
@@ -27,61 +30,126 @@
   margin: 0;
   color: c.$text-2;
   max-width: 62ch;
+  line-height: 1.55;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
 
-  @media (max-width: 960px) {
-    grid-template-columns: 1fr;
+.grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+
+.item {
+  margin: 0;
+}
+
+
+@media (min-width: 720px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 }
 
+
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+  }
+}
+
+/* ===== CARD ===== */
 .card {
   @include m.card;
+  position: relative;
+  isolation: isolate;
+
   box-shadow: s.$soft;
   padding: 18px;
-  border-radius: r.$lg;
-  transition: transform 180ms ease, border-color 180ms ease;
+  border-radius: r.$xl;
+
+  display: grid;
+  gap: 12px;
+
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+
   @include m.reduceMotion;
 
   &:hover {
     transform: translateY(-2px);
-    border-color: rgba(255, 204, 102, 0.22);
+    border-color: rgba(255, 204, 102, 0.24);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22), s.$soft;
+  }
+
+  &:focus-within {
+    border-color: rgba(255, 204, 102, 0.34);
+    box-shadow: 0 0 0 4px rgba(255, 204, 102, 0.14), s.$soft;
   }
 }
 
+.cardGlow {
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.55;
+
+  background:
+    radial-gradient(520px 240px at 18% 0%, rgba(255, 204, 102, 0.18), transparent 62%),
+    radial-gradient(520px 240px at 82% 110%, rgba(124, 247, 212, 0.10), transparent 60%);
+}
+
+/* ===== TOP ROW ===== */
 .cardTop {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
 }
 
 .cardTitle {
   margin: 0;
   font-size: 1.15rem;
   letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 .meta {
   color: c.$muted;
   font-size: 0.88rem;
+  font-weight: 650;
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 10px;
+  border-radius: r.$pill;
+  white-space: nowrap;
 }
 
+/* ===== CONTENT ===== */
 .desc {
-  margin: 10px 0 14px;
+  margin: 0;
   color: c.$text-2;
+  line-height: 1.55;
 }
 
 .line {
   height: 1px;
   background: rgba(255, 255, 255, 0.10);
-  margin: 12px 0;
 }
 
+/* ===== PILLS ===== */
 .pillRow {
   display: flex;
   gap: 8px;
@@ -95,4 +163,23 @@
   background: rgba(255, 255, 255, 0.035);
   color: c.$text-2;
   font-size: 0.84rem;
+  line-height: 1;
+}
+
+/* ===== MEDIA QUERIES ===== */
+@media (min-width: 1024px) {
+  .card {
+    padding: 20px;
+  }
+
+  .cardTitle {
+    font-size: 1.18rem;
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
 }

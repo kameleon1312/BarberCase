@@ -55,7 +55,7 @@
   width: max-content;
 
   
-  --marquee-duration: 34s;
+  --marquee-duration: 14s;
   animation: pricing-marquee var(--marquee-duration) linear infinite;
   will-change: transform;
 
@@ -350,7 +350,7 @@
   .track {
     gap: 16px;
     padding: 12px 6px 16px;
-    --marquee-duration: 38s; 
+    --marquee-duration: 16s; 
   }
 
   .card {
