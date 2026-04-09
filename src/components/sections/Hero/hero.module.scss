@@ -4,15 +4,19 @@
 @use "../../../styles/tokens/radii" as r;
 @use "../../../styles/tokens/shadows" as s;
 
+/* ──────────────────────────────────────────────
+   HERO — editorial split layout
+   ────────────────────────────────────────────── */
 .hero {
-  padding: clamp(56px, 7vw, 100px) 0;
+  padding: clamp(48px, 6vw, 88px) 0 clamp(40px, 5vw, 72px);
+  overflow: hidden;
 }
 
 .inner {
   @include m.container;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: clamp(20px, 3.2vw, 52px);
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(24px, 3.5vw, 56px);
   align-items: center;
 
   @media (max-width: 940px) {
@@ -20,60 +24,74 @@
   }
 }
 
-/* ── Kicker ── */
+/* ──────────────────────────────────────────────
+   KICKER — number + label
+   ────────────────────────────────────────────── */
 .kicker {
-  margin: 0 0 12px;
+  margin: 0 0 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
   color: c.$muted;
   letter-spacing: t.$ls-wide;
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  /* Red rule before kicker */
-  &::before {
-    content: "";
-    display: inline-block;
-    width: 24px;
-    height: 2px;
-    background: c.$accent;
-    flex-shrink: 0;
-  }
+  line-height: 1;
 }
 
-/* ── Headline ── */
-.title {
-  margin: 0 0 16px;
+/* Big red number — "01" — editorial magazine device */
+.kickerNum {
   font-family: t.$font-display;
-  font-size: t.$fs-4;
+  font-size: 2.8rem;
+  font-weight: 900;
+  color: c.$accent;
+  line-height: 0.85;
+  letter-spacing: t.$ls-display;
+  flex-shrink: 0;
+}
+
+/* ──────────────────────────────────────────────
+   HEADLINE — oversized display type
+   ────────────────────────────────────────────── */
+.title {
+  margin: 0 0 20px;
+  font-family: t.$font-display;
+  font-size: t.$fs-display;
   line-height: t.$lh-tight;
   letter-spacing: t.$ls-display;
   text-transform: uppercase;
   color: c.$text;
 }
 
-.accent {
-  color: c.$accent;
+/* Second line — red, slightly smaller = visual tension */
+.titleBreak {
   display: block;
+  color: c.$accent;
+  font-size: 0.70em;
+  line-height: 1.0;
+  margin-top: 4px;
 }
 
-/* ── Lead paragraph ── */
+/* ──────────────────────────────────────────────
+   LEAD
+   ────────────────────────────────────────────── */
 .lead {
-  margin: 0 0 24px;
+  margin: 0 0 26px;
   color: c.$text-2;
   font-size: t.$fs-1;
   line-height: t.$lh;
-  max-width: 52ch;
+  max-width: 50ch;
 }
 
-/* ── CTA row ── */
+/* ──────────────────────────────────────────────
+   CTA BUTTONS
+   ────────────────────────────────────────────── */
 .actions {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 .primary,
@@ -82,7 +100,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 22px;
+  padding: 13px 24px;
   border-radius: r.$pill;
   text-decoration: none;
   font-weight: 700;
@@ -95,7 +113,7 @@
   @include m.focusRing;
   @include m.reduceMotion;
 
-  &:hover { transform: translateY(-1px); }
+  &:hover  { transform: translateY(-2px); }
   &:active { transform: translateY(0) scale(0.99); }
 }
 
@@ -109,18 +127,17 @@
   &:hover {
     background: c.$accent-hover;
     border-color: c.$accent-hover;
-    box-shadow: 0 6px 24px rgba(176, 28, 46, 0.28);
+    box-shadow: 0 8px 28px rgba(176, 28, 46, 0.30);
   }
 }
 
-/* Reset button-specific */
 .primaryBtn {
   appearance: none;
   -webkit-appearance: none;
   font: inherit;
 }
 
-/* Secondary — outlined dark */
+/* Secondary — outlined */
 .secondary {
   background: transparent;
   border-color: c.$line-strong;
@@ -128,58 +145,100 @@
 
   &:hover {
     background: c.$surface;
-    border-color: rgba(12, 12, 12, 0.30);
+    border-color: rgba(12, 12, 12, 0.28);
   }
 }
 
-/* ── Stats row ── */
+/* ──────────────────────────────────────────────
+   STATS — editorial horizontal band
+   ────────────────────────────────────────────── */
 .stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
-  max-width: 520px;
+  display: flex;
+  gap: 0;
+  border-top: 1.5px solid c.$line;
+  padding-top: 20px;
 
   @media (max-width: 520px) {
-    grid-template-columns: 1fr;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    border-top-color: c.$line;
   }
 }
 
 .stat {
-  @include m.card;
-  box-shadow: s.$soft;
-  padding: 12px 14px;
-  border-radius: r.$md;
+  flex: 1;
+  display: grid;
+  gap: 4px;
+  padding: 0 20px;
+  border-right: 1.5px solid c.$line;
+
+  &:first-child { padding-left: 0; }
+  &:last-child  {
+    border-right: none;
+  }
+
+  @media (max-width: 520px) {
+    padding: 0;
+    border-right: none;
+  }
 }
 
-.top {
-  display: block;
-  color: c.$muted;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  margin-bottom: 4px;
+/* Big number + unit on same baseline */
+.valRow {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  line-height: 1;
 }
 
 .val {
-  display: block;
   font-family: t.$font-display;
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 900;
   letter-spacing: t.$ls-display;
   color: c.$text;
   text-transform: uppercase;
 }
 
-/* ── Showcase (image frame) ── */
+/* Unit — red accent, smaller */
+.statUnit {
+  font-family: t.$font-display;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: 700;
+  color: c.$accent;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+}
+
+.top {
+  display: block;
+  color: c.$muted;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* ──────────────────────────────────────────────
+   SHOWCASE — image frame
+   ────────────────────────────────────────────── */
 .showcase {
   position: relative;
   overflow: hidden;
   border-radius: 6px;
   border: 2px solid c.$ink;
   box-shadow: s.$heavy;
-  min-height: clamp(300px, 40vw, 580px);
+
+  /* Tall portrait ratio — barbershop editorial */
+  aspect-ratio: 3 / 4;
+
   background: c.$bg-2;
+
+  @media (max-width: 940px) {
+    aspect-ratio: 4 / 3;
+    max-height: 420px;
+  }
 }
 
 .image {
@@ -189,48 +248,49 @@
   display: block;
 }
 
-/* Inner editorial frame */
+/* Inner editorial dashed frame */
 .frame {
   position: absolute;
-  inset: 12px;
+  inset: 10px;
   border-radius: 2px;
-  border: 1px dashed rgba(12, 12, 12, 0.18);
+  border: 1px dashed rgba(12, 12, 12, 0.16);
   pointer-events: none;
 }
 
 /* Corner tag */
 .tag {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  padding: 6px 10px;
+  bottom: 14px;
+  left: 14px;
+  padding: 6px 11px;
   border-radius: r.$pill;
-  border: 1px solid rgba(12, 12, 12, 0.22);
-  background: rgba(247, 244, 239, 0.88);
+  border: 1px solid rgba(12, 12, 12, 0.20);
+  background: rgba(247, 244, 239, 0.90);
   backdrop-filter: blur(8px);
   letter-spacing: t.$ls-wide;
   text-transform: uppercase;
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   font-weight: 700;
   color: c.$text;
 }
 
-/* Light shimmer sweep */
+/* Shimmer sweep */
 .sweep {
   position: absolute;
   inset: -40%;
   background: linear-gradient(
     118deg,
     transparent 35%,
-    rgba(255, 255, 255, 0.12) 44%,
+    rgba(255, 255, 255, 0.14) 44%,
     transparent 58%
   );
-  transform: translateX(-38%) rotate(8deg);
+  transform: translateX(-40%) rotate(8deg);
   animation: sweep 8s ease-in-out infinite;
+  pointer-events: none;
   @include m.reduceMotion;
 }
 
 @keyframes sweep {
-  0%, 100% { transform: translateX(-40%) rotate(8deg); opacity: 0.6; }
-  50%       { transform: translateX(20%)  rotate(8deg); opacity: 1; }
+  0%, 100% { transform: translateX(-42%) rotate(8deg); opacity: 0.55; }
+  50%       { transform: translateX(22%)  rotate(8deg); opacity: 1; }
 }
