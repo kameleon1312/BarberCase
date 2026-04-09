@@ -17,3 +17,29 @@ export type PriceItem = {
   note?: string;
   featured?: boolean;
 };
+
+export type ProcessStep = {
+  num: string;
+  title: string;
+  desc: string;
+};
+
+export type TestimonialItem = {
+  quote: string;
+  author: string;
+  service: string;
+  date: string;
+};
+
+export type TeamMember = {
+  name: string;
+  role: string;
+  specialty: string;
+  years: number;
+  bio: string;
+};
+
+export type FaqItem = {
+  question: string;
+  answer: string;
+};

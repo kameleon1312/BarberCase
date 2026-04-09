@@ -1,0 +1,146 @@
+@use "../../../styles/tools/mixins" as m;
+@use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/typography" as t;
+@use "../../../styles/tokens/radii" as r;
+
+.section {
+  padding: clamp(56px, 7vw, 92px) 0;
+  background: c.$bg-2;
+}
+
+.inner { @include m.container; }
+
+/* ── Header ── */
+.header {
+  margin-bottom: clamp(28px, 4vw, 44px);
+  display: grid;
+  gap: 10px;
+}
+
+.eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: c.$muted;
+  letter-spacing: t.$ls-wide;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.eyebrowNum {
+  font-family: t.$font-display;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: c.$accent;
+  line-height: 0.85;
+  letter-spacing: t.$ls-display;
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: t.$font-display;
+  font-size: t.$fs-3;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  line-height: t.$lh-heading;
+  color: c.$text;
+}
+
+/* ── Accordion list ── */
+.list {
+  max-width: 760px;
+  display: grid;
+  gap: 0;
+}
+
+/* ── Single item ── */
+.item {
+  border-top: 1px solid c.$line;
+
+  &:last-child {
+    border-bottom: 1px solid c.$line;
+  }
+}
+
+.itemOpen {
+  border-top-color: c.$accent;
+}
+
+/* Question button */
+.question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  padding: 18px 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+
+  @include m.focusRing;
+  @include m.reduceMotion;
+}
+
+.questionText {
+  font-family: t.$font-display;
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  color: c.$text;
+  line-height: 1.1;
+
+  .itemOpen & {
+    color: c.$accent;
+  }
+}
+
+/* +/– icon */
+.icon {
+  font-family: t.$font-display;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: c.$accent;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+  transition: transform 220ms ease;
+  @include m.reduceMotion;
+}
+
+/* ── Answer — CSS grid trick for smooth animation ── */
+.answer {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 260ms ease;
+  @include m.reduceMotion;
+}
+
+.answerOpen {
+  grid-template-rows: 1fr;
+}
+
+.answerText {
+  overflow: hidden;
+  min-height: 0;
+  margin: 0;
+  padding: 0 0 0;
+  color: c.$text-2;
+  font-size: 0.97rem;
+  line-height: t.$lh;
+  transition: padding 260ms ease;
+  @include m.reduceMotion;
+
+  .answerOpen & {
+    padding: 0 0 20px;
+  }
+}

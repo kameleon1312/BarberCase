@@ -1,0 +1,130 @@
+@use "../../../styles/tools/mixins" as m;
+@use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/typography" as t;
+@use "../../../styles/tokens/radii" as r;
+@use "../../../styles/tokens/shadows" as s;
+
+.section {
+  padding: clamp(56px, 7vw, 92px) 0;
+  background: c.$bg;
+}
+
+.inner { @include m.container; }
+
+/* ── Header ── */
+.header {
+  margin-bottom: clamp(32px, 5vw, 52px);
+}
+
+.eyebrow {
+  margin: 0 0 14px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: c.$muted;
+  letter-spacing: t.$ls-wide;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.eyebrowNum {
+  font-family: t.$font-display;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: c.$accent;
+  line-height: 0.85;
+  letter-spacing: t.$ls-display;
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: t.$font-display;
+  font-size: t.$fs-3;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  line-height: t.$lh-heading;
+  color: c.$text;
+}
+
+/* ── Steps grid ── */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Single step ── */
+.step {
+  padding: 28px 24px 28px 0;
+  border-top: 2px solid c.$line;
+  position: relative;
+
+  /* Red top border reveal — first step gets accent */
+  &:first-child {
+    border-top-color: c.$accent;
+  }
+
+  /* Right separator between steps (not after last) */
+  &:not(:last-child) {
+    border-right: 1px solid c.$line;
+    padding-right: 24px;
+    margin-right: 0;
+  }
+
+  &:not(:first-child) {
+    padding-left: 24px;
+  }
+
+  @media (max-width: 860px) {
+    border-right: none;
+    padding: 20px 0 20px 0;
+
+    &:not(:first-child) {
+      padding-left: 0;
+    }
+  }
+}
+
+/* Big number */
+.stepNum {
+  font-family: t.$font-display;
+  font-size: clamp(2.8rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: t.$ls-display;
+  color: c.$accent;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+
+.stepTitle {
+  margin: 0 0 10px;
+  font-family: t.$font-display;
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  color: c.$text;
+  line-height: 1.1;
+}
+
+.stepDesc {
+  margin: 0;
+  color: c.$text-2;
+  font-size: 0.93rem;
+  line-height: t.$lh;
+  max-width: 28ch;
+}

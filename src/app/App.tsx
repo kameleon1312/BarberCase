@@ -4,7 +4,12 @@ import { Footer } from "../components/layout/Footer/Footer";
 
 import { Hero } from "../components/sections/Hero/Hero";
 import { Services } from "../components/sections/Services/Services";
+import { Process } from "../components/sections/Process/Process";
 import { Pricing } from "../components/sections/Pricing/Pricing";
+import { Gallery } from "../components/sections/Gallery/Gallery";
+import { Testimonials } from "../components/sections/Testimonials/Testimonials";
+import { Team } from "../components/sections/Team/Team";
+import { FAQ } from "../components/sections/FAQ/FAQ";
 import { CTA } from "../components/sections/CTA/CTA";
 
 import { QuickBookingDrawer } from "../components/sections/Booking/QuickBookingDrawer";
@@ -28,7 +33,12 @@ export default function App() {
       <main id="main">
         <Hero onBook={() => openBooking()} />
         <Services />
+        <Process />
         <Pricing onPick={(id) => openBooking(id)} />
+        <Gallery />
+        <Testimonials />
+        <Team />
+        <FAQ />
         <CTA />
       </main>
 

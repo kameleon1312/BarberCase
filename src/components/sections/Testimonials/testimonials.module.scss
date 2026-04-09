@@ -1,0 +1,125 @@
+@use "../../../styles/tools/mixins" as m;
+@use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/typography" as t;
+@use "../../../styles/tokens/radii" as r;
+@use "../../../styles/tokens/shadows" as s;
+
+.section {
+  padding: clamp(56px, 7vw, 92px) 0;
+  background: c.$bg;
+}
+
+.inner { @include m.container; }
+
+/* ── Header ── */
+.header {
+  margin-bottom: clamp(28px, 4vw, 44px);
+  display: grid;
+  gap: 10px;
+}
+
+.eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: c.$muted;
+  letter-spacing: t.$ls-wide;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.eyebrowNum {
+  font-family: t.$font-display;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: c.$accent;
+  line-height: 0.85;
+  letter-spacing: t.$ls-display;
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: t.$font-display;
+  font-size: t.$fs-3;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  line-height: t.$lh-heading;
+  color: c.$text;
+}
+
+/* ── 3-column grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @media (max-width: 860px) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Testimonial card — pure typography ── */
+.card {
+  margin: 0;
+  padding: clamp(20px, 3vw, 28px);
+  background: #ffffff;
+  border: 1px solid c.$line;
+  border-radius: r.$xl;
+  box-shadow: s.$soft;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+/* Large Playfair quotation mark — design element */
+.quoteSign {
+  font-family: t.$font-accent;
+  font-size: 5rem;
+  font-weight: 700;
+  color: c.$accent;
+  line-height: 0.7;
+  letter-spacing: -0.02em;
+  user-select: none;
+}
+
+.text {
+  margin: 0;
+  color: c.$text;
+  font-size: 0.97rem;
+  line-height: t.$lh;
+  font-style: italic;
+  font-family: t.$font-accent;
+}
+
+/* Author block */
+.author {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding-top: 12px;
+  border-top: 1px solid c.$line;
+}
+
+.authorName {
+  font-family: t.$font-display;
+  font-size: 1.0rem;
+  font-weight: 800;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  color: c.$text;
+}
+
+.authorMeta {
+  font-size: 0.80rem;
+  color: c.$muted;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}

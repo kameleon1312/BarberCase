@@ -1,0 +1,179 @@
+@use "../../../styles/tools/mixins" as m;
+@use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/typography" as t;
+@use "../../../styles/tokens/radii" as r;
+@use "../../../styles/tokens/shadows" as s;
+
+/* Dark section — editorial mid-page anchor, same family as CTA */
+.section {
+  padding: clamp(56px, 7vw, 92px) 0;
+  background: c.$ink;
+}
+
+.inner { @include m.container; }
+
+/* ── Header ── */
+.header {
+  margin-bottom: clamp(28px, 4vw, 48px);
+  display: grid;
+  gap: 10px;
+}
+
+.eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: rgba(255, 255, 255, 0.40);
+  letter-spacing: t.$ls-wide;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.eyebrowNum {
+  font-family: t.$font-display;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: c.$accent;
+  line-height: 0.85;
+  letter-spacing: t.$ls-display;
+  flex-shrink: 0;
+}
+
+.title {
+  margin: 0;
+  font-family: t.$font-display;
+  font-size: t.$fs-3;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  line-height: t.$lh-heading;
+  color: #ffffff;
+}
+
+.subtitle {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.97rem;
+  line-height: t.$lh;
+  max-width: 60ch;
+}
+
+/* ── Grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Card ── */
+.card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: r.$xl;
+  padding: clamp(20px, 3vw, 28px);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* Monogram — large initial as graphic element */
+.avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 6px;
+  border: 2px solid c.$accent;
+  background: c.$accent-bg;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.initial {
+  font-family: t.$font-display;
+  font-size: 2.8rem;
+  font-weight: 900;
+  letter-spacing: t.$ls-display;
+  color: c.$accent;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+/* Info block */
+.info {
+  display: grid;
+  gap: 6px;
+}
+
+.nameRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.name {
+  margin: 0;
+  font-family: t.$font-display;
+  font-size: clamp(1.5rem, 3.5vw, 1.9rem);
+  font-weight: 900;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1;
+}
+
+/* Years of experience badge */
+.expBadge {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.expNum {
+  font-family: t.$font-display;
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: c.$accent;
+  letter-spacing: t.$ls-display;
+  line-height: 1;
+}
+
+.expUnit {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.role {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.specialty {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.02em;
+}
+
+.bio {
+  margin: 6px 0 0;
+  font-size: 0.93rem;
+  line-height: t.$lh;
+  color: rgba(255, 255, 255, 0.55);
+}
