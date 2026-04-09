@@ -4,9 +4,8 @@
 :root { color-scheme: light; }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: 84px;
-  scroll-snap-type: y proximity;
+  scroll-behavior: smooth;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -22,11 +21,9 @@ body {
 }
 
 section {
-  scroll-snap-align: start;
   scroll-margin-top: 84px;
 }
 
-// Page shell — warm paper bg with subtle radial glow + grain texture
 .bg-shell {
   min-height: 100%;
   position: relative;
@@ -67,24 +64,24 @@ section {
   &:focus { left: 12px; }
 }
 
-// Scroll reveal — [data-reveal="hidden"] → [data-reveal="visible"]
-// --reveal-delay on children controls stagger
+// Scroll reveal — elements start hidden, become visible on intersection
 [data-reveal] {
   transition:
     opacity  560ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
   transition-delay: var(--reveal-delay, 0ms);
-  will-change: opacity, transform;
 }
 
 [data-reveal="hidden"] {
   opacity: 0;
   transform: translateY(22px);
+  will-change: opacity, transform;
 }
 
 [data-reveal="visible"] {
   opacity: 1;
   transform: none;
+  will-change: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -92,5 +89,6 @@ section {
     opacity: 1 !important;
     transform: none !important;
     transition: none !important;
+    will-change: auto !important;
   }
 }

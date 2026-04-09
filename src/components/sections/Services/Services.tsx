@@ -13,16 +13,12 @@ const bgByTitle: Record<string, string> = {
   Combo: comboBg,
 };
 
-type CardStyle = React.CSSProperties & Record<"--card-bg", string>;
-
 export function Services() {
   const [active, setActive] = useState(0);
   const { ref, inView } = useInView<HTMLElement>();
   const rv = inView ? "visible" : "hidden";
 
   const current = services[active];
-  const bg = bgByTitle[current.title] ?? hairBg;
-  const cardStyle: CardStyle = { "--card-bg": `url(${bg})` };
 
   return (
     <section
@@ -84,10 +80,24 @@ export function Services() {
 
           <article
             className={styles.preview}
-            style={{ ...cardStyle, "--reveal-delay": "200ms" } as React.CSSProperties}
             aria-label={`Podgląd usługi: ${current.title}`}
             data-reveal={rv}
+            style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
           >
+            <div className={styles.previewBg}>
+              {services.map((s, i) => (
+                <img
+                  key={s.title}
+                  src={bgByTitle[s.title] ?? hairBg}
+                  alt=""
+                  aria-hidden="true"
+                  className={styles.previewBgImg}
+                  data-active={i === active ? "true" : "false"}
+                  loading={i === 0 ? "eager" : "lazy"}
+                />
+              ))}
+            </div>
+
             <div className={styles.previewTop}>
               <div className={styles.previewTitleWrap}>
                 <h3 className={styles.previewTitle}>{current.title}</h3>

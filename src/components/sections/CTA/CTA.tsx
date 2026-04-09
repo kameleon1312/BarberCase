@@ -1,6 +1,7 @@
 import styles from "./cta.module.scss";
 import logo from "../../../assets/images/logo.jpg";
 import { useInView } from "../../../hooks/useInView";
+import { useMagnetic } from "../../../hooks/useMagnetic";
 
 type Props = {
   onBook?: () => void;
@@ -9,6 +10,7 @@ type Props = {
 export function CTA({ onBook }: Props) {
   const { ref, inView } = useInView<HTMLElement>();
   const rv = inView ? "visible" : "hidden";
+  const magnetic = useMagnetic(0.25);
 
   return (
     <section
@@ -29,7 +31,14 @@ export function CTA({ onBook }: Props) {
             </p>
 
             <div className={styles.actions} id="rezerwacja">
-              <button type="button" className={styles.primary} onClick={onBook}>
+              <button
+                type="button"
+                className={styles.primary}
+                onClick={onBook}
+                ref={magnetic.ref}
+                onMouseMove={magnetic.onMouseMove}
+                onMouseLeave={magnetic.onMouseLeave}
+              >
                 Rezerwacja online
               </button>
               <a className={styles.secondary} href="tel:+48123123123">

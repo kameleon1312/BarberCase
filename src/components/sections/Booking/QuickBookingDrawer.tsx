@@ -1,39 +1,14 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
+import { useEffect, useRef } from "react";
 import styles from "./quick-booking-drawer.module.scss";
 import { bookingServices } from "../../../data/content";
 import type { BookingServiceId } from "../../../data/content";
+import { useBookingForm } from "../../../hooks/useBookingForm";
 
 type Props = {
   open: boolean;
   onClose: () => void;
   preselectServiceId?: BookingServiceId;
 };
-
-type FormState = {
-  serviceId: BookingServiceId;
-  date: string;
-  time: string;
-  name: string;
-  phone: string;
-  note: string;
-};
-
-type SendStatus = "idle" | "sending" | "success" | "error";
-
-function pad(n: number) {
-  return String(n).padStart(2, "0");
-}
-
-function buildTimeSlots(startHour = 10, endHour = 20, stepMin = 30) {
-  const slots: string[] = [];
-  for (let h = startHour; h < endHour; h++) {
-    for (let m = 0; m < 60; m += stepMin) {
-      slots.push(`${pad(h)}:${pad(m)}`);
-    }
-  }
-  return slots;
-}
 
 function useLockBodyScroll(locked: boolean) {
   useEffect(() => {
@@ -105,91 +80,21 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
   const panelRef = useRef<HTMLElement>(null);
   useFocusTrap(open, panelRef, onClose);
 
-  const serviceSelectRef = useRef<HTMLSelectElement | null>(null);
-
-  const today = useMemo(() => {
-    const d = new Date();
-    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-  }, []);
-
-  const slots = useMemo(() => buildTimeSlots(10, 20, 30), []);
-
-  const [form, setForm] = useState<FormState>(() => ({
-    serviceId: bookingServices[0].id,
-    date: today,
-    time: "12:00",
-    name: "",
-    phone: "",
-    note: "",
-  }));
-
-  const [status, setStatus] = useState<SendStatus>("idle");
-
-  useEffect(() => {
-    if (!open) return;
-    if (!preselectServiceId) return;
-
-    requestAnimationFrame(() => {
-      setForm((p) => (p.serviceId === preselectServiceId ? p : { ...p, serviceId: preselectServiceId }));
-      serviceSelectRef.current?.focus();
-      serviceSelectRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
-    });
-  }, [open, preselectServiceId]);
-
-  // Reset status when drawer reopens
-  useEffect(() => {
-    if (open) setStatus("idle");
-  }, [open]);
-
-  const service = useMemo(
-    () => bookingServices.find((s) => s.id === form.serviceId) ?? bookingServices[0],
-    [form.serviceId]
-  );
-
-  const priceLabel =
-    service.priceFrom === service.priceTo
-      ? `${service.priceFrom} zł`
-      : `${service.priceFrom}–${service.priceTo} zł`;
-
-  const canSubmit =
-    status !== "sending" &&
-    form.name.trim().length >= 2 &&
-    form.phone.trim().length >= 7 &&
-    !!form.date &&
-    !!form.time;
+  const {
+    form,
+    setField,
+    status,
+    service,
+    priceLabel,
+    canSubmit,
+    today,
+    slots,
+    serviceSelectRef,
+    submit,
+  } = useBookingForm(open, preselectServiceId);
 
   const onBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) onClose();
-  };
-
-  const submit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!canSubmit) return;
-
-    setStatus("sending");
-
-    const templateParams = {
-      service_name: service.name,
-      booking_date: form.date,
-      booking_time: form.time,
-      duration: `${service.durationMin} min`,
-      price: priceLabel,
-      client_name: form.name,
-      client_phone: form.phone,
-      client_note: form.note || "—",
-    };
-
-    try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        templateParams,
-        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY }
-      );
-      setStatus("success");
-    } catch {
-      setStatus("error");
-    }
   };
 
   return (
@@ -256,9 +161,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
                   ref={serviceSelectRef}
                   className={styles.control}
                   value={form.serviceId}
-                  onChange={(e) =>
-                    setForm((p) => ({ ...p, serviceId: e.target.value as BookingServiceId }))
-                  }
+                  onChange={(e) => setField("serviceId", e.target.value as BookingServiceId)}
                 >
                   {bookingServices.map((s) => (
                     <option key={s.id} value={s.id}>
@@ -276,7 +179,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
                     type="date"
                     min={today}
                     value={form.date}
-                    onChange={(e) => setForm((p) => ({ ...p, date: e.target.value }))}
+                    onChange={(e) => setField("date", e.target.value)}
                   />
                 </label>
 
@@ -285,7 +188,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
                   <select
                     className={styles.control}
                     value={form.time}
-                    onChange={(e) => setForm((p) => ({ ...p, time: e.target.value }))}
+                    onChange={(e) => setField("time", e.target.value)}
                   >
                     {slots.map((t) => (
                       <option key={t} value={t}>
@@ -303,7 +206,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
                   type="text"
                   placeholder="Np. Szymon"
                   value={form.name}
-                  onChange={(e) => setForm((p) => ({ ...p, name: e.target.value }))}
+                  onChange={(e) => setField("name", e.target.value)}
                   autoComplete="name"
                 />
               </label>
@@ -315,7 +218,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
                   type="tel"
                   placeholder="Np. 600 000 000"
                   value={form.phone}
-                  onChange={(e) => setForm((p) => ({ ...p, phone: e.target.value }))}
+                  onChange={(e) => setField("phone", e.target.value)}
                   autoComplete="tel"
                 />
               </label>
@@ -326,7 +229,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
                   className={styles.controlArea}
                   placeholder="Np. broda 2 cm, preferuję naturalne wykończenie…"
                   value={form.note}
-                  onChange={(e) => setForm((p) => ({ ...p, note: e.target.value }))}
+                  onChange={(e) => setField("note", e.target.value)}
                   rows={3}
                 />
               </label>

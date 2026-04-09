@@ -1,0 +1,47 @@
+@use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/typography" as t;
+
+.track {
+  overflow: hidden;
+  border-top: 1px solid c.$line;
+  border-bottom: 1px solid c.$line;
+  padding: 10px 0;
+  background: c.$bg;
+  user-select: none;
+  pointer-events: none;
+
+  @media (prefers-reduced-motion: reduce) {
+    display: none;
+  }
+}
+
+.inner {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: ticker 28s linear infinite;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-33.333%); }
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 0 14px;
+  font-family: t.$font-display;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  color: c.$muted;
+  white-space: nowrap;
+}
+
+.dot {
+  color: c.$accent;
+  font-size: 1rem;
+}
