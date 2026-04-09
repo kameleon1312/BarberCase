@@ -77,7 +77,14 @@ export function Hero({ onBook }: HeroProps) {
         {/* ── Right: image ── */}
         <div className={styles.visual} aria-hidden="true">
           <div className={styles.showcase}>
-            <img src={fryzjer} alt="" className={styles.image} loading="eager" />
+            <img
+                src={fryzjer}
+                alt="Barber podczas precyzyjnego strzyżenia w BarberSpace"
+                className={styles.image}
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+              />
             <div className={styles.frame} />
             <div className={styles.tag}>Premium Studio</div>
             <div className={styles.sweep} />

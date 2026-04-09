@@ -33,6 +33,7 @@ export function Gallery() {
                   alt={item.label}
                   className={styles.img}
                   loading="lazy"
+                  decoding="async"
                 />
                 <div className={styles.overlay} aria-hidden="true">
                   <span className={styles.overlayLabel}>{item.label}</span>
