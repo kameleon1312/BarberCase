@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import styles from "./pricing.module.scss";
 import { pricing } from "../../../data/content";
 import type { BookingServiceId } from "../../../data/content";
@@ -22,8 +22,6 @@ type ServiceMeta = {
 };
 
 export function Pricing({ onPick }: PricingProps) {
-  const [paused, setPaused] = useState(false);
-
   const metaByService = useMemo<Record<BookingServiceId, ServiceMeta>>(
     () => ({
       hair: {
@@ -50,118 +48,81 @@ export function Pricing({ onPick }: PricingProps) {
     []
   );
 
- 
-  const loopItems = useMemo(() => [...pricing, ...pricing], []);
-
-  const pause = () => setPaused(true);
-  const resume = () => setPaused(false);
-
   return (
     <section className={styles.section} id="cennik" aria-label="Cennik">
       <div className={styles.inner}>
         <header className={styles.header}>
-          <h2 className={styles.title}>Cennik</h2>
+          <p className={styles.eyebrow} aria-hidden="true">
+            <span className={styles.eyebrowNum}>04</span>
+            Cennik
+          </p>
+          <h2 className={styles.title}>Transparentnie.<br />Bez niespodzianek.</h2>
           <p className={styles.subtitle}>
-            Transparentnie. Bez niespodzianek. Płacisz za jakość i powtarzalny efekt.
+            Płacisz za jakość i powtarzalny efekt. Zero ukrytych kosztów.
           </p>
         </header>
 
-        <div className={styles.carouselWrap} aria-label="Karuzela cennika">
-          <div
-            className={styles.viewport}
-            onMouseEnter={pause}
-            onMouseLeave={resume}
-            onTouchStart={pause}
-            onTouchEnd={resume}
-          >
-            <div
-              className={`${styles.track} ${paused ? styles.paused : ""}`}
-              role="list"
-              aria-roledescription="carousel"
-            >
-              {loopItems.map((p, idx) => {
-                const serviceId = toServiceId(p.name);
-                const featured = !!p.featured;
-                const meta = metaByService[serviceId];
+        <div className={styles.grid} role="list" aria-label="Lista usług i cen">
+          {pricing.map((p) => {
+            const serviceId = toServiceId(p.name);
+            const featured = !!p.featured;
+            const meta = metaByService[serviceId];
 
-                
-                const handlePick = () => onPick?.(serviceId);
+            return (
+              <button
+                key={p.name}
+                type="button"
+                className={`${styles.card} ${featured ? styles.featured : ""}`}
+                role="listitem"
+                onClick={() => onPick?.(serviceId)}
+                aria-label={`Wybierz ${p.name} i przejdź do rezerwacji`}
+              >
+                <div className={styles.cardTop}>
+                  <div className={styles.kicker}>{meta.eyebrow}</div>
+                  {featured ? <span className={styles.badge}>Najczęściej</span> : null}
+                </div>
 
-                return (
-                  <button
-                    key={`${p.name}-${idx}`}
-                    type="button"
-                    className={`${styles.card} ${featured ? styles.featured : ""}`}
-                    role="listitem"
-                    onClick={handlePick}
-                    aria-label={`Wybierz ${p.name} i przejdź do rezerwacji`}
-                    
-                    onMouseEnter={pause}
-                    onMouseLeave={resume}
-                    onFocus={pause}
-                    onBlur={resume}
-                    onTouchStart={pause}
-                    onTouchEnd={resume}
-                  >
-                    <div className={styles.cardGlow} aria-hidden="true" />
+                <div className={styles.nameRow}>
+                  <div className={styles.name}>{p.name}</div>
+                  {p.note ? <div className={styles.note}>• {p.note}</div> : null}
+                </div>
 
-                    <div className={styles.cardTop}>
-                      <div className={styles.kicker}>{meta.eyebrow}</div>
-                      {featured ? <span className={styles.badge}>Najczęściej</span> : null}
-                    </div>
+                <div className={styles.desc}>{meta.headline}</div>
 
-                    <div className={styles.nameRow}>
-                      <div className={styles.name}>{p.name}</div>
-                      {p.note ? <div className={styles.note}>• {p.note}</div> : null}
-                    </div>
+                <div className={styles.meta}>
+                  <span className={styles.time}>{p.time}</span>
+                  <span className={styles.metaDot} aria-hidden="true">•</span>
+                  <span className={styles.metaHint}>Kliknij, aby zarezerwować</span>
+                </div>
 
-                    <div className={styles.desc}>{meta.headline}</div>
+                <ul className={styles.features} aria-label="W pakiecie">
+                  {meta.bullets.map((b) => (
+                    <li key={b} className={styles.feature}>
+                      <span className={styles.check} aria-hidden="true">✓</span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
 
-                    <div className={styles.meta}>
-                      <span className={styles.time}>{p.time}</span>
-                      <span className={styles.dot} aria-hidden="true">
-                        •
-                      </span>
-                      <span className={styles.metaHint}>Kliknij, aby zarezerwować</span>
-                    </div>
+                <div className={styles.cardBottom}>
+                  <div className={styles.priceWrap}>
+                    <div className={styles.price}>{p.price}</div>
+                    <div className={styles.small}>Cena finalna po konsultacji (jeśli trzeba)</div>
+                  </div>
 
-                    <ul className={styles.features} aria-label="W pakiecie">
-                      {meta.bullets.map((b) => (
-                        <li key={`${b}-${idx}`} className={styles.feature}>
-                          <span className={styles.check} aria-hidden="true">
-                            ✓
-                          </span>
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className={styles.cardBottom}>
-                      <div className={styles.priceWrap}>
-                        <div className={styles.price}>{p.price}</div>
-                        <div className={styles.small}>Cena finalna po konsultacji (jeśli trzeba)</div>
-                      </div>
-
-                      <div className={styles.cta}>
-                        <span className={styles.ctaText}>Rezerwuj termin</span>
-                        <span className={styles.ctaArrow} aria-hidden="true">
-                          →
-                        </span>
-                      </div>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className={styles.fadeL} aria-hidden="true" />
-            <div className={styles.fadeR} aria-hidden="true" />
-          </div>
+                  <div className={styles.cta}>
+                    <span className={styles.ctaText}>Rezerwuj termin</span>
+                    <span className={styles.ctaArrow} aria-hidden="true">→</span>
+                  </div>
+                </div>
+              </button>
+            );
+          })}
         </div>
 
-        <div className={styles.hint}>
+        <p className={styles.hint}>
           * Czas zależy od długości włosów i oczekiwanego efektu. Zawsze dogadamy szczegóły przed startem.
-        </div>
+        </p>
       </div>
     </section>
   );

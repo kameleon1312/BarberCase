@@ -6,7 +6,7 @@
 
 .section {
   padding: clamp(56px, 7vw, 92px) 0;
-  position: relative;
+  background: c.$bg;
 }
 
 .inner { @include m.container; }
@@ -15,7 +15,30 @@
 .header {
   display: grid;
   gap: 10px;
-  margin-bottom: 22px;
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.eyebrow {
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  color: c.$muted;
+  letter-spacing: t.$ls-wide;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.eyebrowNum {
+  font-family: t.$font-display;
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: c.$accent;
+  line-height: 0.85;
+  letter-spacing: t.$ls-display;
+  flex-shrink: 0;
 }
 
 .title {
@@ -36,50 +59,28 @@
   font-size: 0.97rem;
 }
 
-/* ── Carousel wrapper ── */
-.carouselWrap {
-  position: relative;
-  margin-top: 18px;
-}
-
-.viewport {
-  position: relative;
-  overflow: hidden;
-  border-radius: r.$xl;
-}
-
-.track {
-  display: flex;
-  align-items: stretch;
+/* ── Static grid ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
+}
 
-  padding: 8px 4px 16px;
-  width: max-content;
-
-  --marquee-duration: 16s;
-  animation: pricing-marquee var(--marquee-duration) linear infinite;
-  will-change: transform;
-
-  &:focus-within {
-    animation-play-state: paused;
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
   }
 }
 
-.paused {
-  animation-play-state: paused;
-}
-
-@keyframes pricing-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+@media (max-width: 540px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ── Price Card ── */
 .card {
-  flex: 0 0 auto;
-  width: clamp(260px, 74vw, 340px);
-  scroll-snap-align: start;
-
   text-align: left;
   position: relative;
   isolation: isolate;
@@ -92,6 +93,7 @@
 
   display: grid;
   gap: 10px;
+  align-content: start;
 
   cursor: pointer;
   appearance: none;
@@ -109,7 +111,7 @@
 
   &:hover {
     transform: translateY(-3px);
-    border-color: rgba(12, 12, 12, 0.22);
+    border-color: c.$line-strong;
     box-shadow: s.$lift;
   }
 
@@ -206,7 +208,7 @@
   color: c.$text-2;
 }
 
-.dot { color: c.$muted; opacity: 0.7; }
+.metaDot { color: c.$muted; opacity: 0.7; }
 
 .metaHint { color: c.$muted; font-size: 0.86rem; }
 
@@ -229,7 +231,7 @@
   font-size: 0.91rem;
 }
 
-/* Red checkmark circle */
+/* Red checkmark */
 .check {
   width: 18px;
   height: 18px;
@@ -288,6 +290,7 @@
 }
 
 .ctaText { font-weight: 700; letter-spacing: 0.01em; }
+
 .ctaArrow {
   opacity: 0.9;
   transform: translateX(0);
@@ -305,58 +308,22 @@
   opacity: 1;
 }
 
-/* ── Fade edges — use bg color ── */
-.fadeL,
-.fadeR {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 56px;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.fadeL {
-  left: 0;
-  background: linear-gradient(90deg, c.$bg, rgba(247, 244, 239, 0.60), transparent);
-}
-
-.fadeR {
-  right: 0;
-  background: linear-gradient(270deg, c.$bg, rgba(247, 244, 239, 0.60), transparent);
-}
-
 /* ── Footer note ── */
 .hint {
-  margin-top: 16px;
+  margin-top: 20px;
   color: c.$muted;
   font-size: 0.88rem;
   line-height: 1.55;
 }
 
-/* ── Desktop card sizing ── */
+/* ── Desktop price size ── */
 @media (min-width: 900px) {
-  .track {
-    gap: 16px;
-    padding: 10px 4px 18px;
-    --marquee-duration: 18s;
-  }
-
-  .card {
-    width: 340px;
-    padding: 20px;
-  }
-
+  .card { padding: 20px; }
   .price { font-size: 1.9rem; }
 }
 
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .track {
-    animation: none;
-    transform: none;
-  }
-
   .card,
   .cta,
   .ctaArrow {
