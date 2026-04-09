@@ -1,28 +1,19 @@
-// ── Font families ─────────────────────────────────────────────
-// Barlow Condensed — editorial headlines, supports Polish chars
 $font-display: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
-
-// DM Sans — clean body, excellent readability
 $font-sans:    'DM Sans', system-ui, -apple-system, Arial, sans-serif;
-
-// Playfair Display — serif accent, prices, pull quotes
 $font-accent:  'Playfair Display', Georgia, serif;
 
-// ── Fluid type scale ──────────────────────────────────────────
-$fs-0:       clamp(0.92rem,  0.86rem + 0.20vw, 1.00rem);  // body small
-$fs-1:       clamp(1.05rem,  0.98rem + 0.32vw, 1.20rem);  // body base
-$fs-2:       clamp(1.30rem,  1.12rem + 0.80vw, 1.85rem);  // section sub
-$fs-3:       clamp(2.00rem,  1.40rem + 2.20vw, 3.10rem);  // section title
-$fs-4:       clamp(2.70rem,  1.70rem + 3.80vw, 4.60rem);  // hero title
-$fs-display: clamp(3.80rem,  2.20rem + 5.80vw, 7.00rem);  // oversized display
+$fs-0:       clamp(0.92rem,  0.86rem + 0.20vw, 1.00rem);
+$fs-1:       clamp(1.05rem,  0.98rem + 0.32vw, 1.20rem);
+$fs-2:       clamp(1.30rem,  1.12rem + 0.80vw, 1.85rem);
+$fs-3:       clamp(2.00rem,  1.40rem + 2.20vw, 3.10rem);
+$fs-4:       clamp(2.70rem,  1.70rem + 3.80vw, 4.60rem);
+$fs-display: clamp(3.80rem,  2.20rem + 5.80vw, 7.00rem);
 
-// ── Line heights ──────────────────────────────────────────────
-$lh-tight:   0.98;   // condensed display
-$lh-heading: 1.08;   // standard headings
-$lh:         1.55;   // body
-$lh-loose:   1.70;   // caption / small text
+$lh-tight:   0.98;
+$lh-heading: 1.08;
+$lh:         1.55;
+$lh-loose:   1.70;
 
-// ── Letter spacing ────────────────────────────────────────────
-$ls-tight:   -0.02em;  // heading body
-$ls-wide:     0.12em;  // uppercase labels / kickers
-$ls-display:  0.01em;  // Barlow Condensed display (slight +tracking)
+$ls-tight:   -0.02em;
+$ls-wide:     0.12em;
+$ls-display:  0.01em;

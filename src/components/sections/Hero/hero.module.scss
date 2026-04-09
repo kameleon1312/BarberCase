@@ -4,9 +4,6 @@
 @use "../../../styles/tokens/radii" as r;
 @use "../../../styles/tokens/shadows" as s;
 
-/* ──────────────────────────────────────────────
-   HERO — editorial split layout
-   ────────────────────────────────────────────── */
 .hero {
   padding: clamp(48px, 6vw, 88px) 0 clamp(40px, 5vw, 72px);
   overflow: hidden;
@@ -24,9 +21,6 @@
   }
 }
 
-/* ──────────────────────────────────────────────
-   KICKER — number + label
-   ────────────────────────────────────────────── */
 .kicker {
   margin: 0 0 18px;
   display: flex;
@@ -40,7 +34,6 @@
   line-height: 1;
 }
 
-/* Big red number — "01" — editorial magazine device */
 .kickerNum {
   font-family: t.$font-display;
   font-size: 2.8rem;
@@ -51,9 +44,6 @@
   flex-shrink: 0;
 }
 
-/* ──────────────────────────────────────────────
-   HEADLINE — oversized display type
-   ────────────────────────────────────────────── */
 .title {
   margin: 0 0 20px;
   font-family: t.$font-display;
@@ -64,7 +54,6 @@
   color: c.$text;
 }
 
-/* Second line — red, slightly smaller = visual tension */
 .titleBreak {
   display: block;
   color: c.$accent;
@@ -73,9 +62,6 @@
   margin-top: 4px;
 }
 
-/* ──────────────────────────────────────────────
-   LEAD
-   ────────────────────────────────────────────── */
 .lead {
   margin: 0 0 26px;
   color: c.$text-2;
@@ -84,9 +70,6 @@
   max-width: 50ch;
 }
 
-/* ──────────────────────────────────────────────
-   CTA BUTTONS
-   ────────────────────────────────────────────── */
 .actions {
   display: flex;
   gap: 12px;
@@ -117,7 +100,6 @@
   &:active { transform: translateY(0) scale(0.99); }
 }
 
-/* Primary — solid red */
 .primary,
 .primaryBtn {
   background: c.$accent;
@@ -137,7 +119,6 @@
   font: inherit;
 }
 
-/* Secondary — outlined */
 .secondary {
   background: transparent;
   border-color: c.$line-strong;
@@ -149,9 +130,6 @@
   }
 }
 
-/* ──────────────────────────────────────────────
-   STATS — editorial horizontal band
-   ────────────────────────────────────────────── */
 .stats {
   display: flex;
   gap: 0;
@@ -162,7 +140,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    border-top-color: c.$line;
   }
 }
 
@@ -174,9 +151,7 @@
   border-right: 1.5px solid c.$line;
 
   &:first-child { padding-left: 0; }
-  &:last-child  {
-    border-right: none;
-  }
+  &:last-child  { border-right: none; }
 
   @media (max-width: 520px) {
     padding: 0;
@@ -184,7 +159,6 @@
   }
 }
 
-/* Big number + unit on same baseline */
 .valRow {
   display: flex;
   align-items: baseline;
@@ -201,7 +175,6 @@
   text-transform: uppercase;
 }
 
-/* Unit — red accent, smaller */
 .statUnit {
   font-family: t.$font-display;
   font-size: clamp(0.9rem, 2vw, 1.1rem);
@@ -220,19 +193,13 @@
   text-transform: uppercase;
 }
 
-/* ──────────────────────────────────────────────
-   SHOWCASE — image frame
-   ────────────────────────────────────────────── */
 .showcase {
   position: relative;
   overflow: hidden;
   border-radius: 6px;
   border: 2px solid c.$ink;
   box-shadow: s.$heavy;
-
-  /* Tall portrait ratio — barbershop editorial */
   aspect-ratio: 3 / 4;
-
   background: c.$bg-2;
 
   @media (max-width: 940px) {
@@ -248,7 +215,6 @@
   display: block;
 }
 
-/* Inner editorial dashed frame */
 .frame {
   position: absolute;
   inset: 10px;
@@ -257,7 +223,6 @@
   pointer-events: none;
 }
 
-/* Corner tag */
 .tag {
   position: absolute;
   bottom: 14px;
@@ -274,7 +239,6 @@
   color: c.$text;
 }
 
-/* Shimmer sweep */
 .sweep {
   position: absolute;
   inset: -40%;

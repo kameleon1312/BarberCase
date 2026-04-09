@@ -4,7 +4,6 @@
 @use "../../../styles/tokens/radii" as r;
 @use "../../../styles/tokens/shadows" as s;
 
-/* Dark section — editorial mid-page anchor, same family as CTA */
 .section {
   padding: clamp(56px, 7vw, 92px) 0;
   background: c.$ink;
@@ -12,7 +11,6 @@
 
 .inner { @include m.container; }
 
-/* ── Header ── */
 .header {
   margin-bottom: clamp(28px, 4vw, 48px);
   display: grid;
@@ -60,7 +58,6 @@
   max-width: 60ch;
 }
 
-/* ── Grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -71,7 +68,6 @@
   }
 }
 
-/* ── Card ── */
 .card {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -83,7 +79,6 @@
   align-items: start;
 }
 
-/* Monogram — large initial as graphic element */
 .avatar {
   width: 72px;
   height: 72px;
@@ -105,7 +100,6 @@
   text-transform: uppercase;
 }
 
-/* Info block */
 .info {
   display: grid;
   gap: 6px;
@@ -129,7 +123,6 @@
   line-height: 1;
 }
 
-/* Years of experience badge */
 .expBadge {
   display: flex;
   align-items: baseline;

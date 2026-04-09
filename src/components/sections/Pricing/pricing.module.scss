@@ -11,7 +11,6 @@
 
 .inner { @include m.container; }
 
-/* ── Header ── */
 .header {
   display: grid;
   gap: 10px;
@@ -59,7 +58,6 @@
   font-size: 0.97rem;
 }
 
-/* ── Static grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -79,33 +77,27 @@
   }
 }
 
-/* ── Price Card ── */
 .card {
   text-align: left;
   position: relative;
   isolation: isolate;
-
   border-radius: r.$xl;
   border: 1.5px solid c.$line;
   background: #ffffff;
   box-shadow: s.$soft;
   padding: 18px;
-
   display: grid;
   gap: 10px;
   align-content: start;
-
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
   font: inherit;
   color: c.$text;
-
   transition:
     transform 200ms ease,
     border-color 200ms ease,
     box-shadow 200ms ease;
-
   @include m.focusRing;
   @include m.reduceMotion;
 
@@ -123,7 +115,6 @@
   }
 }
 
-/* ── Featured card — red accent ── */
 .featured {
   border: 2px solid c.$accent;
   background: linear-gradient(
@@ -153,7 +144,6 @@
   color: c.$muted;
 }
 
-/* Featured badge */
 .badge {
   padding: 5px 9px;
   border-radius: r.$pill;
@@ -209,10 +199,8 @@
 }
 
 .metaDot { color: c.$muted; opacity: 0.7; }
-
 .metaHint { color: c.$muted; font-size: 0.86rem; }
 
-/* Features list */
 .features {
   margin: 2px 0 0;
   padding: 0;
@@ -231,7 +219,6 @@
   font-size: 0.91rem;
 }
 
-/* Red checkmark */
 .check {
   width: 18px;
   height: 18px;
@@ -256,7 +243,7 @@
 
 .priceWrap { display: grid; gap: 4px; }
 
-/* Playfair for price — elegant serif contrast */
+// Playfair for price — serif contrast against condensed headlines
 .price {
   font-family: t.$font-accent;
   font-size: 1.75rem;
@@ -271,13 +258,11 @@
   line-height: 1.35;
 }
 
-/* Card CTA */
 .cta {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-
   border-radius: r.$pill;
   border: 1.5px solid c.$accent;
   background: transparent;
@@ -285,7 +270,6 @@
   padding: 9px 12px;
   font-weight: 700;
   font-size: 0.88rem;
-
   transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
 }
 
@@ -297,7 +281,6 @@
   transition: transform 160ms ease, opacity 160ms ease;
 }
 
-/* Hover: fill red */
 .card:hover .cta {
   background: c.$accent;
   color: #ffffff;
@@ -308,7 +291,6 @@
   opacity: 1;
 }
 
-/* ── Footer note ── */
 .hint {
   margin-top: 20px;
   color: c.$muted;
@@ -316,13 +298,11 @@
   line-height: 1.55;
 }
 
-/* ── Desktop price size ── */
 @media (min-width: 900px) {
   .card { padding: 20px; }
   .price { font-size: 1.9rem; }
 }
 
-/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .card,
   .cta,

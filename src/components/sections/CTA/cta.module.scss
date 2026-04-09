@@ -4,7 +4,6 @@
 @use "../../../styles/tokens/radii" as r;
 @use "../../../styles/tokens/shadows" as s;
 
-/* ── Dark end-cap section — editorial contrast ── */
 .section {
   padding: clamp(56px, 7vw, 92px) 0;
   background: c.$ink;
@@ -12,7 +11,6 @@
 
 .inner { @include m.container; }
 
-/* ── Card ── */
 .card {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.10);
@@ -27,7 +25,6 @@
   }
 }
 
-/* ── Left: contact copy ── */
 .title {
   margin: 0 0 10px;
   font-family: t.$font-display;
@@ -46,7 +43,6 @@
   font-size: 0.97rem;
 }
 
-/* ── Action buttons ── */
 .actions {
   display: flex;
   gap: 10px;
@@ -54,7 +50,6 @@
   margin-bottom: 20px;
 }
 
-/* Primary — solid red on dark bg */
 .primary {
   display: inline-flex;
   align-items: center;
@@ -67,7 +62,9 @@
   color: #ffffff;
   font-weight: 700;
   font-size: 0.93rem;
-
+  cursor: pointer;
+  font: inherit;
+  appearance: none;
   transition: transform 160ms ease, background 160ms ease, border-color 160ms ease,
     box-shadow 160ms ease;
   @include m.focusRing;
@@ -81,7 +78,6 @@
   }
 }
 
-/* Secondary — outlined white on dark bg */
 .secondary {
   display: inline-flex;
   align-items: center;
@@ -94,7 +90,6 @@
   color: rgba(255, 255, 255, 0.88);
   font-weight: 600;
   font-size: 0.93rem;
-
   transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
@@ -106,7 +101,6 @@
   }
 }
 
-/* ── Contact meta ── */
 .meta {
   display: grid;
   gap: 10px;
@@ -137,7 +131,6 @@
   color: rgba(255, 255, 255, 0.88);
 }
 
-/* ── Map mock ── */
 .mapMock {
   position: relative;
   border-radius: r.$xl;
@@ -154,7 +147,6 @@
   border: 1px dashed rgba(255, 255, 255, 0.14);
 }
 
-/* Logo image inside map */
 .images {
   position: absolute;
   inset: 0;

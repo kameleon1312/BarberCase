@@ -11,7 +11,6 @@
 
 .inner { @include m.container; }
 
-/* ── Header ── */
 .header {
   margin-bottom: clamp(28px, 4vw, 44px);
   display: grid;
@@ -51,7 +50,6 @@
   color: c.$text;
 }
 
-/* ── 3-column grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -66,7 +64,6 @@
   }
 }
 
-/* ── Testimonial card — pure typography ── */
 .card {
   margin: 0;
   padding: clamp(20px, 3vw, 28px);
@@ -79,7 +76,6 @@
   align-content: start;
 }
 
-/* Large Playfair quotation mark — design element */
 .quoteSign {
   font-family: t.$font-accent;
   font-size: 5rem;
@@ -99,7 +95,6 @@
   font-family: t.$font-accent;
 }
 
-/* Author block */
 .author {
   display: flex;
   flex-direction: column;

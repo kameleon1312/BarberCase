@@ -1,12 +1,12 @@
 @use "../tokens/colors" as c;
 @use "../tokens/typography" as t;
 
-/* Light mode */
 :root { color-scheme: light; }
 
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 84px;
+  scroll-snap-type: y proximity;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -21,9 +21,12 @@ body {
   background: c.$bg;
 }
 
-/* ──────────────────────────────────────────────────────────────
-   Page shell — warm paper background with subtle gradient
-   ────────────────────────────────────────────────────────────── */
+section {
+  scroll-snap-align: start;
+  scroll-margin-top: 84px;
+}
+
+// Page shell — warm paper bg with subtle radial glow + grain texture
 .bg-shell {
   min-height: 100%;
   position: relative;
@@ -35,7 +38,6 @@ body {
     linear-gradient(180deg, c.$bg, c.$bg-2 55%, c.$bg);
 }
 
-/* Paper grain texture — multiply on light bg = dark micro-noise */
 .bg-shell::before {
   content: "";
   position: absolute;
@@ -48,9 +50,6 @@ body {
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
 }
 
-/* ──────────────────────────────────────────────────────────────
-   Skip link
-   ────────────────────────────────────────────────────────────── */
 .skip-link {
   position: absolute;
   left: -999px;
@@ -65,15 +64,11 @@ body {
   font-size: 0.9rem;
   text-decoration: none;
 
-  &:focus {
-    left: 12px;
-  }
+  &:focus { left: 12px; }
 }
 
-/* ──────────────────────────────────────────────────────────────
-   Scroll reveal — driven by [data-reveal] attribute
-   Set --reveal-delay on children for stagger effect.
-   ────────────────────────────────────────────────────────────── */
+// Scroll reveal — [data-reveal="hidden"] → [data-reveal="visible"]
+// --reveal-delay on children controls stagger
 [data-reveal] {
   transition:
     opacity  560ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -98,16 +93,4 @@ body {
     transform: none !important;
     transition: none !important;
   }
-}
-
-/* ──────────────────────────────────────────────────────────────
-   Scroll snap
-   ────────────────────────────────────────────────────────────── */
-html {
-  scroll-snap-type: y proximity;
-}
-
-section {
-  scroll-snap-align: start;
-  scroll-margin-top: 84px;
 }

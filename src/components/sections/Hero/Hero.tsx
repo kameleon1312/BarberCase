@@ -10,16 +10,12 @@ export function Hero({ onBook }: HeroProps) {
     <section className={styles.hero} id="top" aria-label="Sekcja główna">
       <div className={styles.inner}>
 
-        {/* ── Left: copy ── */}
         <div className={styles.copy}>
-
-          {/* Kicker z numeracją — editorial trademark */}
           <p className={styles.kicker} aria-hidden="true">
             <span className={styles.kickerNum}>01</span>
             Night Studio / Editorial Cuts
           </p>
 
-          {/* Oversized display headline */}
           <h1 className={styles.title}>
             BarberSpace.
             <span className={styles.titleBreak}>
@@ -48,7 +44,6 @@ export function Hero({ onBook }: HeroProps) {
             </a>
           </div>
 
-          {/* Stats — editorial horizontal band */}
           <div className={styles.stats} aria-label="Szybkie informacje">
             <div className={styles.stat}>
               <div className={styles.valRow}>
@@ -74,7 +69,6 @@ export function Hero({ onBook }: HeroProps) {
           </div>
         </div>
 
-        {/* ── Right: image ── */}
         <div className={styles.visual} aria-hidden="true">
           <div className={styles.showcase}>
             <img

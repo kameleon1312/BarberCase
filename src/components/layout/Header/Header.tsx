@@ -95,8 +95,7 @@ export function Header({ onBook }: HeaderProps) {
       data-menu-open={open ? "true" : "false"}
     >
       <div className={styles.inner}>
-        {/* BRAND */}
-        <a className={styles.brand} href="#top" aria-label={brand.name}>
+<a className={styles.brand} href="#top" aria-label={brand.name}>
           <span className={styles.logoWrap} aria-hidden="true">
             <img src={logos} alt="" className={styles.logo} />
           </span>
@@ -107,7 +106,6 @@ export function Header({ onBook }: HeaderProps) {
           </span>
         </a>
 
-        {/* DESKTOP NAV */}
         <nav className={styles.nav} aria-label="Nawigacja">
           {nav.map((item) => (
             <a key={item.href} className={styles.link} href={item.href}>
@@ -116,10 +114,8 @@ export function Header({ onBook }: HeaderProps) {
           ))}
         </nav>
 
-        {/* CTA */}
         <div className={styles.ctaWrap}>{Cta}</div>
 
-        {/* MOBILE HAMBURGER */}
         <button
           type="button"
           className={styles.burger}
@@ -132,7 +128,6 @@ export function Header({ onBook }: HeaderProps) {
         </button>
       </div>
 
-      {/* MOBILE DRAWER */}
       <div
         className={styles.overlay}
         data-open={open ? "true" : "false"}

@@ -24,7 +24,10 @@ export default function App() {
     setBookingOpen(true);
   };
 
-  const closeBooking = () => setBookingOpen(false);
+  const closeBooking = () => {
+    setBookingOpen(false);
+    setPrefillServiceId(null);
+  };
 
   return (
     <>
@@ -39,7 +42,7 @@ export default function App() {
         <Testimonials />
         <Team />
         <FAQ />
-        <CTA />
+        <CTA onBook={() => openBooking()} />
       </main>
 
       <Footer />

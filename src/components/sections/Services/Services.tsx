@@ -34,7 +34,6 @@ export function Services() {
       <div className={styles.inner}>
         <div className={styles.layout}>
 
-          {/* LEFT: header + numbered service list */}
           <div className={styles.copy}>
             <header className={styles.header} data-reveal={rv}>
               <p className={styles.eyebrow} aria-hidden="true">
@@ -83,7 +82,6 @@ export function Services() {
             </a>
           </div>
 
-          {/* RIGHT: photo preview */}
           <article
             className={styles.preview}
             style={{ ...cardStyle, "--reveal-delay": "200ms" } as React.CSSProperties}

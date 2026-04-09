@@ -11,7 +11,6 @@
 
 .inner { @include m.container; }
 
-/* ── Header ── */
 .header {
   margin-bottom: clamp(32px, 5vw, 52px);
 }
@@ -49,7 +48,6 @@
   color: c.$text;
 }
 
-/* ── Steps grid ── */
 .steps {
   list-style: none;
   margin: 0;
@@ -67,22 +65,18 @@
   }
 }
 
-/* ── Single step ── */
 .step {
   padding: 28px 24px 28px 0;
   border-top: 2px solid c.$line;
   position: relative;
 
-  /* Red top border reveal — first step gets accent */
   &:first-child {
     border-top-color: c.$accent;
   }
 
-  /* Right separator between steps (not after last) */
   &:not(:last-child) {
     border-right: 1px solid c.$line;
     padding-right: 24px;
-    margin-right: 0;
   }
 
   &:not(:first-child) {
@@ -91,7 +85,7 @@
 
   @media (max-width: 860px) {
     border-right: none;
-    padding: 20px 0 20px 0;
+    padding: 20px 0;
 
     &:not(:first-child) {
       padding-left: 0;
@@ -99,7 +93,6 @@
   }
 }
 
-/* Big number */
 .stepNum {
   font-family: t.$font-display;
   font-size: clamp(2.8rem, 5vw, 4rem);

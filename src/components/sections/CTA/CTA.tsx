@@ -2,7 +2,11 @@ import styles from "./cta.module.scss";
 import logo from "../../../assets/images/logo.jpg";
 import { useInView } from "../../../hooks/useInView";
 
-export function CTA() {
+type Props = {
+  onBook?: () => void;
+};
+
+export function CTA({ onBook }: Props) {
   const { ref, inView } = useInView<HTMLElement>();
   const rv = inView ? "visible" : "hidden";
 
@@ -25,9 +29,9 @@ export function CTA() {
             </p>
 
             <div className={styles.actions} id="rezerwacja">
-              <a className={styles.primary} href="#">
+              <button type="button" className={styles.primary} onClick={onBook}>
                 Rezerwacja online
-              </a>
+              </button>
               <a className={styles.secondary} href="tel:+48123123123">
                 Zadzwoń
               </a>

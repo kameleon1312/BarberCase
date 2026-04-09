@@ -11,7 +11,6 @@
 
 .inner { @include m.container; }
 
-/* ── Header ── */
 .header {
   margin-bottom: clamp(28px, 4vw, 44px);
   display: grid;
@@ -59,7 +58,6 @@
   max-width: 60ch;
 }
 
-/* ── Grid — 3 columns, portrait ratio ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -75,14 +73,12 @@
   }
 }
 
-/* ── Gallery item ── */
 .item {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* Image container — editorial contact-sheet framing */
 .imgWrap {
   position: relative;
   overflow: hidden;
@@ -109,7 +105,6 @@
   }
 }
 
-/* Hover overlay */
 .overlay {
   position: absolute;
   inset: 0;
@@ -117,7 +112,6 @@
   display: flex;
   align-items: flex-end;
   padding: 18px;
-
   opacity: 0;
   transition: opacity 280ms ease;
 
@@ -140,7 +134,6 @@
   line-height: 1;
 }
 
-/* Meta below image */
 .meta {
   display: flex;
   align-items: baseline;

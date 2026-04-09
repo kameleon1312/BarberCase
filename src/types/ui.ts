@@ -7,7 +7,6 @@ export type ServiceItem = {
   title: string;
   desc: string;
   meta: string;
-  bg: string;
 };
 
 export type PriceItem = {
