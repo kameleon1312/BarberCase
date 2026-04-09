@@ -57,7 +57,7 @@ export function Hero({ onBook }: HeroProps) {
           <div className={styles.showcase}>
             <img src={fryzjer} alt="" className={styles.image} />
             <div className={styles.frame} />
-            <div className={styles.tag}>SIGNATURE LOOK</div>
+            <div className={styles.tag}></div>
             <div className={styles.sweep} />
           </div>
         </div>

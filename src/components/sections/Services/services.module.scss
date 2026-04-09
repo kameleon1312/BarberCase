@@ -4,215 +4,152 @@
 @use "../../../styles/tokens/radii" as r;
 @use "../../../styles/tokens/shadows" as s;
 
-.section { padding: clamp(56px, 7vw, 92px) 0; }
+/* Alternating section background */
+.section {
+  padding: clamp(56px, 7vw, 92px) 0;
+  background: c.$bg-2;
+}
+
 .inner { @include m.container; }
 
-
+/* ── Two-column layout ── */
 .layout {
   display: grid;
   gap: 16px;
-  align-items: stretch; 
+  align-items: stretch;
 }
 
 @media (min-width: 980px) {
   .layout {
-    grid-template-columns: 1fr 1.05fr;
-    gap: 18px;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 20px;
   }
 }
 
-/* ===== LEFT PANEL ===== */
+/* ── Left panel — copy ── */
 .copy {
   @include m.card;
   border-radius: r.$xl;
-  padding: 18px;
+  padding: clamp(18px, 2.5vw, 28px);
   box-shadow: s.$soft;
-
   display: grid;
-  gap: 12px;
+  gap: 14px;
+  align-content: start;
 }
 
 .eyebrow {
-  font-size: 0.78rem;
-  letter-spacing: 0.14em;
+  font-size: 0.74rem;
+  letter-spacing: t.$ls-wide;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
+  font-weight: 700;
+  color: c.$accent;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 18px;
+    height: 2px;
+    background: c.$accent;
+    flex-shrink: 0;
+  }
 }
 
 .title {
   margin: 0;
   font-family: t.$font-display;
-  font-size: clamp(1.6rem, 6vw, 2.2rem);
-  letter-spacing: t.$ls-tight;
-  line-height: 1.05;
+  font-size: clamp(1.8rem, 6vw, 2.5rem);
+  letter-spacing: t.$ls-display;
+  line-height: t.$lh-heading;
+  text-transform: uppercase;
+  color: c.$text;
 }
 
 .subtitle {
   margin: 0;
   color: c.$text-2;
-  line-height: 1.55;
+  line-height: t.$lh;
   max-width: 60ch;
+  font-size: 0.97rem;
 }
 
-/* controls bar */
-.controls {
-  margin-top: 6px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 10px;
-
-  padding: 10px;
-  border-radius: r.$xl;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.arrow {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.92);
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-
-  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
-  @include m.focusRing;
-  @include m.reduceMotion;
-
-  &:hover { transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); }
-  &:active { transform: translateY(0); }
-}
-
-.dots { display: flex; justify-content: center; gap: 8px; }
-.dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.20);
-  background: rgba(255, 255, 255, 0.08);
-  cursor: pointer;
-  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
-  @include m.focusRing;
-  @include m.reduceMotion;
-
-  &:hover { transform: scale(1.06); }
-}
-.dotActive { border-color: rgba(255, 204, 102, 0.60); background: rgba(255, 204, 102, 0.35); }
-
-/* services list */
-.list {
-  display: grid;
-  gap: 10px;
-  margin-top: 6px;
-}
-
-.listItem {
-  appearance: none;
-  -webkit-tap-highlight-color: transparent;
-  text-align: left;
-  cursor: pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-
-  padding: 12px 12px;
-  border-radius: 16px;
-
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(255, 255, 255, 0.03);
-  color: rgba(255, 255, 255, 0.88);
-
-  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
-  @include m.focusRing;
-  @include m.reduceMotion;
-
-  &:hover { transform: translateY(-1px); background: rgba(255, 255, 255, 0.05); border-color: rgba(255,255,255,.16); }
-}
-
-.listItemActive {
-  border-color: rgba(255, 204, 102, 0.30);
-  background: rgba(255, 204, 102, 0.08);
-}
-
-.liTitle { font-weight: 900; letter-spacing: -0.01em; }
-.liMeta  { color: rgba(255,255,255,.66); font-weight: 750; font-size: .92rem; white-space: nowrap; }
-
-/* CTA */
+/* CTA link */
 .cta {
-  margin-top: 6px;
   display: inline-flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
+  gap: 10px;
+  align-self: start;
+  margin-top: 4px;
 
-  padding: 12px 14px;
+  padding: 11px 18px;
   border-radius: r.$pill;
 
-  border: 1px solid rgba(255, 204, 102, 0.30);
-  background: linear-gradient(180deg, rgba(255, 204, 102, 0.14), rgba(255, 204, 102, 0.07));
-  box-shadow: s.$soft;
-
-  color: c.$text;
+  border: 1.5px solid c.$accent;
+  background: c.$accent;
+  color: #ffffff;
   text-decoration: none;
-  font-weight: 850;
+  font-weight: 700;
+  font-size: 0.92rem;
 
-  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease,
+    box-shadow 160ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
+    background: c.$accent-hover;
+    border-color: c.$accent-hover;
     transform: translateY(-1px);
-    border-color: rgba(255, 204, 102, 0.55);
-    background: linear-gradient(180deg, rgba(255, 204, 102, 0.18), rgba(255, 204, 102, 0.09));
+    box-shadow: 0 6px 20px rgba(176, 28, 46, 0.25);
   }
 }
-.ctaArrow { opacity: 0.9; transform: translateX(0); transition: transform 160ms ease, opacity 160ms ease; }
-.cta:hover .ctaArrow { transform: translateX(3px); opacity: 1; }
 
-/* ===== RIGHT PANEL ===== */
+.ctaArrow {
+  opacity: 0.9;
+  transform: translateX(0);
+  transition: transform 160ms ease;
+
+  .cta:hover & { transform: translateX(3px); }
+}
+
+/* ── Right panel — image preview card ── */
 .preview {
   position: relative;
   overflow: hidden;
   isolation: isolate;
 
- 
-  height: 100%;
-
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-mask-image: -webkit-radial-gradient(white, black);
-
-  @include m.card;
-  border: 0 !important;
+  /* Keep this panel dark — photo card on light page = great contrast */
   border-radius: r.$xl;
+  border: 2px solid c.$ink;
 
-  padding: 18px;
+  padding: 20px;
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 14px;
 
-  color: c.$text;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+  color: #ffffff;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.40);
 
   background-image:
-    linear-gradient(180deg, rgba(7, 8, 11, 0.70) 0%, rgba(7, 8, 11, 0.62) 42%, rgba(7, 8, 11, 0.92) 100%),
+    linear-gradient(180deg,
+      rgba(8, 8, 10, 0.68) 0%,
+      rgba(8, 8, 10, 0.55) 40%,
+      rgba(8, 8, 10, 0.90) 100%),
     var(--card-bg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), s.$soft;
+  box-shadow: s.$heavy;
+  min-height: 260px;
 
-  min-height: 240px;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-
+/* Inset border glow */
 .preview::before {
   content: "";
   position: absolute;
@@ -220,21 +157,7 @@
   border-radius: inherit;
   pointer-events: none;
   z-index: 2;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10);
-}
-
-.preview::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(560px 260px at 18% 0%, rgba(255, 204, 102, 0.18), transparent 62%),
-    radial-gradient(560px 260px at 85% 110%, rgba(124, 247, 212, 0.10), transparent 60%),
-    radial-gradient(120% 120% at 50% 0%, transparent 35%, rgba(0, 0, 0, 0.30) 100%);
-  opacity: 0.85;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.08);
 }
 
 .preview > * { position: relative; z-index: 1; }
@@ -246,125 +169,169 @@
   gap: 12px;
 }
 
-.previewTitleWrap { min-width: 0; display: grid; gap: 8px; }
+.previewTitleWrap {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
 
 .previewTitle {
   margin: 0;
-  font-size: clamp(1.2rem, 4.8vw, 1.6rem);
-  font-weight: 950;
-  letter-spacing: -0.01em;
-  line-height: 1.1;
+  font-family: t.$font-display;
+  font-size: clamp(1.4rem, 5vw, 1.9rem);
+  font-weight: 800;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  line-height: 1.0;
+  color: #ffffff;
 }
 
 .previewDesc {
   margin: 0;
-  color: rgba(255,255,255,.84);
+  color: rgba(255, 255, 255, 0.82);
   line-height: 1.55;
-  max-width: 60ch;
+  max-width: 58ch;
+  font-size: 0.95rem;
 }
 
-
+/* Time badge */
 .badge {
-  color: rgba(255, 255, 255, 0.86);
-  font-size: 0.9rem;
-  font-weight: 850;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.86rem;
+  font-weight: 700;
   white-space: nowrap;
 
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(0, 0, 0, 0.30);
-  padding: 7px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(0, 0, 0, 0.36);
+  padding: 6px 10px;
   border-radius: r.$pill;
 }
 
-
+/* Bottom controls */
 .previewBottom {
   margin-top: auto;
   display: grid;
   gap: 12px;
 }
 
-.pillRow { display: flex; gap: 8px; flex-wrap: wrap; }
-
-.pill {
-  padding: 8px 10px;
-  border-radius: r.$pill;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(0, 0, 0, 0.22);
-  color: rgba(255, 255, 255, 0.84);
-  font-size: 0.84rem;
-  line-height: 1;
-}
-
-
-.previewActions {
+/* Arrow + dots row */
+.pager {
   display: grid;
   grid-template-columns: auto 1fr auto;
-  gap: 10px;
   align-items: center;
+  gap: 10px;
 
-  padding: 10px;
+  padding: 8px 10px;
   border-radius: r.$xl;
   border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(0, 0, 0, 0.26);
+  background: rgba(0, 0, 0, 0.28);
 }
 
 .previewArrow {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  border: 1px solid rgba(255, 255, 255, 0.10);
-  background: rgba(255, 255, 255, 0.04);
-  color: rgba(255, 255, 255, 0.92);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.90);
   display: grid;
   place-items: center;
   cursor: pointer;
+  font-size: 1rem;
 
   transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
-  &:hover { transform: translateY(-1px); background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); }
+  &:hover {
+    transform: translateY(-1px);
+    background: rgba(255, 255, 255, 0.10);
+    border-color: rgba(255, 255, 255, 0.20);
+  }
+
   &:active { transform: translateY(0); }
 }
 
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.10);
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover { transform: scale(1.15); }
+}
+
+/* Active dot — red accent */
+.dotActive {
+  border-color: rgba(176, 28, 46, 0.70);
+  background: c.$accent;
+}
+
+/* Pills row */
+.pillRow {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 7px 10px;
+  border-radius: r.$pill;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.28);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.82rem;
+  line-height: 1;
+  font-weight: 500;
+}
+
+/* Preview CTA link */
 .previewCta {
   display: inline-flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 
-  padding: 12px 14px;
+  padding: 11px 14px;
   border-radius: r.$pill;
 
-  border: 1px solid rgba(255, 204, 102, 0.30);
-  background: linear-gradient(180deg, rgba(255, 204, 102, 0.14), rgba(255, 204, 102, 0.07));
-  color: c.$text;
+  border: 1.5px solid c.$accent;
+  background: c.$accent;
+  color: #ffffff;
   text-decoration: none;
-  font-weight: 900;
+  font-weight: 700;
+  font-size: 0.92rem;
 
-  transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
+    background: c.$accent-hover;
+    border-color: c.$accent-hover;
     transform: translateY(-1px);
-    border-color: rgba(255, 204, 102, 0.55);
-    background: linear-gradient(180deg, rgba(255, 204, 102, 0.18), rgba(255, 204, 102, 0.09));
   }
 }
-
 
 @media (min-width: 980px) {
   .preview { min-height: 0; }
 }
 
-
 @media (prefers-reduced-motion: reduce) {
-  .arrow,
-  .dot,
-  .listItem,
-  .cta,
   .previewArrow,
+  .dot,
+  .cta,
   .previewCta {
     transition: none;
   }

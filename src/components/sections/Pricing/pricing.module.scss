@@ -9,35 +9,38 @@
   position: relative;
 }
 
-.inner {
-  @include m.container;
-}
+.inner { @include m.container; }
 
+/* ── Header ── */
 .header {
   display: grid;
   gap: 10px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
 }
 
 .title {
   margin: 0;
   font-family: t.$font-display;
   font-size: t.$fs-3;
-  letter-spacing: t.$ls-tight;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  color: c.$text;
+  line-height: t.$lh-heading;
 }
 
 .subtitle {
   margin: 0;
   color: c.$text-2;
-  max-width: 70ch;
-  line-height: 1.55;
+  max-width: 68ch;
+  line-height: t.$lh;
+  font-size: 0.97rem;
 }
 
+/* ── Carousel wrapper ── */
 .carouselWrap {
   position: relative;
   margin-top: 18px;
 }
-
 
 .viewport {
   position: relative;
@@ -45,42 +48,33 @@
   border-radius: r.$xl;
 }
 
-
 .track {
   display: flex;
   align-items: stretch;
   gap: 14px;
 
-  padding: 10px 6px 16px;
+  padding: 8px 4px 16px;
   width: max-content;
 
-  
-  --marquee-duration: 14s;
+  --marquee-duration: 16s;
   animation: pricing-marquee var(--marquee-duration) linear infinite;
   will-change: transform;
 
-  
   &:focus-within {
     animation-play-state: paused;
   }
 }
 
-
 .paused {
   animation-play-state: paused;
 }
 
-
 @keyframes pricing-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-
+/* ── Price Card ── */
 .card {
   flex: 0 0 auto;
   width: clamp(260px, 74vw, 340px);
@@ -91,14 +85,10 @@
   isolation: isolate;
 
   border-radius: r.$xl;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-
-  background:
-    radial-gradient(1100px 520px at 18% 0%, rgba(255, 204, 102, 0.10), transparent 58%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-
+  border: 1.5px solid c.$line;
+  background: #ffffff;
   box-shadow: s.$soft;
-  padding: 16px;
+  padding: 18px;
 
   display: grid;
   gap: 10px;
@@ -112,46 +102,37 @@
   transition:
     transform 200ms ease,
     border-color 200ms ease,
-    background 200ms ease,
     box-shadow 200ms ease;
 
   @include m.focusRing;
   @include m.reduceMotion;
 
   &:hover {
-    transform: translateY(-2px);
-    border-color: rgba(255, 204, 102, 0.24);
-    background:
-      radial-gradient(1100px 520px at 18% 0%, rgba(255, 204, 102, 0.16), transparent 58%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+    transform: translateY(-3px);
+    border-color: rgba(12, 12, 12, 0.22);
+    box-shadow: s.$lift;
   }
 
-  &:active {
-    transform: translateY(0);
-  }
+  &:active { transform: translateY(0); }
 
   &:focus-visible {
-    border-color: rgba(255, 204, 102, 0.38);
-    box-shadow: 0 0 0 4px rgba(255, 204, 102, 0.18), s.$soft;
+    border-color: rgba(176, 28, 46, 0.55);
+    box-shadow: 0 0 0 3px rgba(176, 28, 46, 0.15), s.$soft;
   }
 }
 
-.cardGlow {
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: -1;
-  background: radial-gradient(420px 220px at 18% 10%, rgba(255, 204, 102, 0.18), transparent 60%);
-  opacity: 0.55;
-}
-
+/* ── Featured card — red accent ── */
 .featured {
-  border-color: rgba(255, 204, 102, 0.35);
+  border: 2px solid c.$accent;
+  background: linear-gradient(
+    160deg,
+    rgba(176, 28, 46, 0.04) 0%,
+    #ffffff 60%
+  );
 
-  .cardGlow {
-    opacity: 0.9;
-    background: radial-gradient(520px 260px at 18% 10%, rgba(255, 204, 102, 0.24), transparent 62%);
+  &:hover {
+    border-color: c.$accent-hover;
+    box-shadow: 0 8px 32px rgba(176, 28, 46, 0.16), s.$soft;
   }
 }
 
@@ -163,70 +144,73 @@
 }
 
 .kicker {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   letter-spacing: t.$ls-wide;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.66);
+  font-weight: 700;
+  color: c.$muted;
 }
 
+/* Featured badge */
 .badge {
-  padding: 7px 10px;
+  padding: 5px 9px;
   border-radius: r.$pill;
-  border: 1px solid rgba(255, 204, 102, 0.35);
-  background: rgba(0, 0, 0, 0.35);
-  font-size: 0.74rem;
-  letter-spacing: t.$ls-wide;
+  border: 1.5px solid c.$accent;
+  background: c.$accent;
+  color: #ffffff;
+  font-size: 0.70rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  font-weight: 700;
   white-space: nowrap;
   line-height: 1;
 }
 
 .nameRow {
   display: grid;
-  gap: 6px;
+  gap: 5px;
 }
 
 .name {
-  font-weight: 900;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  font-size: 1.05rem;
+  font-family: t.$font-display;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: c.$text;
 }
 
 .note {
   color: c.$muted;
-  font-weight: 650;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  font-weight: 500;
 }
 
 .desc {
-  color: rgba(255, 255, 255, 0.78);
-  line-height: 1.45;
-  font-size: 0.95rem;
+  color: c.$text-2;
+  line-height: 1.5;
+  font-size: 0.93rem;
 }
 
 .meta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: c.$muted;
-  font-size: 0.92rem;
+  font-size: 0.90rem;
   line-height: 1.2;
 }
 
 .time {
-  font-weight: 750;
-  color: rgba(255, 255, 255, 0.72);
+  font-weight: 700;
+  color: c.$text-2;
 }
 
-.dot {
-  opacity: 0.55;
-}
+.dot { color: c.$muted; opacity: 0.7; }
 
-.metaHint {
-  opacity: 0.92;
-}
+.metaHint { color: c.$muted; font-size: 0.86rem; }
 
+/* Features list */
 .features {
   margin: 2px 0 0;
   padding: 0;
@@ -240,48 +224,52 @@
   grid-template-columns: 18px 1fr;
   gap: 8px;
   align-items: start;
-  color: rgba(255, 255, 255, 0.76);
-  line-height: 1.35;
-  font-size: 0.93rem;
+  color: c.$text-2;
+  line-height: 1.4;
+  font-size: 0.91rem;
 }
 
+/* Red checkmark circle */
 .check {
   width: 18px;
   height: 18px;
   display: inline-grid;
   place-items: center;
   border-radius: 999px;
-  border: 1px solid rgba(255, 204, 102, 0.28);
-  background: rgba(255, 204, 102, 0.10);
-  color: rgba(255, 204, 102, 0.95);
-  font-size: 0.8rem;
+  border: 1.5px solid rgba(176, 28, 46, 0.30);
+  background: rgba(176, 28, 46, 0.08);
+  color: c.$accent;
+  font-size: 0.72rem;
   margin-top: 1px;
+  flex-shrink: 0;
 }
 
 .cardBottom {
-  margin-top: 6px;
+  margin-top: 4px;
   display: grid;
   gap: 10px;
+  padding-top: 10px;
+  border-top: 1px solid c.$line;
 }
 
-.priceWrap {
-  display: grid;
-  gap: 6px;
-}
+.priceWrap { display: grid; gap: 4px; }
 
+/* Playfair for price — elegant serif contrast */
 .price {
-  font-family: t.$font-display;
-  font-size: 1.7rem;
-  letter-spacing: -0.02em;
+  font-family: t.$font-accent;
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   color: c.$text;
 }
 
 .small {
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.86rem;
+  color: c.$muted;
+  font-size: 0.84rem;
   line-height: 1.35;
 }
 
+/* Card CTA */
 .cta {
   display: inline-flex;
   align-items: center;
@@ -289,27 +277,27 @@
   gap: 10px;
 
   border-radius: r.$pill;
-  border: 1px solid rgba(255, 204, 102, 0.22);
-  background: rgba(255, 204, 102, 0.08);
-  padding: 10px 12px;
+  border: 1.5px solid c.$accent;
+  background: transparent;
+  color: c.$accent;
+  padding: 9px 12px;
+  font-weight: 700;
+  font-size: 0.88rem;
 
-  transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+  transition: background 160ms ease, color 160ms ease, border-color 160ms ease;
 }
 
-.ctaText {
-  font-weight: 800;
-  letter-spacing: -0.01em;
-}
-
+.ctaText { font-weight: 700; letter-spacing: 0.01em; }
 .ctaArrow {
   opacity: 0.9;
   transform: translateX(0);
-  transition: transform 180ms ease, opacity 180ms ease;
+  transition: transform 160ms ease, opacity 160ms ease;
 }
 
+/* Hover: fill red */
 .card:hover .cta {
-  border-color: rgba(255, 204, 102, 0.32);
-  background: rgba(255, 204, 102, 0.12);
+  background: c.$accent;
+  color: #ffffff;
 }
 
 .card:hover .ctaArrow {
@@ -317,53 +305,52 @@
   opacity: 1;
 }
 
-
+/* ── Fade edges — use bg color ── */
 .fadeL,
 .fadeR {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 52px;
+  width: 56px;
   pointer-events: none;
   z-index: 2;
 }
 
 .fadeL {
   left: 0;
-  background: linear-gradient(90deg, rgba(7, 8, 11, 1), rgba(7, 8, 11, 0.55), transparent);
+  background: linear-gradient(90deg, c.$bg, rgba(247, 244, 239, 0.60), transparent);
 }
 
 .fadeR {
   right: 0;
-  background: linear-gradient(270deg, rgba(7, 8, 11, 1), rgba(7, 8, 11, 0.55), transparent);
+  background: linear-gradient(270deg, c.$bg, rgba(247, 244, 239, 0.60), transparent);
 }
 
+/* ── Footer note ── */
 .hint {
-  margin-top: 14px;
+  margin-top: 16px;
   color: c.$muted;
-  font-size: 0.92rem;
-  line-height: 1.5;
+  font-size: 0.88rem;
+  line-height: 1.55;
 }
 
-
+/* ── Desktop card sizing ── */
 @media (min-width: 900px) {
   .track {
     gap: 16px;
-    padding: 12px 6px 16px;
-    --marquee-duration: 16s; 
+    padding: 10px 4px 18px;
+    --marquee-duration: 18s;
   }
 
   .card {
     width: 340px;
-    padding: 18px;
+    padding: 20px;
   }
 
-  .price {
-    font-size: 1.85rem;
-  }
+  .price { font-size: 1.9rem; }
 }
 
-/* reduced motion */
+/* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   .track {
     animation: none;

@@ -4,76 +4,113 @@
 @use "../../../styles/tokens/radii" as r;
 @use "../../../styles/tokens/shadows" as s;
 
+/* ── Dark end-cap section — editorial contrast ── */
 .section {
   padding: clamp(56px, 7vw, 92px) 0;
+  background: c.$ink;
 }
 
 .inner { @include m.container; }
 
+/* ── Card ── */
 .card {
-  @include m.card;
-  box-shadow: s.$lift;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: r.$xl;
-  padding: clamp(16px, 2.5vw, 22px);
+  padding: clamp(18px, 2.5vw, 28px);
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-  gap: 18px;
+  gap: 20px;
 
   @media (max-width: 920px) {
     grid-template-columns: 1fr;
   }
 }
 
+/* ── Left: contact copy ── */
 .title {
   margin: 0 0 10px;
   font-family: t.$font-display;
   font-size: t.$fs-3;
-  letter-spacing: t.$ls-tight;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  line-height: t.$lh-heading;
+  color: #ffffff;
 }
 
 .subtitle {
-  margin: 0 0 16px;
-  color: c.$text-2;
-  max-width: 60ch;
+  margin: 0 0 20px;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 58ch;
+  line-height: t.$lh;
+  font-size: 0.97rem;
 }
 
+/* ── Action buttons ── */
 .actions {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
 
-.primary,
+/* Primary — solid red on dark bg */
+.primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px;
+  border-radius: r.$pill;
+  text-decoration: none;
+  border: 1.5px solid c.$accent;
+  background: c.$accent;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.93rem;
+
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease,
+    box-shadow 160ms ease;
+  @include m.focusRing;
+  @include m.reduceMotion;
+
+  &:hover {
+    background: c.$accent-hover;
+    border-color: c.$accent-hover;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(176, 28, 46, 0.35);
+  }
+}
+
+/* Secondary — outlined white on dark bg */
 .secondary {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 16px;
+  padding: 12px 20px;
   border-radius: r.$pill;
   text-decoration: none;
-  border: 1px solid c.$line;
-  transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.88);
+  font-weight: 600;
+  font-size: 0.93rem;
+
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
   @include m.focusRing;
   @include m.reduceMotion;
 
-  &:hover { transform: translateY(-1px); }
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.40);
+    transform: translateY(-1px);
+  }
 }
 
-.primary {
-  background: linear-gradient(180deg, rgba(255, 204, 102, 0.22), rgba(255, 204, 102, 0.10));
-  border-color: rgba(255, 204, 102, 0.35);
-}
-
-.secondary {
-  background: rgba(255, 255, 255, 0.045);
-  color: c.$text;
-}
-
+/* ── Contact meta ── */
 .meta {
   display: grid;
   gap: 10px;
-  padding-top: 10px;
+  padding-top: 12px;
   border-top: 1px solid rgba(255, 255, 255, 0.10);
 }
 
@@ -87,34 +124,54 @@
   }
 }
 
-.key { color: c.$muted; }
-.val { font-weight: 650; }
+.key {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.88rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
 
+.val {
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ── Map mock ── */
 .mapMock {
   position: relative;
   border-radius: r.$xl;
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   overflow: hidden;
-  min-height: 320px;
-  background:
-    radial-gradient(850px 380px at 18% 0%, rgba(255,255,255,0.12), transparent 62%),
-    radial-gradient(700px 340px at 80% 30%, rgba(124, 247, 212, 0.12), transparent 55%),
-    linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  min-height: 280px;
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .mapFrame {
   position: absolute;
-  inset: 16px;
-  border-radius: calc(r.$xl - 12px);
-  border: 1px dashed rgba(255,255,255,0.18);
+  inset: 14px;
+  border-radius: calc(r.$xl - 10px);
+  border: 1px dashed rgba(255, 255, 255, 0.14);
+}
+
+/* Logo image inside map */
+.images {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.18;
+  mix-blend-mode: luminosity;
 }
 
 .pin {
   position: absolute;
-  right: 18px;
-  bottom: 18px;
-  padding: 10px 12px;
+  right: 16px;
+  bottom: 16px;
+  padding: 8px 12px;
   border-radius: r.$pill;
-  background: rgba(0,0,0,0.35);
-  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 1rem;
 }

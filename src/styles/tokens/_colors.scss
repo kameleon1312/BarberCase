@@ -1,16 +1,30 @@
-$bg: #07080b;
-$bg-2: #0a0c12;
+// ── Background ───────────────────────────────────────────────
+$bg:   #F7F4EF;   // warm paper / parchment
+$bg-2: #EEEAE2;   // slightly deeper warm — alternating sections
 
-$surface: rgba(255, 255, 255, 0.06);
-$surface-2: rgba(255, 255, 255, 0.085);
-$line: rgba(255, 255, 255, 0.12);
+// ── Surfaces (dark-on-light) ─────────────────────────────────
+$surface:   rgba(12, 12, 12, 0.04);
+$surface-2: rgba(12, 12, 12, 0.07);
+$line:      rgba(12, 12, 12, 0.12);
+$line-strong: rgba(12, 12, 12, 0.22);
 
-$text: rgba(255, 255, 255, 0.92);
-$text-2: rgba(255, 255, 255, 0.72);
-$muted: rgba(255, 255, 255, 0.55);
+// ── Text ─────────────────────────────────────────────────────
+$text:   #1A1806;   // warm near-black
+$text-2: #4A4437;   // warm mid-tone
+$muted:  #7A7060;   // warm grey
 
-$accent: #ffcc66;  // gold
-$mint: #7cf7d4;    // detail
+// ── Ink (absolute black — CTA, Footer, high-contrast blocks) ─
+$ink: #0C0C0C;
 
-$glow-a: rgba(255, 204, 102, 0.22);
-$glow-b: rgba(124, 247, 212, 0.16);
+// ── Accent — deep red ─────────────────────────────────────────
+$accent:       #B01C2E;                  // barber pole red, passion, action
+$accent-hover: #8E1524;                  // darker for hover
+$accent-bg:    rgba(176, 28, 46, 0.08);  // light tint for backgrounds
+
+// ── Gold / Copper — secondary highlight ──────────────────────
+$gold:    #B8762E;
+$gold-bg: rgba(184, 118, 46, 0.10);
+
+// ── Subtle glows (very low opacity on light bg) ──────────────
+$glow-a: rgba(176, 28, 46, 0.05);
+$glow-b: rgba(184, 118, 46, 0.06);

@@ -1,10 +1,12 @@
 @use "../../../styles/tools/mixins" as m;
 @use "../../../styles/tokens/colors" as c;
+@use "../../../styles/tokens/typography" as t;
 
+/* Continues dark from CTA section */
 .footer {
-  padding: 34px 0;
-  border-top: 1px solid c.$line;
-  background: rgba(0, 0, 0, 0.18);
+  padding: 28px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: c.$ink;
 }
 
 .inner {
@@ -20,12 +22,18 @@
 }
 
 .brandLine {
-  font-weight: 750;
+  font-family: t.$font-display;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .muted {
-  color: c.$muted;
+  color: rgba(255, 255, 255, 0.38);
   margin-top: 6px;
+  font-size: 0.84rem;
 }
 
 .right {
@@ -36,9 +44,9 @@
 
 .link {
   text-decoration: none;
-  color: c.$text-2;
+  color: rgba(255, 255, 255, 0.50);
+  font-size: 0.88rem;
+  transition: color 160ms ease;
 
-  &:hover {
-    color: c.$text;
-  }
+  &:hover { color: rgba(255, 255, 255, 0.88); }
 }
