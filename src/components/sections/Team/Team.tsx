@@ -1,11 +1,20 @@
 import styles from "./team.module.scss";
 import { team } from "../../../data/content";
+import { useInView } from "../../../hooks/useInView";
 
 export function Team() {
+  const { ref, inView } = useInView<HTMLElement>();
+  const rv = inView ? "visible" : "hidden";
+
   return (
-    <section className={styles.section} id="ekipa" aria-label="Nasz zespół">
+    <section
+      className={styles.section}
+      id="ekipa"
+      aria-label="Nasz zespół"
+      ref={ref}
+    >
       <div className={styles.inner}>
-        <header className={styles.header}>
+        <header className={styles.header} data-reveal={rv}>
           <p className={styles.eyebrow} aria-hidden="true">
             <span className={styles.eyebrowNum}>06</span>
             Ekipa
@@ -17,9 +26,13 @@ export function Team() {
         </header>
 
         <div className={styles.grid}>
-          {team.map((member) => (
-            <article key={member.name} className={styles.card}>
-              {/* Monogram — intentional editorial design, no photo */}
+          {team.map((member, i) => (
+            <article
+              key={member.name}
+              className={styles.card}
+              data-reveal={rv}
+              style={{ "--reveal-delay": `${100 + i * 130}ms` } as React.CSSProperties}
+            >
               <div className={styles.avatar} aria-hidden="true">
                 <span className={styles.initial}>{member.name[0]}</span>
               </div>

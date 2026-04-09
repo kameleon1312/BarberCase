@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import styles from "./pricing.module.scss";
 import { pricing } from "../../../data/content";
 import type { BookingServiceId } from "../../../data/content";
+import { useInView } from "../../../hooks/useInView";
 
 type PricingProps = {
   onPick?: (serviceId: BookingServiceId) => void;
@@ -22,6 +23,9 @@ type ServiceMeta = {
 };
 
 export function Pricing({ onPick }: PricingProps) {
+  const { ref, inView } = useInView<HTMLElement>();
+  const rv = inView ? "visible" : "hidden";
+
   const metaByService = useMemo<Record<BookingServiceId, ServiceMeta>>(
     () => ({
       hair: {
@@ -49,9 +53,14 @@ export function Pricing({ onPick }: PricingProps) {
   );
 
   return (
-    <section className={styles.section} id="cennik" aria-label="Cennik">
+    <section
+      className={styles.section}
+      id="cennik"
+      aria-label="Cennik"
+      ref={ref}
+    >
       <div className={styles.inner}>
-        <header className={styles.header}>
+        <header className={styles.header} data-reveal={rv}>
           <p className={styles.eyebrow} aria-hidden="true">
             <span className={styles.eyebrowNum}>04</span>
             Cennik
@@ -63,7 +72,7 @@ export function Pricing({ onPick }: PricingProps) {
         </header>
 
         <div className={styles.grid} role="list" aria-label="Lista usług i cen">
-          {pricing.map((p) => {
+          {pricing.map((p, i) => {
             const serviceId = toServiceId(p.name);
             const featured = !!p.featured;
             const meta = metaByService[serviceId];
@@ -76,6 +85,8 @@ export function Pricing({ onPick }: PricingProps) {
                 role="listitem"
                 onClick={() => onPick?.(serviceId)}
                 aria-label={`Wybierz ${p.name} i przejdź do rezerwacji`}
+                data-reveal={rv}
+                style={{ "--reveal-delay": `${80 + i * 100}ms` } as React.CSSProperties}
               >
                 <div className={styles.cardTop}>
                   <div className={styles.kicker}>{meta.eyebrow}</div>
@@ -120,7 +131,11 @@ export function Pricing({ onPick }: PricingProps) {
           })}
         </div>
 
-        <p className={styles.hint}>
+        <p
+          className={styles.hint}
+          data-reveal={rv}
+          style={{ "--reveal-delay": "480ms" } as React.CSSProperties}
+        >
           * Czas zależy od długości włosów i oczekiwanego efektu. Zawsze dogadamy szczegóły przed startem.
         </p>
       </div>

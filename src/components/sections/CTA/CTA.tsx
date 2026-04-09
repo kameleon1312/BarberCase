@@ -1,11 +1,23 @@
 import styles from "./cta.module.scss";
 import logo from "../../../assets/images/logo.jpg";
+import { useInView } from "../../../hooks/useInView";
 
 export function CTA() {
+  const { ref, inView } = useInView<HTMLElement>();
+  const rv = inView ? "visible" : "hidden";
+
   return (
-    <section className={styles.section} id="kontakt" aria-label="Kontakt i rezerwacja">
+    <section
+      className={styles.section}
+      id="kontakt"
+      aria-label="Kontakt i rezerwacja"
+      ref={ref}
+    >
       <div className={styles.inner}>
-        <div className={styles.card}>
+        <div
+          className={styles.card}
+          data-reveal={rv}
+        >
           <div className={styles.left}>
             <h2 className={styles.title}>Zarezerwuj termin</h2>
             <p className={styles.subtitle}>
