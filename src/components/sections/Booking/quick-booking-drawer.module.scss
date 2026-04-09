@@ -284,3 +284,74 @@
   border-top: 1px solid c.$line;
   padding-top: 10px;
 }
+
+/* ── Error message ── */
+.errorMsg {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: r.$md;
+  border: 1.5px solid rgba(176, 28, 46, 0.30);
+  background: rgba(176, 28, 46, 0.06);
+  color: c.$accent;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* ── Sending spinner ── */
+.spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 600ms linear infinite;
+  flex-shrink: 0;
+
+  @include m.reduceMotion;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Success state ── */
+.successState {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  text-align: center;
+  padding: clamp(28px, 6vw, 48px) 16px;
+  align-content: center;
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid c.$accent;
+  background: c.$accent-bg;
+  display: grid;
+  place-items: center;
+  color: c.$accent;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.successTitle {
+  margin: 0;
+  font-family: t.$font-display;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: t.$ls-display;
+  text-transform: uppercase;
+  color: c.$text;
+}
+
+.successDesc {
+  margin: 0;
+  color: c.$text-2;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  max-width: 34ch;
+}
