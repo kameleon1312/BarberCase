@@ -66,7 +66,7 @@ export function Hero({ onBook }: HeroProps) {
             </a>
           </div>
 
-          <div className={styles.stats} aria-label="Szybkie informacje">
+          <div className={styles.stats} aria-label="Szybkie informacje" data-reveal={inView ? "visible" : "hidden"}>
             <div className={styles.stat}>
               <div className={styles.valRow}>
                 <span className={styles.val}>{rating}</span>
