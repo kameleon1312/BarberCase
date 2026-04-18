@@ -7,7 +7,7 @@ const isCoarsePointer =
   typeof window !== "undefined" &&
   window.matchMedia("(pointer: coarse)").matches;
 
-export function useLenis(disabled = false, paused = false) {
+export function useLenis(disabled = false, paused = false): void {
   const lenisRef = useRef<Lenis | null>(null);
   const rafRef = useRef(0);
 

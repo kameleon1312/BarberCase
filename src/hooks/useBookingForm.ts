@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { bookingServices } from "../data/content";
-import type { BookingServiceId } from "../data/content";
+import type { BookingService, BookingServiceId } from "../data/content";
 
-type FormState = {
+export type FormState = {
   serviceId: BookingServiceId;
   date: string;
   time: string;
@@ -14,6 +14,23 @@ type FormState = {
 };
 
 export type SendStatus = "idle" | "sending" | "success" | "error";
+
+export type UseBookingFormReturn = {
+  form: FormState;
+  setField: <K extends keyof FormState>(key: K, value: FormState[K]) => void;
+  status: SendStatus;
+  phoneError: boolean;
+  setPhoneError: React.Dispatch<React.SetStateAction<boolean>>;
+  isPhoneValid: boolean;
+  reset: () => void;
+  service: BookingService;
+  priceLabel: string;
+  canSubmit: boolean;
+  today: string;
+  slots: string[];
+  serviceSelectRef: React.MutableRefObject<HTMLSelectElement | null>;
+  submit: (e: React.FormEvent) => Promise<void>;
+};
 
 const PHONE_RE = /^(\+?48)?[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3}$/;
 const MIN_INTERACTION_MS = 3000;
@@ -32,7 +49,7 @@ function buildTimeSlots(startHour = 10, endHour = 20, stepMin = 30) {
   return slots;
 }
 
-export function useBookingForm(open: boolean, preselectServiceId?: BookingServiceId) {
+export function useBookingForm(open: boolean, preselectServiceId?: BookingServiceId): UseBookingFormReturn {
   const today = useMemo(() => {
     const d = new Date();
     return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;

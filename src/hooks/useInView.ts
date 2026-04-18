@@ -15,7 +15,7 @@ export function useInView<T extends HTMLElement = HTMLElement>({
   threshold = 0.12,
   rootMargin = "0px",
   once = true,
-}: Options = {}) {
+}: Options = {}): { ref: React.RefObject<T | null>; inView: boolean } {
   const ref = useRef<T>(null);
   const [inView, setInView] = useState(false);
 

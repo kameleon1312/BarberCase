@@ -14,7 +14,7 @@ type CounterConfig = {
  * Animates multiple counters with a single shared RAF loop.
  * Returns formatted string values, one per config entry.
  */
-export function useCounters(configs: CounterConfig[], start: boolean): string[] {
+export function useCounters(configs: ReadonlyArray<CounterConfig>, start: boolean): string[] {
   const [values, setValues] = useState<number[]>(() => configs.map(() => 0));
   const rafRef = useRef(0);
   const startedRef = useRef(false);

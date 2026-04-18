@@ -11,7 +11,13 @@ const LEAVE_TRANSITION =
 const MOVE_TRANSITION =
   "background 160ms ease, border-color 160ms ease, box-shadow 160ms ease";
 
-export function useMagnetic(strength = 0.32) {
+type MagneticHandlers = {
+  onMouseEnter: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onMouseMove: React.MouseEventHandler<HTMLButtonElement> | undefined;
+  onMouseLeave: React.MouseEventHandler<HTMLButtonElement> | undefined;
+};
+
+export function useMagnetic(strength = 0.32): MagneticHandlers {
   const rafRef = useRef(0);
   const timeoutRef = useRef(0);
 

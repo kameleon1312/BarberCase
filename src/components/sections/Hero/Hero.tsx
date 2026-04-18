@@ -19,10 +19,7 @@ export function Hero({ onBook }: HeroProps) {
   const { ref, inView } = useInView<HTMLElement>({ threshold: 0.15 });
   const magnetic = useMagnetic(0.28);
 
-  const [rating, timeMin, timeMax, bookSec] = useCounters(
-    STAT_CONFIGS as unknown as { target: number; duration?: number; decimals?: number }[],
-    inView
-  );
+  const [rating, timeMin, timeMax, bookSec] = useCounters(STAT_CONFIGS, inView);
 
   return (
     <section className={styles.hero} id="top" aria-label="Sekcja główna" ref={ref}>

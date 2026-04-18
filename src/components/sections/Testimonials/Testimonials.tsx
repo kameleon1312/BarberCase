@@ -16,7 +16,7 @@ export function Testimonials() {
       <div className={styles.inner}>
         <header className={styles.header} data-reveal={rv}>
           <p className={styles.eyebrow} aria-hidden="true">
-            <span className={styles.eyebrowNum}>05</span>
+            <span className={styles.eyebrowNum}>06</span>
             Opinie
           </p>
           <h2 className={styles.title}>Co mówią klienci.</h2>

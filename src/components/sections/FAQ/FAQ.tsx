@@ -20,7 +20,7 @@ export function FAQ() {
       <div className={styles.inner}>
         <header className={styles.header} data-reveal={rv}>
           <p className={styles.eyebrow} aria-hidden="true">
-            <span className={styles.eyebrowNum}>07</span>
+            <span className={styles.eyebrowNum}>08</span>
             FAQ
           </p>
           <h2 className={styles.title}>Najczęstsze pytania.</h2>

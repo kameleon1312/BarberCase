@@ -24,7 +24,7 @@ export function Gallery() {
       <div className={styles.inner}>
         <header className={styles.header} data-reveal={rv}>
           <p className={styles.eyebrow} aria-hidden="true">
-            <span className={styles.eyebrowNum}>04</span>
+            <span className={styles.eyebrowNum}>05</span>
             Nasze prace
           </p>
           <h2 className={styles.title}>The Book.</h2>

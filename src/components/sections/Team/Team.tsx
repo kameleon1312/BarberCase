@@ -16,7 +16,7 @@ export function Team() {
       <div className={styles.inner}>
         <header className={styles.header} data-reveal={rv}>
           <p className={styles.eyebrow} aria-hidden="true">
-            <span className={styles.eyebrowNum}>06</span>
+            <span className={styles.eyebrowNum}>07</span>
             Ekipa
           </p>
           <h2 className={styles.title}>Ludzie za nożyczkami.</h2>
