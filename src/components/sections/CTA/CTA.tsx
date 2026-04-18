@@ -1,5 +1,5 @@
 import styles from "./cta.module.scss";
-import logo from "../../../assets/images/logo.jpg";
+import logo from "../../../assets/images/logo.jpg?w=500";
 import { useInView } from "../../../hooks/useInView";
 import { useMagnetic } from "../../../hooks/useMagnetic";
 

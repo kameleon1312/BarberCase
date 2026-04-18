@@ -1,7 +1,7 @@
 import styles from "./gallery.module.scss";
-import fryzjer from "../../../assets/images/fryzjer.jpg";
-import maszynka from "../../../assets/images/maszynka.jpg";
-import wlosy from "../../../assets/images/wlosy.jpg";
+import fryzjer from "../../../assets/images/fryzjer.jpg?w=900";
+import maszynka from "../../../assets/images/maszynka.jpg?w=900";
+import wlosy from "../../../assets/images/wlosy.jpg?w=900";
 import { useInView } from "../../../hooks/useInView";
 
 const items = [

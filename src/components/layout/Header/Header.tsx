@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./header.module.scss";
 import { brand, nav } from "../../../data/content";
-import logos from "../../../assets/images/logos.png";
+import logos from "../../../assets/images/logos.png?w=120";
 
 type HeaderProps = {
   onBook?: () => void;

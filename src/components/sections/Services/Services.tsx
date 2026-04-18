@@ -3,9 +3,9 @@ import styles from "./services.module.scss";
 import { services } from "../../../data/content";
 import { useInView } from "../../../hooks/useInView";
 
-import hairBg from "../../../assets/images/wlosy.jpg";
-import beardBg from "../../../assets/images/maszynka.jpg";
-import comboBg from "../../../assets/images/fryzjer.jpg";
+import hairBg from "../../../assets/images/wlosy.jpg?w=1400";
+import beardBg from "../../../assets/images/maszynka.jpg?w=1400";
+import comboBg from "../../../assets/images/fryzjer.jpg?w=1400";
 
 const bgByTitle: Record<string, string> = {
   Strzyżenie: hairBg,

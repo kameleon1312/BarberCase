@@ -1,5 +1,5 @@
 import styles from "./hero.module.scss";
-import fryzjer from "../../../assets/images/fryzjer.jpg";
+import fryzjer from "../../../assets/images/fryzjer.jpg?w=1200";
 import { useInView } from "../../../hooks/useInView";
 import { useCounters } from "../../../hooks/useCounters";
 import { useMagnetic } from "../../../hooks/useMagnetic";
