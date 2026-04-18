@@ -24,7 +24,6 @@ export default function App() {
 
   const reducedMotion = usePrefersReducedMotion();
 
-  // Pause Lenis when drawer is open (body scroll is locked — let lock work cleanly)
   useLenis(reducedMotion, bookingOpen);
 
   const openBooking = (serviceId?: BookingServiceId) => {
