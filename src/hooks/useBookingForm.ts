@@ -10,9 +10,13 @@ type FormState = {
   name: string;
   phone: string;
   note: string;
+  website: string; // honeypot — must stay empty
 };
 
 export type SendStatus = "idle" | "sending" | "success" | "error";
+
+const PHONE_RE = /^(\+?48)?[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3}$/;
+const MIN_INTERACTION_MS = 3000;
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
@@ -43,14 +47,18 @@ export function useBookingForm(open: boolean, preselectServiceId?: BookingServic
     name: "",
     phone: "",
     note: "",
+    website: "",
   }));
 
   const [status, setStatus] = useState<SendStatus>("idle");
+  const [phoneError, setPhoneError] = useState(false);
 
   const serviceSelectRef = useRef<HTMLSelectElement | null>(null);
+  const openedAtRef = useRef<number>(0);
 
   useEffect(() => {
     if (!open) return;
+    openedAtRef.current = Date.now();
     if (!preselectServiceId) return;
 
     requestAnimationFrame(() => {
@@ -62,9 +70,10 @@ export function useBookingForm(open: boolean, preselectServiceId?: BookingServic
     });
   }, [open, preselectServiceId]);
 
-  useEffect(() => {
-    if (open) setStatus("idle");
-  }, [open]);
+  const reset = () => {
+    setStatus("idle");
+    setPhoneError(false);
+  };
 
   const service = useMemo(
     () => bookingServices.find((s) => s.id === form.serviceId) ?? bookingServices[0],
@@ -76,15 +85,27 @@ export function useBookingForm(open: boolean, preselectServiceId?: BookingServic
       ? `${service.priceFrom} zł`
       : `${service.priceFrom}–${service.priceTo} zł`;
 
+  const isPhoneValid = PHONE_RE.test(form.phone.trim());
+
   const canSubmit =
     status !== "sending" &&
     form.name.trim().length >= 2 &&
-    form.phone.trim().length >= 7 &&
+    isPhoneValid &&
     !!form.date &&
     !!form.time;
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (form.website.length > 0) return; // honeypot triggered — silent drop
+
+    if (Date.now() - openedAtRef.current < MIN_INTERACTION_MS) return; // time-gate
+
+    if (!isPhoneValid) {
+      setPhoneError(true);
+      return;
+    }
+
     if (!canSubmit) return;
 
     setStatus("sending");
@@ -120,6 +141,10 @@ export function useBookingForm(open: boolean, preselectServiceId?: BookingServic
     form,
     setField,
     status,
+    phoneError,
+    setPhoneError,
+    isPhoneValid,
+    reset,
     service,
     priceLabel,
     canSubmit,

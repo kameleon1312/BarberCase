@@ -35,7 +35,7 @@ export function CTA({ onBook }: Props) {
                 type="button"
                 className={styles.primary}
                 onClick={onBook}
-                ref={magnetic.ref}
+                onMouseEnter={magnetic.onMouseEnter}
                 onMouseMove={magnetic.onMouseMove}
                 onMouseLeave={magnetic.onMouseLeave}
               >

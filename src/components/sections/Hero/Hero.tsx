@@ -52,7 +52,6 @@ export function Hero({ onBook }: HeroProps) {
                 type="button"
                 className={styles.primaryBtn}
                 onClick={onBook}
-                ref={magnetic.ref}
                 onMouseEnter={magnetic.onMouseEnter}
                 onMouseMove={magnetic.onMouseMove}
                 onMouseLeave={magnetic.onMouseLeave}

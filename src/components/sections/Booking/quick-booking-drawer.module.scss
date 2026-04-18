@@ -149,6 +149,17 @@
   color: c.$text;
 }
 
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  tab-index: -1;
+}
+
 .form {
   display: grid;
   gap: 12px;
@@ -165,7 +176,18 @@
   }
 }
 
-.field { display: grid; gap: 6px; }
+.field { display: grid; gap: 6px; position: relative; }
+
+.fieldError {
+  color: c.$accent;
+  font-size: 0.80rem;
+  line-height: 1.4;
+}
+
+.controlError {
+  border-color: c.$accent !important;
+  box-shadow: 0 0 0 3px rgba(176, 28, 46, 0.10) !important;
+}
 
 .label {
   color: c.$muted;

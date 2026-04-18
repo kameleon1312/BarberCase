@@ -48,5 +48,5 @@ export function useCounters(configs: CounterConfig[], start: boolean): string[] 
     return () => cancelAnimationFrame(rafRef.current);
   }, [start]);
 
-  return values.map((v, i) => v.toFixed(configsRef.current[i]?.decimals ?? 0));
+  return values.map((v, i) => v.toFixed(configs[i]?.decimals ?? 0));
 }

@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef } from "react";
 
-// Disable on touch/coarse-pointer devices — native touch is already optimal
 const supportsHover =
   typeof window !== "undefined" &&
   window.matchMedia("(hover: hover) and (pointer: fine)").matches;
@@ -13,11 +12,9 @@ const MOVE_TRANSITION =
   "background 160ms ease, border-color 160ms ease, box-shadow 160ms ease";
 
 export function useMagnetic(strength = 0.32) {
-  const ref = useRef<HTMLButtonElement>(null);
   const rafRef = useRef(0);
   const timeoutRef = useRef(0);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       cancelAnimationFrame(rafRef.current);
@@ -25,59 +22,42 @@ export function useMagnetic(strength = 0.32) {
     };
   }, []);
 
-  const onMouseEnter = useCallback(() => {
-    if (!supportsHover) return;
-    const el = ref.current;
-    if (!el) return;
-    // Remove transform from CSS transition so hover background/shadow animate
-    // but transform follows cursor instantly via RAF
-    el.style.transition = MOVE_TRANSITION;
+  const onMouseEnter = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+    e.currentTarget.style.transition = MOVE_TRANSITION;
   }, []);
 
   const onMouseMove = useCallback(
     (e: React.MouseEvent<HTMLButtonElement>) => {
-      if (!supportsHover) return;
-      const el = ref.current;
-      if (!el) return;
-
       cancelAnimationFrame(rafRef.current);
-
       const cx = e.clientX;
       const cy = e.clientY;
+      const el = e.currentTarget;
 
       rafRef.current = requestAnimationFrame(() => {
-        if (!ref.current) return;
-        const { left, top, width, height } = ref.current.getBoundingClientRect();
+        if (!el.isConnected) return;
+        const { left, top, width, height } = el.getBoundingClientRect();
         const dx = (cx - (left + width / 2)) * strength;
         const dy = (cy - (top + height / 2)) * strength;
-        ref.current.style.transform = `translate(${dx}px, ${dy}px)`;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
       });
     },
     [strength]
   );
 
-  const onMouseLeave = useCallback(() => {
-    if (!supportsHover) return;
+  const onMouseLeave = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     cancelAnimationFrame(rafRef.current);
     clearTimeout(timeoutRef.current);
-
-    const el = ref.current;
-    if (!el) return;
-
-    // Elastic spring return
+    const el = e.currentTarget;
     el.style.transition = LEAVE_TRANSITION;
     el.style.transform = "";
-
     timeoutRef.current = window.setTimeout(() => {
-      if (ref.current) {
-        ref.current.style.transition = "";
-      }
+      if (el.isConnected) el.style.transition = "";
     }, 520);
   }, []);
 
   if (!supportsHover) {
-    return { ref, onMouseEnter: undefined, onMouseMove: undefined, onMouseLeave: undefined };
+    return { onMouseEnter: undefined, onMouseMove: undefined, onMouseLeave: undefined };
   }
 
-  return { ref, onMouseEnter, onMouseMove, onMouseLeave };
+  return { onMouseEnter, onMouseMove, onMouseLeave };
 }

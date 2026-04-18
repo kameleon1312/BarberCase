@@ -78,12 +78,15 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
   useLockBodyScroll(open);
 
   const panelRef = useRef<HTMLElement>(null);
-  useFocusTrap(open, panelRef, onClose);
 
   const {
     form,
     setField,
     status,
+    phoneError,
+    setPhoneError,
+    isPhoneValid,
+    reset,
     service,
     priceLabel,
     canSubmit,
@@ -93,8 +96,15 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
     submit,
   } = useBookingForm(open, preselectServiceId);
 
+  const handleClose = () => {
+    reset();
+    onClose();
+  };
+
+  useFocusTrap(open, panelRef, handleClose);
+
   const onBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target === e.currentTarget) onClose();
+    if (e.target === e.currentTarget) handleClose();
   };
 
   return (
@@ -117,7 +127,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
             <div className={styles.sub}>Wybierz usługę i termin — bez chaosu.</div>
           </div>
 
-          <button type="button" className={styles.close} onClick={onClose} aria-label="Zamknij">
+          <button type="button" className={styles.close} onClick={handleClose} aria-label="Zamknij">
             ✕
           </button>
         </div>
@@ -130,7 +140,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
               Skontaktujemy się z Tobą wkrótce, aby potwierdzić termin{" "}
               <strong>{form.date}</strong> o <strong>{form.time}</strong>.
             </p>
-            <button type="button" className={styles.primary} onClick={onClose}>
+            <button type="button" className={styles.primary} onClick={handleClose}>
               Zamknij
             </button>
           </div>
@@ -155,6 +165,18 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
             </div>
 
             <form className={styles.form} onSubmit={submit} noValidate>
+              {/* honeypot — hidden from real users, bots fill it */}
+              <input
+                type="text"
+                name="website"
+                value={form.website}
+                onChange={(e) => setField("website", e.target.value)}
+                tabIndex={-1}
+                aria-hidden="true"
+                autoComplete="off"
+                className={styles.honeypot}
+              />
+
               <label className={styles.field}>
                 <span className={styles.label}>Usługa</span>
                 <select
@@ -208,19 +230,34 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
                   value={form.name}
                   onChange={(e) => setField("name", e.target.value)}
                   autoComplete="name"
+                  maxLength={80}
                 />
               </label>
 
               <label className={styles.field}>
                 <span className={styles.label}>Telefon</span>
                 <input
-                  className={styles.control}
+                  className={`${styles.control} ${phoneError ? styles.controlError : ""}`}
                   type="tel"
                   placeholder="Np. 600 000 000"
                   value={form.phone}
-                  onChange={(e) => setField("phone", e.target.value)}
+                  onChange={(e) => {
+                    setPhoneError(false);
+                    setField("phone", e.target.value);
+                  }}
+                  onBlur={() => {
+                    if (form.phone.trim().length > 0) setPhoneError(!isPhoneValid);
+                  }}
                   autoComplete="tel"
+                  maxLength={20}
+                  aria-describedby={phoneError ? "phone-error" : undefined}
+                  aria-invalid={phoneError}
                 />
+                {phoneError && (
+                  <span id="phone-error" className={styles.fieldError} role="alert">
+                    Podaj poprawny numer telefonu (np. 600 000 000 lub +48 600 000 000)
+                  </span>
+                )}
               </label>
 
               <label className={styles.field}>
@@ -231,6 +268,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
                   value={form.note}
                   onChange={(e) => setField("note", e.target.value)}
                   rows={3}
+                  maxLength={300}
                 />
               </label>
 
@@ -241,7 +279,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
               )}
 
               <div className={styles.actions}>
-                <button type="button" className={styles.secondary} onClick={onClose}>
+                <button type="button" className={styles.secondary} onClick={handleClose}>
                   Anuluj
                 </button>
 
