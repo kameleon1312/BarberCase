@@ -21,7 +21,7 @@ export function Footer() {
           <a className={styles.link} href="#cennik">
             Cennik
           </a>
-          <a className={styles.link} href="#top">
+          <a className={styles.link} href="#top" aria-label="Do góry">
             Do góry ↑
           </a>
         </div>

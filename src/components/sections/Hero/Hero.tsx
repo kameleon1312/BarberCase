@@ -91,7 +91,7 @@ export function Hero({ onBook }: HeroProps) {
           </div>
         </div>
 
-        <div className={styles.visual} aria-hidden="true">
+        <div className={styles.visual}>
           <div className={styles.showcase}>
             <img
               src={fryzjer}
@@ -101,9 +101,9 @@ export function Hero({ onBook }: HeroProps) {
               decoding="async"
               fetchPriority="high"
             />
-            <div className={styles.frame} />
-            <div className={styles.tag}>Premium Studio</div>
-            <div className={styles.sweep} />
+            <div className={styles.frame} aria-hidden="true" />
+            <div className={styles.tag} aria-hidden="true">Premium Studio</div>
+            <div className={styles.sweep} aria-hidden="true" />
           </div>
         </div>
 

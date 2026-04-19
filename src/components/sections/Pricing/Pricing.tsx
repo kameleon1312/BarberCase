@@ -71,18 +71,17 @@ export function Pricing({ onPick }: PricingProps) {
           </p>
         </header>
 
-        <div className={styles.grid} role="list" aria-label="Lista usług i cen">
+        <ul className={styles.grid} aria-label="Lista usług i cen">
           {pricing.map((p, i) => {
             const serviceId = toServiceId(p.name);
             const featured = !!p.featured;
             const meta = metaByService[serviceId];
 
             return (
+              <li key={p.name}>
               <button
-                key={p.name}
                 type="button"
                 className={`${styles.card} ${featured ? styles.featured : ""}`}
-                role="listitem"
                 onClick={() => onPick?.(serviceId)}
                 aria-label={`Wybierz ${p.name} i przejdź do rezerwacji`}
                 data-reveal={rv}
@@ -127,9 +126,10 @@ export function Pricing({ onPick }: PricingProps) {
                   </div>
                 </div>
               </button>
+              </li>
             );
           })}
-        </div>
+        </ul>
 
         <p
           className={styles.hint}

@@ -3,6 +3,7 @@ import styles from "./quick-booking-drawer.module.scss";
 import { bookingServices } from "../../../data/content";
 import type { BookingServiceId } from "../../../data/content";
 import { useBookingForm } from "../../../hooks/useBookingForm";
+import { useFocusTrap } from "../../../hooks/useFocusTrap";
 
 type Props = {
   open: boolean;
@@ -19,59 +20,6 @@ function useLockBodyScroll(locked: boolean) {
       document.body.style.overflow = prev;
     };
   }, [locked]);
-}
-
-function useFocusTrap(
-  active: boolean,
-  containerRef: React.RefObject<HTMLElement | null>,
-  onEscape: () => void
-) {
-  useEffect(() => {
-    if (!active) return;
-
-    const el = containerRef.current;
-    if (!el) return;
-
-    const focusables = () =>
-      Array.from(
-        el.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
-        )
-      ).filter((x) => !x.hasAttribute("disabled") && !x.getAttribute("aria-hidden"));
-
-    focusables()[0]?.focus();
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        onEscape();
-        return;
-      }
-      if (e.key !== "Tab") return;
-
-      const items = focusables();
-      if (!items.length) return;
-
-      const first = items[0];
-      const last = items[items.length - 1];
-      const activeEl = document.activeElement as HTMLElement | null;
-
-      if (e.shiftKey) {
-        if (!activeEl || activeEl === first) {
-          e.preventDefault();
-          last.focus();
-        }
-      } else {
-        if (activeEl === last) {
-          e.preventDefault();
-          first.focus();
-        }
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [active, containerRef, onEscape]);
 }
 
 export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props) {
@@ -102,6 +50,13 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
   };
 
   useFocusTrap(open, panelRef, handleClose);
+
+  const successCloseRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (status === "success") {
+      successCloseRef.current?.focus();
+    }
+  }, [status]);
 
   const onBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) handleClose();
@@ -140,7 +95,7 @@ export function QuickBookingDrawer({ open, onClose, preselectServiceId }: Props)
               Skontaktujemy się z Tobą wkrótce, aby potwierdzić termin{" "}
               <strong>{form.date}</strong> o <strong>{form.time}</strong>.
             </p>
-            <button type="button" className={styles.primary} onClick={handleClose}>
+            <button type="button" className={styles.primary} onClick={handleClose} ref={successCloseRef}>
               Zamknij
             </button>
           </div>

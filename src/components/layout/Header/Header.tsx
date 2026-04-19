@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./header.module.scss";
 import { brand, nav } from "../../../data/content";
 import logos from "../../../assets/images/logos.png?w=120";
+import { useFocusTrap } from "../../../hooks/useFocusTrap";
 
 type HeaderProps = {
   onBook?: () => void;
@@ -44,31 +45,7 @@ export function Header({ onBook }: HeaderProps) {
     };
   }, [open]);
 
-  // close on ESC + basic focus management
-  useEffect(() => {
-    if (!open) return;
-
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-
-    // focus first focusable in drawer
-    const t = window.setTimeout(() => {
-      const el = drawerRef.current?.querySelector<HTMLElement>(
-        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-      );
-      el?.focus();
-    }, 0);
-
-    return () => {
-      window.removeEventListener("keydown", onKeyDown);
-      window.clearTimeout(t);
-    };
-  }, [open]);
-
-  const Cta = onBook ? (
+const Cta = onBook ? (
     <button
       type="button"
       className={styles.cta}
@@ -84,6 +61,8 @@ export function Header({ onBook }: HeaderProps) {
       <span className={styles.ctaLabelFull}>Umów wizytę</span>
     </a>
   );
+
+  useFocusTrap(open, drawerRef, () => setOpen(false));
 
   const onNavClick = () => setOpen(false);
 

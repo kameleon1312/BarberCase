@@ -40,9 +40,9 @@ export function Team() {
               <div className={styles.info}>
                 <div className={styles.nameRow}>
                   <h3 className={styles.name}>{member.name}</h3>
-                  <div className={styles.expBadge}>
-                    <span className={styles.expNum}>{member.years}</span>
-                    <span className={styles.expUnit}>lat</span>
+                  <div className={styles.expBadge} aria-label={`Doświadczenie: ${member.years} lat`}>
+                    <span className={styles.expNum} aria-hidden="true">{member.years}</span>
+                    <span className={styles.expUnit} aria-hidden="true">lat</span>
                   </div>
                 </div>
                 <p className={styles.role}>{member.role}</p>
