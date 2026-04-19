@@ -33,7 +33,6 @@ export function Header({ onBook }: HeaderProps) {
     };
   }, []);
 
-  // lock body scroll when menu open
   useEffect(() => {
     if (!open) return;
 
@@ -45,7 +44,11 @@ export function Header({ onBook }: HeaderProps) {
     };
   }, [open]);
 
-const Cta = onBook ? (
+  useFocusTrap(open, drawerRef, () => setOpen(false));
+
+  const onNavClick = () => setOpen(false);
+
+  const Cta = onBook ? (
     <button
       type="button"
       className={styles.cta}
@@ -62,10 +65,6 @@ const Cta = onBook ? (
     </a>
   );
 
-  useFocusTrap(open, drawerRef, () => setOpen(false));
-
-  const onNavClick = () => setOpen(false);
-
   return (
     <header
       className={styles.header}
@@ -74,7 +73,7 @@ const Cta = onBook ? (
       data-menu-open={open ? "true" : "false"}
     >
       <div className={styles.inner}>
-<a className={styles.brand} href="#top" aria-label={brand.name}>
+        <a className={styles.brand} href="#top" aria-label={brand.name}>
           <span className={styles.logoWrap} aria-hidden="true">
             <img src={logos} alt="" className={styles.logo} />
           </span>

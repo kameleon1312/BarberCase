@@ -46,7 +46,10 @@ Projekt miał wyglądać jak zaprojektowany przez człowieka, nie wygenerowany.
 - Magnetic button na głównych CTA (`getBoundingClientRect` + RAF)
 - Scroll reveal na każdej sekcji (własny `useInView`, `IntersectionObserver`)
 - `usePrefersReducedMotion` bramkuje wszystkie animacje JS
-- Pełne SEO: Open Graph, JSON-LD `HairSalon` schema, meta tagi
+- Pełne SEO: Open Graph, JSON-LD `HairSalon` schema, sitemap, meta tagi
+- Obrazy: `vite-imagetools` → WebP + resize (9.5 MB → ~1 MB, 89% redukcji)
+- A11Y: focus trap, skip-to-content, ARIA roles, kontrast WCAG AA
+- `ErrorBoundary` z przyjaznym komunikatem po polsku
 
 ---
 
