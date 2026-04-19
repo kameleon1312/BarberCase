@@ -3,14 +3,19 @@ import styles from "./services.module.scss";
 import { services } from "../../../data/content";
 import { useInView } from "../../../hooks/useInView";
 
-import hairBg from "../../../assets/images/wlosy.jpg?w=1400";
-import beardBg from "../../../assets/images/maszynka.jpg?w=1400";
-import comboBg from "../../../assets/images/fryzjer.jpg?w=1400";
+import hairBgSm from "../../../assets/images/wlosy.jpg?w=700";
+import hairBgLg from "../../../assets/images/wlosy.jpg?w=1400";
+import beardBgSm from "../../../assets/images/maszynka.jpg?w=700";
+import beardBgLg from "../../../assets/images/maszynka.jpg?w=1400";
+import comboBgSm from "../../../assets/images/fryzjer.jpg?w=700";
+import comboBgLg from "../../../assets/images/fryzjer.jpg?w=1400";
 
-const bgByTitle: Record<string, string> = {
-  Strzyżenie: hairBg,
-  Broda: beardBg,
-  Combo: comboBg,
+type BgSrc = { sm: string; lg: string };
+
+const bgByTitle: Record<string, BgSrc> = {
+  Strzyżenie: { sm: hairBgSm,  lg: hairBgLg  },
+  Broda:      { sm: beardBgSm, lg: beardBgLg },
+  Combo:      { sm: comboBgSm, lg: comboBgLg },
 };
 
 export function Services() {
@@ -85,17 +90,22 @@ export function Services() {
             style={{ "--reveal-delay": "200ms" } as React.CSSProperties}
           >
             <div className={styles.previewBg}>
-              {services.map((s, i) => (
-                <img
-                  key={s.title}
-                  src={bgByTitle[s.title] ?? hairBg}
-                  alt=""
-                  aria-hidden="true"
-                  className={styles.previewBgImg}
-                  data-active={i === active ? "true" : "false"}
-                  loading={i === 0 ? "eager" : "lazy"}
-                />
-              ))}
+              {services.map((s, i) => {
+                const bg = bgByTitle[s.title] ?? bgByTitle["Strzyżenie"]!;
+                return (
+                  <img
+                    key={s.title}
+                    src={bg.lg}
+                    srcSet={`${bg.sm} 700w, ${bg.lg} 1400w`}
+                    sizes="(max-width: 900px) 100vw, 50vw"
+                    alt=""
+                    aria-hidden="true"
+                    className={styles.previewBgImg}
+                    data-active={i === active ? "true" : "false"}
+                    loading={i === 0 ? "eager" : "lazy"}
+                  />
+                );
+              })}
             </div>
 
             <div className={styles.previewTop}>

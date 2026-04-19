@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { Header } from "../components/layout/Header/Header";
 import { Footer } from "../components/layout/Footer/Footer";
 import { Ticker } from "../components/layout/Ticker/Ticker";
@@ -13,20 +13,27 @@ import { Team } from "../components/sections/Team/Team";
 import { FAQ } from "../components/sections/FAQ/FAQ";
 import { CTA } from "../components/sections/CTA/CTA";
 
-import { QuickBookingDrawer } from "../components/sections/Booking/QuickBookingDrawer";
 import type { BookingServiceId } from "../data/content";
 import { useLenis } from "../hooks/useLenis";
 import { usePrefersReducedMotion } from "../hooks/usePrefersReducedMotion";
 
+const QuickBookingDrawer = lazy(() =>
+  import("../components/sections/Booking/QuickBookingDrawer").then((m) => ({
+    default: m.QuickBookingDrawer,
+  }))
+);
+
 export default function App() {
   const [bookingOpen, setBookingOpen] = useState(false);
   const [prefillServiceId, setPrefillServiceId] = useState<BookingServiceId | null>(null);
+  const [drawerMounted, setDrawerMounted] = useState(false);
 
   const reducedMotion = usePrefersReducedMotion();
 
   useLenis(reducedMotion, bookingOpen);
 
   const openBooking = (serviceId?: BookingServiceId) => {
+    setDrawerMounted(true);
     if (serviceId) setPrefillServiceId(serviceId);
     setBookingOpen(true);
   };
@@ -58,11 +65,15 @@ export default function App() {
 
       <Footer />
 
-      <QuickBookingDrawer
-        open={bookingOpen}
-        onClose={closeBooking}
-        preselectServiceId={prefillServiceId ?? undefined}
-      />
+      {drawerMounted && (
+        <Suspense fallback={null}>
+          <QuickBookingDrawer
+            open={bookingOpen}
+            onClose={closeBooking}
+            preselectServiceId={prefillServiceId ?? undefined}
+          />
+        </Suspense>
+      )}
     </>
   );
 }

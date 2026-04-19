@@ -1,4 +1,5 @@
 import styles from "./hero.module.scss";
+import fryzjerSm from "../../../assets/images/fryzjer.jpg?w=600";
 import fryzjer from "../../../assets/images/fryzjer.jpg?w=1200";
 import { useInView } from "../../../hooks/useInView";
 import { useCounters } from "../../../hooks/useCounters";
@@ -95,6 +96,8 @@ export function Hero({ onBook }: HeroProps) {
           <div className={styles.showcase}>
             <img
               src={fryzjer}
+              srcSet={`${fryzjerSm} 600w, ${fryzjer} 1200w`}
+              sizes="(max-width: 900px) 100vw, 50vw"
               alt="Barber podczas precyzyjnego strzyżenia w BarberSpace"
               className={styles.image}
               loading="eager"
