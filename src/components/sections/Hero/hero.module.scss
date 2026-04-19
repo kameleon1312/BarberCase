@@ -52,6 +52,10 @@
   letter-spacing: t.$ls-display;
   text-transform: uppercase;
   color: c.$text;
+
+  @media (max-width: 460px) {
+    font-size: clamp(2.40rem, 13vw, 3.40rem);
+  }
 }
 
 .titleBreak {
