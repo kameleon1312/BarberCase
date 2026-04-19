@@ -38,6 +38,8 @@ export default function App() {
 
   return (
     <>
+      <a href="#main" className="skip-link">Przejdź do treści</a>
+
       <Header onBook={() => openBooking()} />
 
       <main id="main">
