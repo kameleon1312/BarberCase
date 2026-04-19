@@ -4,6 +4,7 @@
 :root { color-scheme: light; }
 
 html {
+  overflow-x: hidden;
   scroll-padding-top: 84px;
   scroll-behavior: smooth;
 }
@@ -49,8 +50,9 @@ section {
 
 .skip-link {
   position: absolute;
-  left: -999px;
+  left: 12px;
   top: 10px;
+  transform: translateY(calc(-100% - 12px));
   background: c.$ink;
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -61,7 +63,7 @@ section {
   font-size: 0.9rem;
   text-decoration: none;
 
-  &:focus { left: 12px; }
+  &:focus { transform: translateY(0); }
 }
 
 // Scroll reveal — elements start hidden, become visible on intersection
