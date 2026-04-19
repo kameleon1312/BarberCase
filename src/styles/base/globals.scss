@@ -19,6 +19,11 @@ body {
   line-height: t.$lh;
   color: c.$text;
   background: c.$bg;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body { scroll-behavior: auto; }
 }
 
 section {

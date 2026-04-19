@@ -19,7 +19,7 @@ export function useFocusTrap(
         (x) => !x.hasAttribute("disabled") && !x.getAttribute("aria-hidden")
       );
 
-    focusables()[0]?.focus();
+    focusables()[0]?.focus({ preventScroll: true });
 
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
