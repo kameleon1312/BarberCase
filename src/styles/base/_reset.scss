@@ -4,6 +4,8 @@
 
 html, body { height: 100%; }
 
+html { overflow-x: clip; }
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -11,5 +13,13 @@ body {
 }
 
 img { max-width: 100%; display: block; }
-button, input { font: inherit; }
+button, input, textarea, select { font: inherit; }
 a { color: inherit; }
+
+/* Prevent iOS tap highlight flash on all interactive elements */
+a, button { -webkit-tap-highlight-color: transparent; }
+
+/* Prevent iOS Safari auto-zoom on input focus (triggers when font-size < 16px) */
+@media (max-width: 860px) {
+  input, textarea, select { font-size: max(1rem, 16px); }
+}
